@@ -1,11 +1,13 @@
+import Background from "./components/Background"
+import Board from "./components/Board"
 
 function App() {
 
   return (
 	<>
-		<div>
-			<p>Hello World!</p>
-		</div>
+		<Background>
+			<Board/>
+		</Background> 
 	</>
   )
 }
