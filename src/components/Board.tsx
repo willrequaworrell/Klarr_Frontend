@@ -2,6 +2,7 @@ import { useState } from "react"
 import Column from "./Column"
 import { DEFAULT_CARDS } from "../util/DummyData"
 import { CardType } from "../util/Types"
+import DeleteArea from "./DeleteArea"
 
 
 
@@ -31,6 +32,7 @@ const Board = () => {
                 cards={cards}
                 setCards={setCards}
             />
+            <DeleteArea setCards={setCards}/>
             
         </div>
     )
