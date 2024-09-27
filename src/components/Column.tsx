@@ -42,12 +42,21 @@ const Column = ({title, headingColor, column, cards, setCards}: ColumnProps) => 
 
         return nearest
     }
+    const clearIndicatorHighlights = (indicatorList?: HTMLElement[]) => {
+        const indicators = indicatorList || getIndicators()
+
+        indicators.forEach( i => {
+            i.style.opacity = "0"
+        })
+    }
 
     const highlightIndicators = (e: React.DragEvent) => {
         const indicators = getIndicators()
+        clearIndicatorHighlights(indicators)
         const nearestIndicator = getNearestIndicator(e, indicators)
         nearestIndicator.element.style.opacity = "1"
     }
+
 
     const handleDragStart = (e: React.DragEvent, card: CardType) => {
         e.dataTransfer.setData("cardId", card.id)
@@ -61,10 +70,40 @@ const Column = ({title, headingColor, column, cards, setCards}: ColumnProps) => 
 
     const handleDragLeave = () => {
         setActive(false)
+        clearIndicatorHighlights() 
     }
 
-    const handleDrop = () => {
+    const handleDrop = (e: React.DragEvent) => {
+        const cardId = e.dataTransfer.getData("cardId")
         setActive(false)
+        clearIndicatorHighlights()
+
+        const indicators = getIndicators()
+        const nearestIndicator = getNearestIndicator(e, indicators).element 
+        const before = nearestIndicator.dataset.before || "-1"
+
+        if (before !== cardId) {
+            let copy = [...cards]
+
+            let cardToTransfer = copy.find(c => c.id === cardId)
+            if (!cardToTransfer) return
+
+            cardToTransfer = {...cardToTransfer, column}
+
+            copy = copy.filter(c => c.id !== cardId)
+
+            const moveToBack = before === "-1"
+            if (moveToBack) {
+                copy.push(cardToTransfer)
+            } else {
+                const insertAtIndex = copy.findIndex(card => card.id === before)
+                if (insertAtIndex === undefined) return
+
+                copy.splice(insertAtIndex, 0, cardToTransfer)
+            }
+
+            setCards(copy)
+        }
     }
 
     
