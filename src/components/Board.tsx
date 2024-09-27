@@ -5,6 +5,8 @@ import { CardType } from "../util/Types"
 import DeleteArea from "./DeleteArea"
 
 
+// https://play.tailwindcss.com/aoOayGLBIX
+
 
 const Board = () => {
     const [cards, setCards] = useState<CardType[]>(DEFAULT_CARDS)
@@ -14,21 +16,24 @@ const Board = () => {
             <Column
                 title="Today"
                 column="today"
-                headingColor="text-red-200"
+                headingColor="text-offblack"
+                bgColor="bg-red"
                 cards={cards}
                 setCards={setCards}
             />
             <Column
                 title="Upcoming"
                 column="upcoming"
-                headingColor="text-emerald-200"
+                headingColor="text-offblack"
+                bgColor="bg-blue"
                 cards={cards}
                 setCards={setCards}
             />
             <Column
                 title="Optional"
                 column="optional"
-                headingColor="text-yellow-200"
+                headingColor="text-offblack"
+                bgColor="bg-yellow"
                 cards={cards}
                 setCards={setCards}
             />

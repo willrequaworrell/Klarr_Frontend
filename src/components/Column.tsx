@@ -7,13 +7,14 @@ import AddCard from "./AddCard"
 interface ColumnProps {
     title: string
     headingColor: string
+    bgColor: string
     column: 'today' | 'upcoming' | 'optional'
     cards: CardType[]
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 }
 
 
-const Column = ({title, headingColor, column, cards, setCards}: ColumnProps) => {
+const Column = ({title, headingColor, bgColor, column, cards, setCards}: ColumnProps) => {
     const [active, setActive] = useState<boolean>(false)
 
     const getIndicators = () => {
@@ -108,7 +109,6 @@ const Column = ({title, headingColor, column, cards, setCards}: ColumnProps) => 
 
     
     const filteredCards = cards.filter(c => c.column === column)
-
     return (
         <div className="w-56 shrink-0">
             <div className="flex items-center justify-between mb-3">
@@ -121,7 +121,7 @@ const Column = ({title, headingColor, column, cards, setCards}: ColumnProps) => 
                 onDragOver={handleDragOver} 
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                className={`h-full w-full transition-colors ${active ? "bg-neutral-800/50" : "bg-neutral-800/0"}`}
+                className={` w-full p-2 rounded-xl transition-colors ${active ? "bg-neutral-500/20" : bgColor}`}
             >
                     {filteredCards.map(c => {
                         return (

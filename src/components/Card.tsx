@@ -17,7 +17,7 @@ const Card = ({title, id, column, handleDragStart}: DraggableCardType) => {
             layout
             layoutId={id}
             draggable 
-            className="p-3 border rounded cursor-grab border-neutral-700 bg-neutral-800 active:cursor-grabbing"
+            className="p-2 border rounded-xl cursor-grab border-neutral-700 bg-offblack active:cursor-grabbing"
             onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column})}
         >
             <p className="text-sm text-neutral-100">{title}</p>
