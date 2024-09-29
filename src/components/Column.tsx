@@ -11,10 +11,11 @@ interface ColumnProps {
     column: 'today' | 'upcoming' | 'optional'
     cards: CardType[]
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>
+    width: string
 }
 
 
-const Column = ({title, headingColor, bgColor, column, cards, setCards}: ColumnProps) => {
+const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: ColumnProps) => {
     const [active, setActive] = useState<boolean>(false)
 
     const getIndicators = () => {
@@ -110,7 +111,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards}: ColumnP
     
     const filteredCards = cards.filter(c => c.column === column)
     return (
-        <div className="w-56 shrink-0">
+        <div className={`${width} shrink-0 h-full flex-col rounded-xl bg-red-400`}>
             <div className="flex items-center justify-between mb-3">
                 <h3 className={`font-medium ${headingColor}`}>
                     {title}
