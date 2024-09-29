@@ -111,32 +111,63 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     
     const filteredCards = cards.filter(c => c.column === column)
     return (
-        <div className={`${width} shrink-0 h-full flex-col rounded-xl bg-red-400`}>
+
+        <div 
+            onDragOver={handleDragOver} 
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`flex flex-col ${width} size-full p-2 rounded-xl transition-colors border-4 border-offblack ${active && ""}`}
+        >
             <div className="flex items-center justify-between mb-3">
-                <h3 className={`font-medium ${headingColor}`}>
+                <h3 className={`font-bold text-lg ${headingColor}`}>
                     {title}
                 </h3>
-                <span className="text-sm rounded text-neutral-400">{filteredCards.length}</span>
+                <span className="flex items-center justify-center p-2 text-sm font-bold text-center rounded-full size-6 bg-offblack">{filteredCards.length}</span>
             </div>
-            <div 
-                onDragOver={handleDragOver} 
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                className={` w-full p-2 rounded-xl transition-colors ${active ? "bg-neutral-500/20" : bgColor}`}
-            >
-                    {filteredCards.map(c => {
-                        return (
-                            <Card 
-                                key={c.id} 
-                                {...c}
-                                handleDragStart={handleDragStart}
-                            />
-                        )
-                    })}
-                    <DropIndicator beforeId={"-1"} column={column}/>
-                    <AddCard column={column} setCards={setCards}/>
+            <div className="py-4 overflow-hidden hover:overflow-y-auto">
+                {filteredCards.map(c => {
+                    return (
+                        <Card 
+                            key={c.id} 
+                            {...c}
+                            handleDragStart={handleDragStart}
+                            bgColor={bgColor}
+                        />
+                    )
+                })}
+
             </div>
+            <DropIndicator beforeId={"-1"} column={column}/>
+            <AddCard column={column} setCards={setCards}/>
         </div>
+        // <div className={`${width} shrink-0 h-full flex-col rounded-xl border-red border`}>
+        //     <div className="flex items-center justify-between mb-3">
+        //         <h3 className={`font-medium ${headingColor}`}>
+        //             {title}
+        //         </h3>
+        //         <span className="text-sm rounded text-neutral-400">{filteredCards.length}</span>
+        //     </div>
+
+            
+        //     <div 
+        //         onDragOver={handleDragOver} 
+        //         onDragLeave={handleDragLeave}
+        //         onDrop={handleDrop}
+        //         className={` w-full p-2 rounded-xl transition-colors ${active ? "bg-neutral-500/20" : bgColor}`}
+        //     >
+        //             {filteredCards.map(c => {
+        //                 return (
+        //                     <Card 
+        //                         key={c.id} 
+        //                         {...c}
+        //                         handleDragStart={handleDragStart}
+        //                     />
+        //                 )
+        //             })}
+        //             <DropIndicator beforeId={"-1"} column={column}/>
+        //             <AddCard column={column} setCards={setCards}/>
+        //     </div>
+        // </div>
     )
 }
 

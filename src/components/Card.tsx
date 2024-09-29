@@ -4,10 +4,11 @@ import DropIndicator from "./DropIndicator"
 
 interface DraggableCardType extends CardType {
     handleDragStart: (e: React.DragEvent<HTMLDivElement>, card: CardType) => void;
+    bgColor: string
 }
 
 
-const Card = ({title, id, column, handleDragStart}: DraggableCardType) => {
+const Card = ({title, id, column, handleDragStart, bgColor}: DraggableCardType) => {
     
 
     return (
@@ -17,10 +18,10 @@ const Card = ({title, id, column, handleDragStart}: DraggableCardType) => {
             layout
             layoutId={id}
             draggable 
-            className="p-2 border rounded-xl cursor-grab border-neutral-700 bg-offblack active:cursor-grabbing"
+            className={`p-2 border rounded-xl cursor-grab  ${bgColor} active:cursor-grabbing`}
             onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column})}
         >
-            <p className="text-sm text-neutral-100">{title}</p>
+            <p className="text-sm font-bold text-neutral-900">{title}</p>
         </motion.div>
     </>
     )

@@ -60,10 +60,10 @@ const AddCard = ({column, setCards}: AddCardType) => {
                 <motion.button
                     layout
                     onClick={() => setAdding(true)}
-                    className='flex w-full items-center gap-1.5 px-3 py-1.5 text-sm text-offblack transition-colors hover:text-neutral-50'
+                    className='flex w-8 rounded-full items-center text-xl gap-1.5 px-3 py-1.5  text-offwhite bg-offblack transition-colors hover:text-neutral-50'
                 >
-                    <span>Add</span>
-                    <FiPlus/>
+                    {/* <span>Add</span> */}
+                    <FiPlus />
                 </motion.button>
             }
         </>

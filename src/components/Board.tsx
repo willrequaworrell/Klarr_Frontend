@@ -5,7 +5,7 @@ import { CardType } from "../util/Types"
 import DeleteArea from "./DeleteArea"
 
 
-// https://play.tailwindcss.com/aoOayGLBIX
+// https://play.tailwindcss.com/2INd20Fvl0
 
 
 const Board = () => {
@@ -16,7 +16,7 @@ const Board = () => {
 
             <div className="flex w-full gap-8 h-1/2">
                 <Column
-                    title="Today"
+                    title="TODAY"
                     column="today"
                     headingColor="text-offblack"
                     bgColor="bg-red"
@@ -25,10 +25,10 @@ const Board = () => {
                     width="w-3/4"
                 />
                 <div className="flex flex-col items-center justify-center flex-1 gap-8">
-                    <div className="flex items-center justify-center w-full bg-black h-1/2 rounded-xl">
+                    <div className="flex items-center justify-center w-full bg-offblack h-1/2 rounded-xl">
                     <p>12:34</p>
                     </div>
-                    <div className="flex items-center justify-center w-full bg-black h-1/2 rounded-xl">
+                    <div className="flex items-center justify-center w-full bg-offblack h-1/2 rounded-xl">
                     <p>Trash</p>
                     </div>
                 </div>
@@ -36,8 +36,17 @@ const Board = () => {
             </div>
             <div className="flex w-full gap-8 h-1/2">
                 <Column
-                    title="Upcoming"
+                    title="UPCOMING"
                     column="upcoming"
+                    headingColor="text-offblack"
+                    bgColor="bg-yellow"
+                    cards={cards}
+                    setCards={setCards}
+                    width="flex-1"
+                />
+                <Column
+                    title="OPTIONAL"
+                    column="optional"
                     headingColor="text-offblack"
                     bgColor="bg-blue"
                     cards={cards}
@@ -45,15 +54,6 @@ const Board = () => {
                     width="w-2/5"
                 />
             
-                <Column
-                    title="Optional"
-                    column="optional"
-                    headingColor="text-offblack"
-                    bgColor="bg-yellow"
-                    cards={cards}
-                    setCards={setCards}
-                    width="flex-1"
-                />
             </div>
             {/* <DeleteArea setCards={setCards}/> */}
             

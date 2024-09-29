@@ -7,12 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        offwhite: '#F7F2EA',
-        offblack: '#211712',
-        blue: '#236DF6',
+        offwhite: '#f0e7d8', //'#F7F2EA',
+        offblack: '#333534', //'#211712',
+        blue: 'rgb(var(--color-blue) / <alpha-value>)',
         darkBlue: '#253156',
-        red: '#FF6642',
-        yellow: '#FDD131'
+        red: 'rgb(var(--color-red) / <alpha-value>)',
+        yellow: 'rgb(var(--color-yellow) / <alpha-value>)'
       }
     }
   },

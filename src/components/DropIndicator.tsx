@@ -6,7 +6,7 @@ interface DropIndicatorType {
 const DropIndicator = ({beforeId, column}: DropIndicatorType) => {
     return (
         <div
-            className='my-0.5 h-0.5 w-full bg-violet-400 opacity-0'
+            className='w-full h-2 my-0.5 opacity-0 bg-darkBlue rounded-full'
             data-before={beforeId || "-1"}
             data-column={column}
         />

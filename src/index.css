@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --color-blue: 75 135 180;  /* RGB for #236DF6 #265A9F*/ 
+    --color-red: 230 102 66;   /* RGB for #FF6642 */
+    --color-yellow: 255 200 73; /* RGB for #FDD131 */
+}
