@@ -19,7 +19,8 @@ export default {
         Bungee: ["Bungee", "sans-serif"],
         Space: ["Space Grotesk", "sans-serif"],
         Baumans: ["Baumans", "system-ui"],
-        Nanum: ["Nanum Gothic Coding", "monospace"]
+        Nanum: ["Nanum Gothic Coding", "monospace"],
+        Barlow: ["Barlow Condensed", "sans-serif"]
       }
     }
   },

@@ -52,7 +52,7 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
                         className="w-full text-sm font-bold bg-transparent border-none outline-none text-neutral-900" />
                 </form>
             :
-            <p className="flex-1 text-sm font-bold font-Nanum text-neutral-900">{title}</p>
+            <p className="flex-1 text-md font-Barlow text-neutral-900">{title}</p>
 
             }
 
