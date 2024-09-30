@@ -33,7 +33,7 @@ const DeleteArea = ({setCards}: DeleteAreaType) => {
 			className={` grid h-1/2 w-full place-content-center  rounded-xl text-6xl 
 				${active 
 					? "border-red bg-red/20 text-red-500" 
-					: " bg-offblack text-offwhite"
+					: " bg-offblack text-white"
 				}`
 			}
 			onDragOver={handleDragOver}

@@ -8,6 +8,12 @@ interface AddCardType {
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 }
 
+const columnToColor = {
+    'today': 'bg-red/75',
+    'upcoming': 'bg-yellow/75',
+    'optional': 'bg-blue/75'
+}
+
 const AddCard = ({column, setCards}: AddCardType) => {
     const [text, setText] = useState<string>("")
     const [adding, setAdding] = useState<boolean>(false)
@@ -32,27 +38,30 @@ const AddCard = ({column, setCards}: AddCardType) => {
         <>
             {adding 
             ? 
-                <motion.form layout onSubmit={handleSubmit}>
+                <motion.form 
+                    layout 
+                    onSubmit={handleSubmit}
+                    // onBlur={() => setAdding(false)}
+                >
                     <textarea 
                         onChange={(e) => setText(e.target.value)}
                         autoFocus
                         placeholder='Add new task...'
-                        className='w-full p-3 text-sm border rounded border-violet-400 bg-violet-400/20 text-neutral-50 placeholder-violet-300 focus:outline-0'
+                        className={`w-full p-2 text-sm rounded-xl ${columnToColor[column]} text-offblack placeholder-offblack focus:outline-0`}
                     />
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
                         <button
                             type='button'
                             onClick={() => setAdding(false)}
-                            className='px-3 py-1.5 text-xs text-neutral-400 transition-colors hover:text-neutral-50'
+                            className='px-3 py-1.5 text-xs text-offblack transition-colors hover:text-white'
                         >
-                            Close
+                            Cancel
                         </button>
                         <button
                             type="submit"
-                            className='flex items-center gap-1.5 px-3 py-1.5 text-xs text-neutral-950 rounded bg-neutral-50 transition-colors hover:text-neutral-50'
+                            className='flex rounded-full justify-center items-center w-min text-sm  gap-1.5 px-3 py-1.5  text-white bg-offblack transition-colors  hover:scale-105'
                         >
                             <span>Add</span>
-                            <FiPlus/>
                         </button>
                     </div>
                 </motion.form>
@@ -60,7 +69,7 @@ const AddCard = ({column, setCards}: AddCardType) => {
                 <motion.button
                     layout
                     onClick={() => setAdding(true)}
-                    className='flex rounded-full justify-center items-center w-min text-sm  gap-1.5 px-3 py-1.5  text-offwhite bg-offblack transition-colors hover:text-neutral-50'
+                    className={`flex rounded-full justify-center items-center w-min text-sm  gap-1.5 px-3 py-1.5  text-white bg-offblack transition-colors hover:scale-105`}
                 >
                     <span>Add</span>
                     <FiPlus />

@@ -13,6 +13,13 @@ export default {
         darkBlue: '#253156',
         red: 'rgb(var(--color-red) / <alpha-value>)',
         yellow: 'rgb(var(--color-yellow) / <alpha-value>)'
+      },
+      fontFamily: {
+        Staat: ["Staatliches", "sans-serif"],
+        Bungee: ["Bungee", "sans-serif"],
+        Space: ["Space Grotesk", "sans-serif"],
+        Baumans: ["Baumans", "system-ui"],
+        Nanum: ["Nanum Gothic Coding", "monospace"]
       }
     }
   },

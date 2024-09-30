@@ -122,13 +122,13 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             onDragOver={handleDragOver} 
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`flex flex-col ${width} size-full p-2 rounded-xl transition-colors border-4 border-offblack ${active && ""}`}
+            className={`flex flex-col font-Staat ${width} size-full p-2 rounded-xl transition-colors border-8 border-offblack ${active && ""}`}
         >
             <div className="flex items-center justify-between mb-3">
-                <h3 className={`font-bold text-lg ${headingColor}`}>
+                <h3 className={`font-bold text-4xl  ${headingColor}`}>
                     {title}
                 </h3>
-                <span className="flex items-center justify-center p-2 text-sm font-bold text-center rounded-full size-6 bg-offblack">{filteredCards.length}</span>
+                <span className="flex items-center justify-center p-2 text-2xl font-bold text-center rounded-full size-10 bg-offblack">{filteredCards.length}</span>
             </div>
             <div className="py-4 overflow-hidden hover:overflow-y-auto">
                 {filteredCards.map(c => {

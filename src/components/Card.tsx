@@ -25,7 +25,6 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
     const handleSubmitEdit = (e: React.FormEvent) => {
         e.preventDefault()
         onEdit(id, editedTitle)
-        console.log("submitting")
         setIsEditing(false)
     }
 
@@ -36,7 +35,7 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
             layout
             layoutId={id}
             draggable={!isEditing}
-            className={`flex relative p-2 border rounded-xl cursor-grab  ${bgColor} active:cursor-grabbing`}
+            className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} active:cursor-grabbing`}
             onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column})}
             onDoubleClick={handleDoubleClick}
         >
@@ -53,7 +52,7 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
                         className="w-full text-sm font-bold bg-transparent border-none outline-none text-neutral-900" />
                 </form>
             :
-            <p className="flex-1 text-sm font-bold text-neutral-900">{title}</p>
+            <p className="flex-1 text-sm font-bold font-Nanum text-neutral-900">{title}</p>
 
             }
 
