@@ -28,9 +28,7 @@ const Board = () => {
                     <div className="flex items-center justify-center w-full bg-offblack h-1/2 rounded-xl">
                     <p>12:34</p>
                     </div>
-                    <div className="flex items-center justify-center w-full bg-offblack h-1/2 rounded-xl">
-                    <p>Trash</p>
-                    </div>
+                    <DeleteArea setCards={setCards}/>
                 </div>
 
             </div>
@@ -55,7 +53,6 @@ const Board = () => {
                 />
             
             </div>
-            {/* <DeleteArea setCards={setCards}/> */}
             
         </div>
     )

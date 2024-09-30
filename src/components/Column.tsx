@@ -108,7 +108,13 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         }
     }
 
-    
+    const handleEditCard = (id: string, newTitle: string) => {
+        setCards(prev => {
+            return prev.map(card => (card.id === id ? {...card, title: newTitle} : card))
+        })
+    }
+
+
     const filteredCards = cards.filter(c => c.column === column)
     return (
 
@@ -132,6 +138,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
                             {...c}
                             handleDragStart={handleDragStart}
                             bgColor={bgColor}
+                            onEdit={handleEditCard}
                         />
                     )
                 })}
@@ -140,34 +147,6 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             <DropIndicator beforeId={"-1"} column={column}/>
             <AddCard column={column} setCards={setCards}/>
         </div>
-        // <div className={`${width} shrink-0 h-full flex-col rounded-xl border-red border`}>
-        //     <div className="flex items-center justify-between mb-3">
-        //         <h3 className={`font-medium ${headingColor}`}>
-        //             {title}
-        //         </h3>
-        //         <span className="text-sm rounded text-neutral-400">{filteredCards.length}</span>
-        //     </div>
-
-            
-        //     <div 
-        //         onDragOver={handleDragOver} 
-        //         onDragLeave={handleDragLeave}
-        //         onDrop={handleDrop}
-        //         className={` w-full p-2 rounded-xl transition-colors ${active ? "bg-neutral-500/20" : bgColor}`}
-        //     >
-        //             {filteredCards.map(c => {
-        //                 return (
-        //                     <Card 
-        //                         key={c.id} 
-        //                         {...c}
-        //                         handleDragStart={handleDragStart}
-        //                     />
-        //                 )
-        //             })}
-        //             <DropIndicator beforeId={"-1"} column={column}/>
-        //             <AddCard column={column} setCards={setCards}/>
-        //     </div>
-        // </div>
     )
 }
 

@@ -1,15 +1,33 @@
 import { motion } from "framer-motion"
 import { CardType } from "../util/Types"
 import DropIndicator from "./DropIndicator"
+import { useState } from "react";
 
 interface DraggableCardType extends CardType {
     handleDragStart: (e: React.DragEvent<HTMLDivElement>, card: CardType) => void;
     bgColor: string
+    onEdit: (id: string, newTitle: string) => void
 }
 
 
-const Card = ({title, id, column, handleDragStart, bgColor}: DraggableCardType) => {
-    
+const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCardType) => {
+    const [editedTitle, setEditedTitle] = useState<string>(title)
+    const [isEditing, setIsEditing] = useState<boolean>(false)
+
+    const handleDoubleClick = () => {
+        setIsEditing(pv => !pv)
+    }
+
+    const handleTitleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEditedTitle(e.target.value)
+    }
+
+    const handleSubmitEdit = (e: React.FormEvent) => {
+        e.preventDefault()
+        onEdit(id, editedTitle)
+        console.log("submitting")
+        setIsEditing(false)
+    }
 
     return (
     <>
@@ -17,11 +35,28 @@ const Card = ({title, id, column, handleDragStart, bgColor}: DraggableCardType) 
         <motion.div 
             layout
             layoutId={id}
-            draggable 
-            className={`p-2 border rounded-xl cursor-grab  ${bgColor} active:cursor-grabbing`}
+            draggable={!isEditing}
+            className={`flex relative p-2 border rounded-xl cursor-grab  ${bgColor} active:cursor-grabbing`}
             onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column})}
+            onDoubleClick={handleDoubleClick}
         >
-            <p className="text-sm font-bold text-neutral-900">{title}</p>
+
+            {isEditing 
+            ?
+                <form onSubmit={handleSubmitEdit} className="w-full">
+                    <input 
+                        autoFocus
+                        type="text" 
+                        value={editedTitle}
+                        onChange={handleTitleEdit}
+                        onBlur={() => setIsEditing(false)}
+                        className="w-full text-sm font-bold bg-transparent border-none outline-none text-neutral-900" />
+                </form>
+            :
+            <p className="flex-1 text-sm font-bold text-neutral-900">{title}</p>
+
+            }
+
         </motion.div>
     </>
     )
