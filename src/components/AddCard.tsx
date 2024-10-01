@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CardType } from '../util/Types'
-import { FiPlus } from 'react-icons/fi'
+import { FaPlus } from "react-icons/fa";
+
 
 interface AddCardType {
     column: 'today' | 'upcoming' | 'optional'
@@ -47,7 +48,7 @@ const AddCard = ({column, setCards}: AddCardType) => {
                         onChange={(e) => setText(e.target.value)}
                         autoFocus
                         placeholder='Add new task...'
-                        className={`w-full p-2 text-sm rounded-xl ${columnToColor[column]} text-offblack placeholder-offblack focus:outline-0`}
+                        className={`w-full p-2 text-md font-Barlow rounded-xl ${columnToColor[column]} text-offblack placeholder-offblack focus:outline-0`}
                     />
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
                         <button
@@ -69,10 +70,10 @@ const AddCard = ({column, setCards}: AddCardType) => {
                 <motion.button
                     layout
                     onClick={() => setAdding(true)}
-                    className={`flex rounded-full justify-center items-center w-min text-sm  gap-1.5 px-3 py-1.5  text-white bg-offblack transition-colors hover:scale-105`}
+                    className={`flex text-lg rounded-full text-center justify-center items-center w-min  gap-1.5 px-3 py-1.5  text-offblack  transition-colors hover:scale-105`}
                 >
-                    <span>Add</span>
-                    <FiPlus />
+                    <p>Add</p>
+                    <FaPlus />
                 </motion.button>
             }
         </>

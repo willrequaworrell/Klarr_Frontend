@@ -3,7 +3,6 @@ import Column from "./Column"
 import { DEFAULT_CARDS } from "../util/DummyData"
 import { CardType } from "../util/Types"
 import DeleteArea from "./DeleteArea"
-import { TbClock2 } from "react-icons/tb";
 
 
 
@@ -27,8 +26,8 @@ const Board = () => {
                     width="w-3/4"
                 />
                 <div className="flex flex-col items-center justify-center flex-1 gap-8">
-                    <div className="flex items-center justify-center w-full text-white text-[150px] bg-offblack h-1/2 rounded-xl">
-                        <TbClock2 />
+                    <div className="flex items-center justify-center w-full text-white font-Barlow text-[115px] bg-offblack h-1/2 rounded-xl">
+                        <p>12:34</p>
                     </div>
                     <DeleteArea setCards={setCards}/>
                 </div>

@@ -35,7 +35,7 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
             layout
             layoutId={id}
             draggable={!isEditing}
-            className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} active:cursor-grabbing`}
+            className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} border-offblack border-l-8 border-b-8 active:cursor-grabbing`}
             onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column})}
             onDoubleClick={handleDoubleClick}
         >
@@ -49,10 +49,10 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
                         value={editedTitle}
                         onChange={handleTitleEdit}
                         onBlur={() => setIsEditing(false)}
-                        className="w-full text-sm font-bold bg-transparent border-none outline-none text-neutral-900" />
+                        className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack" />
                 </form>
             :
-            <p className="flex-1 text-md font-Barlow text-neutral-900">{title}</p>
+            <p className="flex-1 text-md font-Barlow text-offblack">{title}</p>
 
             }
 
