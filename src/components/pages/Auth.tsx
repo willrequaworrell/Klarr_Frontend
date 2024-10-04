@@ -1,23 +1,44 @@
 import Background from "../Background"
 import { FcGoogle } from "react-icons/fc";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { fireAuth } from "../../util/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { CgSpinner } from "react-icons/cg";
+import { useEffect, useState } from "react";
+import { MdEmail } from "react-icons/md";
 
 const Auth = () => {
     const navigate = useNavigate()
     const [user, loading] = useAuthState(fireAuth)
-
+    const [signinOrSignup, setSigninOrSignup] = useState<("signin" | "signup")>("signin")
+    
     const googleProvider = new GoogleAuthProvider()
+
+
     const googleLogin = async () => {
         try {
             const res = await signInWithPopup(fireAuth, googleProvider)
             console.log(res.user)
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const emailSignup = async () => {
+        try {
+            // createUserWithEmailAndPassword(fireAuth, )
+            console.log("singup")
+        } catch (error) {
+            
+        }
+    }
+
+    const emailSignin = async () => {
+        try {
+            // createUserWithEmailAndPassword(fireAuth, )
+            console.log("singin")
+        } catch (error) {
+            
         }
     }
 
@@ -37,30 +58,27 @@ const Auth = () => {
                 <div className={`flex flex-col text-offblack w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
                     <div className="flex items-center justify-between mb-3">
                         <h3 className={`font-bold text-2xl `}>
-                            <span className="text-4xl ">S</span>ign in
+                        <span className="text-4xl ">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
                         </h3>
                     </div>
-                    <div className="flex flex-col items-center justify-center flex-1">
-                        <button onClick={googleLogin} className="flex items-center w-1/2 text-xl border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl">
-                            {loading
-                            ? (
-                                <div className="flex justify-center w-full gap-2 p-2">
-                                    <div className="size-4 bg-red animate-spin"></div>
-                                    <div className="size-4 bg-blue animate-spin"></div>
-                                    <div className="size-4 bg-yellow animate-spin"></div>
+                    <div className="flex flex-col items-center justify-center flex-1 gap-4">
+                        <div className="w-2/3 p-2">
+                            <form className="flex flex-col gap-2">
+                                {/* <p>Email</p> */}
+                                <input placeholder="Email" className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" type="email" />
+                                <input placeholder="Password" className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" type="password" />
+                                <button  className="flex items-center p-1 text-xl text-white rounded-lg bg-offblack">
+                                    <p className="flex-1">Sign In</p>
+                                </button>
+                            </form>
+                            <button onClick={googleLogin} className="flex items-center justify-center w-full mt-2 text-xl bg-white text-offblack rounded-xl">
+                                <div className="flex items-center justify-center h-full mr-2 border-offblack">
+                                    <FcGoogle className="p-1 text-4xl" />
                                 </div>
-                            )
-                                
-                            : (
-                                <>
-                                    <div className="flex items-center justify-center h-full text-white border-r-4 bg-offblack border-offblack">
-                                        <FcGoogle className="p-1 text-4xl" />
-                                    </div>
-                                    <p className="flex-1">Sign in with Google</p>
-                                </>
-                            )
-                            }
-                        </button>
+                                <p className="">Sign {signinOrSignup === "signin" ? "in" : "up"} with Google</p>
+                            </button>
+                        </div>
+                        
                         
                     </div>
                 </div>
@@ -72,3 +90,17 @@ const Auth = () => {
 }
 
 export default Auth
+
+
+{/* <div className="flex justify-center w-full gap-2 p-2">
+    <div className="size-4 bg-red animate-spin"></div>
+    <div className="size-4 bg-blue animate-spin"></div>
+    <div className="size-4 bg-yellow animate-spin"></div>
+</div> */}
+
+{/* <button onClick={googleLogin} className="flex items-center w-full text-xl border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl">
+    <div className="flex items-center justify-center h-full text-white border-r-4 bg-offblack border-offblack">
+        <FcGoogle className="p-1 text-4xl" />
+    </div>
+    <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"} with Google</p>
+</button> */}
