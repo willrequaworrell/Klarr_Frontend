@@ -1,19 +1,42 @@
 import Background from "../Background"
 import { FcGoogle } from "react-icons/fc";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { fireAuth } from "../../util/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { MdEmail } from "react-icons/md";
+import { FirebaseError } from "firebase/app";
+
+interface userCredentialsInputType {
+    email: string
+    password: string
+    passwordRepeat?: string
+}
 
 const Auth = () => {
     const navigate = useNavigate()
     const [user, loading] = useAuthState(fireAuth)
     const [signinOrSignup, setSigninOrSignup] = useState<("signin" | "signup")>("signin")
-    
+    const [userCredentialsInput, setUserCredentialsInput] = useState<userCredentialsInputType>({
+        email: "",
+        password: "", 
+        passwordRepeat: ""
+    })
+
     const googleProvider = new GoogleAuthProvider()
 
+    const toggleSigninSignup = () => {
+        setSigninOrSignup(pv => {
+            return pv === "signin" ? "signup" : "signin"
+        })
+    }
+
+    const handleUserCredentialsInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUserCredentialsInput(pv => ({
+            ...pv,
+            [e.target.name]: e.target.value
+        }))
+    }
 
     const googleLogin = async () => {
         try {
@@ -26,19 +49,34 @@ const Auth = () => {
 
     const emailSignup = async () => {
         try {
-            // createUserWithEmailAndPassword(fireAuth, )
-            console.log("singup")
+            const userCredential = await createUserWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
+            const user = userCredential.user;
+            console.log(user)
+
         } catch (error) {
-            
+            if (error instanceof FirebaseError) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+            } else {
+                console.log("Unknown Error:", error)
+            }
         }
     }
 
     const emailSignin = async () => {
         try {
-            // createUserWithEmailAndPassword(fireAuth, )
-            console.log("singin")
+            const userCredential = await signInWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
+            const user = userCredential.user
+            console.log(user)
         } catch (error) {
-            
+            if (error instanceof FirebaseError) {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+            } else {
+                console.log("Unknown Error:", error)
+            }
         }
     }
 
@@ -48,43 +86,61 @@ const Auth = () => {
             navigate('/')
             return
         }
-    } , [loading, user])
+    }, [loading, user])
 
 
     return (
         <Background>
             <div className="flex items-center justify-center w-full h-full min-h-screen">
-                
+
                 <div className={`flex flex-col text-offblack w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
                     <div className="flex items-center justify-between mb-3">
                         <h3 className={`font-bold text-2xl `}>
-                        <span className="text-4xl ">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
+                            <span className="text-4xl">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
                         </h3>
                     </div>
                     <div className="flex flex-col items-center justify-center flex-1 gap-4">
                         <div className="w-2/3 p-2">
-                            <form className="flex flex-col gap-2">
+                            <form className="flex flex-col gap-2" onSubmit={e => e.preventDefault()}>
                                 {/* <p>Email</p> */}
-                                <input placeholder="Email" className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" type="email" />
-                                <input placeholder="Password" className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" type="password" />
-                                <button  className="flex items-center p-1 text-xl text-white rounded-lg bg-offblack">
-                                    <p className="flex-1">Sign In</p>
+                                <input 
+                                    name="email"
+                                    value={userCredentialsInput.email}
+                                    onChange={handleUserCredentialsInputChange}
+                                    placeholder="Email" 
+                                    className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
+                                    type="email" 
+                                />
+                                <input 
+                                    name="password"
+                                    value={userCredentialsInput.password}
+                                    onChange={handleUserCredentialsInputChange}
+                                    placeholder="Password" 
+                                    className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
+                                    type="password" 
+                                />
+                                <button 
+                                    onClick={signinOrSignup === "signin" ? emailSignin : emailSignup }
+                                    className="flex items-center p-1 text-xl text-white rounded-lg bg-offblack"
+                                >
+                                    <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"}</p>
                                 </button>
                             </form>
                             <button onClick={googleLogin} className="flex items-center justify-center w-full mt-2 text-xl bg-white text-offblack rounded-xl">
                                 <div className="flex items-center justify-center h-full mr-2 border-offblack">
                                     <FcGoogle className="p-1 text-4xl" />
                                 </div>
-                                <p className="">Sign {signinOrSignup === "signin" ? "in" : "up"} with Google</p>
+                                <p className="">Continue with Google</p>
                             </button>
+                            <p className="mt-2 text-sm text-center">{signinOrSignup === "signup" ? "Already" : "Don't"} have an account? <span onClick={toggleSigninSignup} className="underline cursor-pointer">Sign {signinOrSignup === "signin" ? "Up" : "In"}</span></p>
                         </div>
-                        
-                        
+
+
                     </div>
                 </div>
             </div>
-                
-                
+
+
         </Background>
     )
 }
