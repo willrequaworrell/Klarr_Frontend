@@ -6,6 +6,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FirebaseError } from "firebase/app";
+import Toast from "../Toast";
 
 interface userCredentialsInputType {
     email: string
@@ -91,6 +92,7 @@ const Auth = () => {
 
     return (
         <Background>
+            <Toast message="Error!" type="error"/>
             <div className="flex items-center justify-center w-full h-full min-h-screen">
 
                 <div className={`flex flex-col text-offblack w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
