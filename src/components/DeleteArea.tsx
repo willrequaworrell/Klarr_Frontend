@@ -32,7 +32,7 @@ const DeleteArea = ({setCards}: DeleteAreaType) => {
 		<div
 			className={` grid h-1/2 w-full place-content-center  rounded-xl text-6xl 
 				${active 
-					? "border-red bg-red/20 text-red-500" 
+					? "bg-offblack/50 text-red-500" 
 					: " bg-offblack text-white"
 				}`
 			}
@@ -40,10 +40,7 @@ const DeleteArea = ({setCards}: DeleteAreaType) => {
 			onDragLeave={handleDragLeave}
 			onDrop={handleDrop}
 		>
-			{active
-			? <FaFire className="animate-bounce"/>
-			: <FaTrash/>
-			}
+		<FaTrash className={`${active ? "text-white/50" : "text-white"}`}/>
 			
 		</div>
     )
