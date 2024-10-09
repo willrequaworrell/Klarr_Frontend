@@ -1,6 +1,6 @@
 import Background from "../Background"
 import { FcGoogle } from "react-icons/fc";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { fireAuth } from "../../util/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from "react-router-dom";
@@ -23,6 +23,8 @@ const Auth = () => {
         password: "", 
         passwordRepeat: ""
     })
+    const [showToast, setShowToast] = useState<boolean>(false)
+    const [toastMessage, setToastMessage] = useState<string>("")
 
     const googleProvider = new GoogleAuthProvider()
 
@@ -58,6 +60,10 @@ const Auth = () => {
             if (error instanceof FirebaseError) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                setToastMessage(errorCode)
+                setShowToast(true)
+                setTimeout(() => setShowToast(false), 3000)
+                setUserCredentialsInput(pv => ({...pv, password: ""}))
                 console.log(errorCode, errorMessage);
             } else {
                 console.log("Unknown Error:", error)
@@ -74,6 +80,10 @@ const Auth = () => {
             if (error instanceof FirebaseError) {
                 const errorCode = error.code;
                 const errorMessage = error.message;
+                setToastMessage(errorCode)
+                setShowToast(true)
+                setUserCredentialsInput(pv => ({...pv, password: ""}))
+                setTimeout(() => setShowToast(false), 3000)
                 console.log(errorCode, errorMessage);
             } else {
                 console.log("Unknown Error:", error)
@@ -92,7 +102,7 @@ const Auth = () => {
 
     return (
         <Background>
-            <Toast message="Error!" type="error"/>
+            
             <div className="flex items-center justify-center w-full h-full min-h-screen">
 
                 <div className={`flex flex-col text-offblack w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
@@ -123,18 +133,18 @@ const Auth = () => {
                                 />
                                 <button 
                                     onClick={signinOrSignup === "signin" ? emailSignin : emailSignup }
-                                    className="flex items-center p-1 text-xl text-white rounded-lg bg-offblack"
+                                    className="flex items-center p-1 text-xl text-white rounded-lg bg-offblack hover:bg-black/50"
                                 >
                                     <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"}</p>
                                 </button>
                             </form>
-                            <button onClick={googleLogin} className="flex items-center justify-center w-full mt-2 text-xl bg-white text-offblack rounded-xl">
+                            <button onClick={googleLogin} className="flex items-center justify-center w-full mt-2 text-xl bg-white hover:bg-offblack/50 text-offblack rounded-xl">
                                 <div className="flex items-center justify-center h-full mr-2 border-offblack">
                                     <FcGoogle className="p-1 text-4xl" />
                                 </div>
                                 <p className="">Continue with Google</p>
                             </button>
-                            <p className="mt-2 text-sm text-center">{signinOrSignup === "signup" ? "Already" : "Don't"} have an account? <span onClick={toggleSigninSignup} className="underline cursor-pointer">Sign {signinOrSignup === "signin" ? "Up" : "In"}</span></p>
+                            <p className="mt-2 text-sm text-center">{signinOrSignup === "signup" ? "Already" : "Don't"} have an account? <span onClick={toggleSigninSignup} className="underline cursor-pointer hover:text-offblack/50">Sign {signinOrSignup === "signin" ? "Up" : "In"}</span></p>
                         </div>
 
 
@@ -142,7 +152,7 @@ const Auth = () => {
                 </div>
             </div>
 
-
+            {showToast && <Toast message={toastMessage} type="error"/>}
         </Background>
     )
 }

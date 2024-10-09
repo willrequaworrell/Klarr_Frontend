@@ -16,6 +16,8 @@ export function generateFirebaseErrorMessage(errorCode: string): string {
             return 'Incorrect password. Please try again.';
         case 'auth/too-many-requests':
             return 'Too many unsuccessful login attempts. Please try again later.';
+        case 'auth/invalid-credential':
+            return 'Invalid email or password. Please check your credentials and try again.';
         default:
             return 'An error occurred. Please try again.';
     }
