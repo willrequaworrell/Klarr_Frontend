@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { CardType } from "../util/Types"
-import { FaFire, FaTrash } from "react-icons/fa"
+import { FaTrash } from "react-icons/fa"
 
 
 interface DeleteAreaType {

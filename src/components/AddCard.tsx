@@ -70,9 +70,9 @@ const AddCard = ({column, setCards}: AddCardType) => {
                 <motion.button
                     layout
                     onClick={() => setAdding(true)}
-                    className={`flex text-lg rounded-full text-center justify-center items-center w-min  gap-1.5 px-3 py-1.5  text-offblack  transition-colors hover:scale-105`}
+                    className={`flex text-lg rounded-full text-center justify-center items-center size-10 min-h-10 p-2  bg-offblack text-white transition-colors hover:scale-105`}
                 >
-                    <p>Add</p>
+                    
                     <FaPlus />
                 </motion.button>
             }

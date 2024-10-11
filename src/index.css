@@ -16,3 +16,7 @@
     --color-red: 230 102 66;   /* RGB for #FF6642 */
     --color-yellow: 255 200 73; /* RGB for #FDD131 */
 }
+
+body {
+    background-color: #f0e7d8;
+}

@@ -7,6 +7,7 @@ import Clock from "./Clock"
 
 
 
+
 // https://play.tailwindcss.com/2INd20Fvl0
 
 
@@ -14,7 +15,7 @@ const Board = () => {
     const [cards, setCards] = useState<CardType[]>(DEFAULT_CARDS)
 
     return (
-        <div className="flex flex-wrap justify-center gap-8 p-16 size-full">
+        <div className="flex flex-wrap justify-center gap-8 p-20 size-full">
 
             <div className="flex w-full gap-8 h-1/2">
                 <Column
