@@ -40,7 +40,7 @@ const DeleteArea = ({setCards}: DeleteAreaType) => {
 			onDragLeave={handleDragLeave}
 			onDrop={handleDrop}
 		>
-		<FaTrash className={`${active ? "text-white/50" : "text-white"}`}/>
+		<FaTrash className={`${active ? "text-white/50 scale-125" : "text-white"}`}/>
 			
 		</div>
     )

@@ -1,6 +1,11 @@
-import { useState } from "react"
-import Column from "./Column"
+import { useEffect, useState } from "react"
+import axios from "axios"
+
+import { useAuthState } from "react-firebase-hooks/auth"
+import { fireAuth } from "../util/firebase"
 import { DEFAULT_CARDS } from "../util/DummyData"
+
+import Column from "./Column"
 import { CardType } from "../util/Types"
 import DeleteArea from "./DeleteArea"
 import Clock from "./Clock"
@@ -12,7 +17,26 @@ import Clock from "./Clock"
 
 
 const Board = () => {
+    const [user, loading] = useAuthState(fireAuth)
     const [cards, setCards] = useState<CardType[]>(DEFAULT_CARDS)
+
+
+    useEffect( () => {
+
+        if (user) {
+            const fetchAPI = async () => {
+                try {
+                    const res = await axios.get(`https://staatlidobackend.onrender.com/api/tasks/${user.uid}`)
+                    console.log(res.data)
+                    // setCards(res.data)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            fetchAPI()
+
+        }
+    },[user, loading])
 
     return (
         <div className="flex flex-wrap justify-center gap-8 p-20 size-full">

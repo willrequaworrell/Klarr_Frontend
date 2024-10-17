@@ -1,4 +1,3 @@
-import React, { useState } from "react"
 import { CardType } from "../util/Types"
 import Card from "./Card"
 import DropIndicator from "./DropIndicator"
@@ -16,7 +15,7 @@ interface ColumnProps {
 
 
 const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: ColumnProps) => {
-    const [active, setActive] = useState<boolean>(false)
+    // const [active, setActive] = useState<boolean>(false)
 
     const getIndicators = () => {
         return Array.from(document.querySelectorAll(`[data-column="${column}"]`)) as HTMLElement[]
@@ -67,17 +66,17 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault()
         highlightIndicators(e)
-        setActive(true)
+        // setActive(true)
     }
 
     const handleDragLeave = () => {
-        setActive(false)
+        // setActive(false)
         clearIndicatorHighlights() 
     }
 
     const handleDrop = (e: React.DragEvent) => {
         const cardId = e.dataTransfer.getData("cardId")
-        setActive(false)
+        // setActive(false)
         clearIndicatorHighlights()
 
         const indicators = getIndicators()
