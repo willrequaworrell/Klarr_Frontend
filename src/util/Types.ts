@@ -3,3 +3,15 @@ export interface CardType {
     id: string
     column: 'today' | 'upcoming' | 'optional'
 }
+
+export interface TaskFromBackend {
+    _id: string;
+    column: string;
+    createdAt: string;
+    dueDate: string;
+    title: string;
+    updatedAt: string;
+    userId: string;
+    __v: number;
+    [key: string]: any;
+}

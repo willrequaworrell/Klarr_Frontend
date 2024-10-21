@@ -2,6 +2,7 @@ import { CardType } from "../util/Types"
 import Card from "./Card"
 import DropIndicator from "./DropIndicator"
 import AddCard from "./AddCard"
+import axios from "axios"
 
 interface ColumnProps {
     title: string
@@ -16,6 +17,16 @@ interface ColumnProps {
 
 const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: ColumnProps) => {
     // const [active, setActive] = useState<boolean>(false)
+
+    const updateCardColumn = async (id: string, column: 'today' | 'upcoming' | 'optional' ) => {
+
+        try {
+            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column, _id: id })
+            console.log(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const getIndicators = () => {
         return Array.from(document.querySelectorAll(`[data-column="${column}"]`)) as HTMLElement[]
@@ -90,7 +101,8 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             if (!cardToTransfer) return
 
             cardToTransfer = {...cardToTransfer, column}
-
+            // call to api to change the column in the database. if it succeeds, do the below stuff, if not, return?
+            updateCardColumn(cardId, column)
             copy = copy.filter(c => c.id !== cardId)
 
             const moveToBack = before === "-1"
