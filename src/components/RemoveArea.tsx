@@ -1,14 +1,16 @@
 import React, { useState } from "react"
 import { CardType } from "../util/Types"
-import { FaTrash } from "react-icons/fa"
+import { IconBaseProps } from "react-icons"
+
 import axios from "axios"
 
-interface DeleteAreaType {
-  setCards: React.Dispatch<React.SetStateAction<CardType[]>>
+interface RemoveAreaPropsType {
+	Icon: React.ComponentType<IconBaseProps>,
+	setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 }
 
 
-const DeleteArea = ({setCards}: DeleteAreaType) => {
+const RemoveArea = ({Icon, setCards}: RemoveAreaPropsType) => {
 	const [active, setActive] = useState<boolean>(false)
 
 	const deleteCard = async (id: string) => {
@@ -41,7 +43,7 @@ const DeleteArea = ({setCards}: DeleteAreaType) => {
 
     return (
 		<div
-			className={` grid h-1/2 w-full place-content-center  rounded-xl text-6xl 
+			className={` grid h-full w-full place-content-center  rounded-xl text-6xl 
 				${active 
 					? "bg-offblack/50 text-red-500" 
 					: " bg-offblack text-white"
@@ -51,10 +53,12 @@ const DeleteArea = ({setCards}: DeleteAreaType) => {
 			onDragLeave={handleDragLeave}
 			onDrop={handleDrop}
 		>
-		<FaTrash className={`${active ? "text-white/50 scale-125" : "text-white"}`}/>
+		{/* <FaTrash className={`${active ? "text-white/50 scale-125" : "text-white"}`}/> */}
+		<Icon className={`${active ? "text-white/50 scale-125" : "text-white"}`}/>
+
 			
 		</div>
     )
 }
 
-export default DeleteArea
+export default RemoveArea

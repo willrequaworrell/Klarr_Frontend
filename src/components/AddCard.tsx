@@ -25,7 +25,7 @@ const columnToColor = {
 }
 
 const AddCard = ({column, setCards}: AddCardPropsType) => {
-    const [user, loading] = useAuthState(fireAuth)
+    const [user] = useAuthState(fireAuth)
     const [text, setText] = useState<string>("")
     const [adding, setAdding] = useState<boolean>(false)
 

@@ -8,8 +8,10 @@ import { fireAuth } from "../util/firebase"
 import { CardType } from "../util/Types"
 import { TaskFromBackend } from "../util/Types"
 import Column from "./Column"
-import DeleteArea from "./DeleteArea"
+import RemoveArea from "./RemoveArea"
 import Clock from "./Clock"
+import { FaTrash } from "react-icons/fa"
+import { PiCheckFatFill } from "react-icons/pi";
 
 
 
@@ -57,7 +59,10 @@ const Board = () => {
                 />
                 <div className="flex flex-col items-center justify-center flex-1 gap-8">
                     <Clock/>
-                    <DeleteArea setCards={setCards}/>
+                    <div className="flex items-center justify-center size-full gap-x-8">
+                        <RemoveArea Icon={PiCheckFatFill} setCards={setCards}/>
+                        <RemoveArea Icon={FaTrash} setCards={setCards}/>
+                    </div>
                 </div>
 
             </div>
