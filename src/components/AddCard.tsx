@@ -2,9 +2,18 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { CardType } from '../util/Types'
 import { FaPlus } from "react-icons/fa";
+import axios from 'axios';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { fireAuth } from '../util/firebase';
 
+interface NewCardType {
+    userId: string, 
+    title: string, 
+    column: 'today' | 'upcoming' | 'optional',
+    dueDate: Date, 
+}
 
-interface AddCardType {
+interface AddCardPropsType {
     column: 'today' | 'upcoming' | 'optional'
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 }
@@ -15,24 +24,54 @@ const columnToColor = {
     'optional': 'bg-blue/75'
 }
 
-const AddCard = ({column, setCards}: AddCardType) => {
+const AddCard = ({column, setCards}: AddCardPropsType) => {
+    const [user, loading] = useAuthState(fireAuth)
     const [text, setText] = useState<string>("")
     const [adding, setAdding] = useState<boolean>(false)
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const insertCard = async (data: NewCardType) => {
+        try {
+            const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
+            console.log(res.data)
+            return res.data
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         if (!text.trim().length) return
 
-        const newCard: CardType = {
-            column: column,
+        if (!user) return 
+        
+        const newCardForDatabase: NewCardType = {
+            userId: user?.uid,
             title: text.trim(),
-            id: Math.random().toString()
+            column: column,
+            dueDate: new Date()
+        }
+
+        const insertedCard = await insertCard(newCardForDatabase)
+        if (insertedCard) {
+            console.log(insertedCard)
+            const newCard: CardType = {
+                column: column,
+                title: text.trim(),
+                id: insertedCard._id
+            }
+            setText("")
+            setAdding(false)
+            setCards(prev => [...prev, newCard] )
+
+        } else {
+            console.log("error adding task")
         }
         
-        setText("")
-        setAdding(false)
-        setCards(prev => [...prev, newCard] )
+
     }
 
     return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { CardType } from "../util/Types"
 import { FaTrash } from "react-icons/fa"
-
+import axios from "axios"
 
 interface DeleteAreaType {
   setCards: React.Dispatch<React.SetStateAction<CardType[]>>
@@ -10,6 +10,15 @@ interface DeleteAreaType {
 
 const DeleteArea = ({setCards}: DeleteAreaType) => {
 	const [active, setActive] = useState<boolean>(false)
+
+	const deleteCard = async (id: string) => {
+		try {
+            const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
+            console.log(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+	}
 
 	const handleDragOver = (e: React.DragEvent) => {
 		e.preventDefault()
@@ -22,6 +31,8 @@ const DeleteArea = ({setCards}: DeleteAreaType) => {
 
 	const handleDrop = (e: React.DragEvent) => {
 		const cardId = e.dataTransfer.getData("cardId")
+
+		deleteCard(cardId)
 		setCards(prev => prev.filter((card) => card.id !== cardId))
 		setActive(false)
 

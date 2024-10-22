@@ -18,11 +18,21 @@ interface ColumnProps {
 const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: ColumnProps) => {
     // const [active, setActive] = useState<boolean>(false)
 
-    const updateCardColumn = async (id: string, column: 'today' | 'upcoming' | 'optional' ) => {
-
+    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional' ) => {
         try {
-            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column, _id: id })
+            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn })
             console.log(res.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const updateCardTitle = async (id: string, newTitle: string) => {
+        try {
+            console.log(id, newTitle, "updateCardTitle")
+            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {title: newTitle })
+            console.log(res.data)
+            return res.data
         } catch (error) {
             console.log(error)
         }
@@ -119,10 +129,19 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         }
     }
 
-    const handleEditCard = (id: string, newTitle: string) => {
-        setCards(prev => {
-            return prev.map(card => (card.id === id ? {...card, title: newTitle} : card))
-        })
+    const handleEditCard = async (id: string, newTitle: string) => {
+        try {
+            console.log(id, newTitle)
+            const res = await updateCardTitle(id, newTitle)
+            if (res) {
+                setCards(prev => {
+                    return prev.map(card => (card.id === id ? {...card, title: newTitle} : card))
+                })
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
 
 
