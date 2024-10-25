@@ -30,6 +30,7 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
     const [adding, setAdding] = useState<boolean>(false)
 
     const insertCard = async (data: NewCardType) => {
+        console.log(data)
         try {
             const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
             console.log(res.data)
