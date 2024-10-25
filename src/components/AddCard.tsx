@@ -5,6 +5,8 @@ import { FaPlus } from "react-icons/fa";
 import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { fireAuth } from '../util/firebase';
+import CustomDatePicker from './CustomDatePicker';
+
 
 interface NewCardType {
     userId: string, 
@@ -30,7 +32,6 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
     const [adding, setAdding] = useState<boolean>(false)
 
     const insertCard = async (data: NewCardType) => {
-        console.log(data)
         try {
             const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
             console.log(res.data)
@@ -91,6 +92,7 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
                         className={`w-full p-2 text-md font-Barlow rounded-xl ${columnToColor[column]} text-offblack placeholder-offblack focus:outline-0`}
                     />
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
+                        <CustomDatePicker/>
                         <button
                             type='button'
                             onClick={() => setAdding(false)}
