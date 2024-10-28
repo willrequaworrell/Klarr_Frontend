@@ -67,11 +67,12 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
 
         const insertedCard = await insertCard(newCardForDatabase)
         if (insertedCard) {
-            console.log(insertedCard)
+            console.log("inserted" ,insertedCard)
             const newCard: CardType = {
                 column: column,
                 title: text.trim(),
-                id: insertedCard._id
+                id: insertedCard._id,
+                dueDate: insertedCard.dueDate
             }
             setText("")
             setAdding(false)

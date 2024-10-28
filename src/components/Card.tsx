@@ -10,7 +10,7 @@ interface DraggableCardType extends CardType {
 }
 
 
-const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCardType) => {
+const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit}: DraggableCardType) => {
     const [editedTitle, setEditedTitle] = useState<string>(title)
     const [isEditing, setIsEditing] = useState<boolean>(false)
 
@@ -28,6 +28,23 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
         setIsEditing(false)
     }
 
+    const formatDate = (date: Date | string): string => {
+        let datePassed = date
+        console.log(typeof date)
+
+        if (datePassed instanceof Date) {
+            const month = String(datePassed.getMonth() + 1).padStart(2, '0')
+            const day = String(datePassed.getDate()).padStart(2, '0');
+            return `${month}/${day}`;
+        } else {
+            const stringToDate = new Date(date)
+            console.log(stringToDate)
+            const month = String(stringToDate.getMonth() + 1).padStart(2, '0')
+            const day = String(stringToDate.getDate()).padStart(2, '0');
+            return `${month}/${day}`;
+        }
+    }
+    
     return (
     <>
         <DropIndicator beforeId={id} column={column}/>
@@ -36,7 +53,7 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
             layoutId={id}
             draggable={!isEditing}
             className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} border-offblack border-l-8 border-b-8 active:cursor-grabbing`}
-            onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column})}
+            onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column, dueDate})}
             onDoubleClick={handleDoubleClick}
         >
 
@@ -52,7 +69,10 @@ const Card = ({title, id, column, handleDragStart, bgColor, onEdit}: DraggableCa
                         className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack" />
                 </form>
             :
-            <p className="flex-1 text-md font-Barlow text-offblack">{title}</p>
+            <>
+                <p className="flex-1 text-md font-Barlow text-offblack">{title}</p>
+                {column === "upcoming" && <p className="text-offblack">{formatDate(dueDate)}</p>}
+            </>
 
             }
 
