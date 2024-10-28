@@ -6,13 +6,14 @@ import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { fireAuth } from '../util/firebase';
 import CustomDatePicker from './CustomDatePicker';
+import { Dayjs } from 'dayjs';
 
 
 interface NewCardType {
     userId: string, 
     title: string, 
     column: 'today' | 'upcoming' | 'optional',
-    dueDate: Date, 
+    dueDate: Date | null, 
 }
 
 interface AddCardPropsType {
@@ -29,6 +30,7 @@ const columnToColor = {
 const AddCard = ({column, setCards}: AddCardPropsType) => {
     const [user] = useAuthState(fireAuth)
     const [text, setText] = useState<string>("")
+    const [dueDate, setDueDate] = useState<Dayjs | null>(null)
     const [adding, setAdding] = useState<boolean>(false)
 
     const insertCard = async (data: NewCardType) => {
@@ -49,13 +51,19 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
         if (!text.trim().length) return
 
         if (!user) return 
+
+        !dueDate && console.log("nope")
         
+        if ( !dueDate && (column === "upcoming" || column === 'today'))  return 
+
         const newCardForDatabase: NewCardType = {
             userId: user?.uid,
             title: text.trim(),
             column: column,
-            dueDate: new Date()
+            dueDate: dueDate ? dueDate.toDate() : null
         }
+
+        console.log("Sending to server:", newCardForDatabase)
 
         const insertedCard = await insertCard(newCardForDatabase)
         if (insertedCard) {
@@ -89,10 +97,13 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
                         onChange={(e) => setText(e.target.value)}
                         autoFocus
                         placeholder='Add new task...'
-                        className={`w-full p-2 text-md font-Barlow rounded-xl ${columnToColor[column]} text-offblack placeholder-offblack focus:outline-0`}
+                        className={`resize-none w-full p-2 text-md font-Barlow rounded-xl ${columnToColor[column]} text-offblack/75 placeholder-offblack/50 focus:outline-0 border-offblack/75 border-l-8 border-b-8`}
                     />
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
-                        <CustomDatePicker/>
+                        <CustomDatePicker
+                            dueDate={dueDate}
+                            setDueDate={setDueDate}
+                        />
                         <button
                             type='button'
                             onClick={() => setAdding(false)}

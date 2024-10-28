@@ -162,6 +162,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             </div>
             <div className="py-4 overflow-hidden hover:overflow-y-auto">
                 {filteredCards.map(c => {
+                    console.log(c)
                     return (
                         <Card 
                             key={c.id} 
