@@ -30,7 +30,6 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit}: Dr
 
     const formatDate = (date: Date | string): string => {
         let datePassed = date
-        console.log(typeof date)
 
         if (datePassed instanceof Date) {
             const month = String(datePassed.getMonth() + 1).padStart(2, '0')
@@ -38,7 +37,6 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit}: Dr
             return `${month}/${day}`;
         } else {
             const stringToDate = new Date(date)
-            console.log(stringToDate)
             const month = String(stringToDate.getMonth() + 1).padStart(2, '0')
             const day = String(stringToDate.getDate()).padStart(2, '0');
             return `${month}/${day}`;

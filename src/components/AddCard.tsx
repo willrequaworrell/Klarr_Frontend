@@ -36,31 +36,41 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
     const insertCard = async (data: NewCardType) => {
         try {
             const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
-            console.log(res.data)
             return res.data
         } catch (error) {
             console.log(error)
         }
     }
-
     
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
         e.preventDefault()
 
         if (!text.trim().length) return
 
         if (!user) return 
 
-        !dueDate && console.log("nope")
-        
-        if ( !dueDate && (column === "upcoming" || column === 'today'))  return 
+        if ( !dueDate && (column === "upcoming"))  return 
+
+        const determineDueDate = (dueDate: Dayjs, column: string) => {
+            
+            if (column === "upcoming"){
+                console.log('upcoming hit')
+                return dueDate.toDate()
+            }else if (column === "today") {
+                return new Date()
+            }else {
+                console.log("optional hit")
+                return null
+            }
+        }
 
         const newCardForDatabase: NewCardType = {
             userId: user?.uid,
             title: text.trim(),
             column: column,
-            dueDate: dueDate ? dueDate.toDate() : null
+            dueDate: determineDueDate(dueDate as Dayjs, column)
+            // dueDate: dueDate ? dueDate.toDate() : null
         }
 
         console.log("Sending to server:", newCardForDatabase)
@@ -81,8 +91,14 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
         } else {
             console.log("error adding task")
         }
-        
+    }
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+
+        if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+            e.preventDefault();
+            handleSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
+        }
     }
 
     return (
@@ -96,15 +112,18 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
                 >
                     <textarea 
                         onChange={(e) => setText(e.target.value)}
+                        onKeyDown={handleKeyDown}
                         autoFocus
                         placeholder='Add new task...'
                         className={`resize-none w-full p-2 text-md font-Barlow rounded-xl ${columnToColor[column]} text-offblack/75 placeholder-offblack/50 focus:outline-0 border-offblack/75 border-l-8 border-b-8`}
                     />
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
-                        <CustomDatePicker
+                        {column === "upcoming" && (
+                            <CustomDatePicker
                             dueDate={dueDate}
                             setDueDate={setDueDate}
                         />
+                        )}
                         <button
                             type='button'
                             onClick={() => setAdding(false)}

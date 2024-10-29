@@ -29,9 +29,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
     const updateCardTitle = async (id: string, newTitle: string) => {
         try {
-            console.log(id, newTitle, "updateCardTitle")
             const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {title: newTitle })
-            console.log(res.data)
             return res.data
         } catch (error) {
             console.log(error)
@@ -97,6 +95,9 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
     const handleDrop = (e: React.DragEvent) => {
         const cardId = e.dataTransfer.getData("cardId")
+        if (column === "upcoming") {
+            alert("choose a new date")
+        }
         // setActive(false)
         clearIndicatorHighlights()
 
@@ -111,8 +112,11 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             if (!cardToTransfer) return
 
             cardToTransfer = {...cardToTransfer, column}
+            
             // call to api to change the column in the database. if it succeeds, do the below stuff, if not, return?
             updateCardColumn(cardId, column)
+
+
             copy = copy.filter(c => c.id !== cardId)
 
             const moveToBack = before === "-1"
@@ -124,7 +128,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
                 copy.splice(insertAtIndex, 0, cardToTransfer)
             }
-
+            
             setCards(copy)
         }
     }
@@ -162,7 +166,6 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             </div>
             <div className="py-4 overflow-hidden hover:overflow-y-auto">
                 {filteredCards.map(c => {
-                    console.log(c)
                     return (
                         <Card 
                             key={c.id} 
