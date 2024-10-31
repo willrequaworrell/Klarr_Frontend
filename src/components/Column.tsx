@@ -3,6 +3,7 @@ import Card from "./Card"
 import DropIndicator from "./DropIndicator"
 import AddCard from "./AddCard"
 import axios from "axios"
+import { useState } from "react"
 
 interface ColumnProps {
     title: string
@@ -17,6 +18,9 @@ interface ColumnProps {
 
 const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: ColumnProps) => {
     // const [active, setActive] = useState<boolean>(false)
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional' ) => {
         try {
@@ -93,11 +97,30 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         clearIndicatorHighlights() 
     }
 
+    const completeDrop = (cardToTransfer: CardType, before: string) => {
+        console.log(cardToTransfer)
+        let copy = [...cards]
+        copy = copy.filter(c => c.id !== cardToTransfer.id)
+
+        // cardToTransfer = {...cardToTransfer, column}
+
+        const moveToBack = before === "-1"
+        if (moveToBack) {
+            copy.push(cardToTransfer)
+        } else {
+            const insertAtIndex = copy.findIndex(card => card.id === before)
+            if (insertAtIndex === undefined) return
+
+            copy.splice(insertAtIndex, 0, cardToTransfer)
+        }
+        console.log(copy)
+        
+        updateCardColumn(cardToTransfer.id, column);
+        setCards(copy)
+    }
+
     const handleDrop = (e: React.DragEvent) => {
         const cardId = e.dataTransfer.getData("cardId")
-        if (column === "upcoming") {
-            alert("choose a new date")
-        }
         // setActive(false)
         clearIndicatorHighlights()
 
@@ -106,30 +129,17 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         const before = nearestIndicator.dataset.before || "-1"
 
         if (before !== cardId) {
-            let copy = [...cards]
+            let copy = [...cards];
+            let cardToTransfer = copy.find(c => c.id === cardId);
+            if (!cardToTransfer) return;
 
-            let cardToTransfer = copy.find(c => c.id === cardId)
-            if (!cardToTransfer) return
-
-            cardToTransfer = {...cardToTransfer, column}
-            
-            // call to api to change the column in the database. if it succeeds, do the below stuff, if not, return?
-            updateCardColumn(cardId, column)
-
-
-            copy = copy.filter(c => c.id !== cardId)
-
-            const moveToBack = before === "-1"
-            if (moveToBack) {
-                copy.push(cardToTransfer)
+            if (column === "upcoming") {
+                setDroppingCard({...cardToTransfer, column});
+                setShowDatePicker(true);
             } else {
-                const insertAtIndex = copy.findIndex(card => card.id === before)
-                if (insertAtIndex === undefined) return
-
-                copy.splice(insertAtIndex, 0, cardToTransfer)
+                completeDrop({...cardToTransfer, column}, before);
             }
             
-            setCards(copy)
         }
     }
 
@@ -180,6 +190,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             </div>
             <DropIndicator beforeId={"-1"} column={column}/>
             <AddCard column={column} setCards={setCards}/>
+            {showDatePicker && <p>Pick Date!</p>}
         </div>
     )
 }
