@@ -24,6 +24,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [before, setBefore] = useState<string>("-1")
 
     const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional' ) => {
         try {
@@ -129,7 +130,8 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
         const indicators = getIndicators()
         const nearestIndicator = getNearestIndicator(e, indicators).element 
-        const before = nearestIndicator.dataset.before || "-1"
+        // const before = nearestIndicator.dataset.before || "-1"
+        setBefore(nearestIndicator.dataset.before || "-1")
 
         if (before !== cardId) {
             let copy = [...cards];
@@ -161,21 +163,15 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         
     }
 
-    const testComponent = () => {
-        return (
-            <div>
-                Modal
-            </div>
-        )
-    }
-
-
     const filteredCards = cards.filter(c => c.column === column)
     return (
         <>
             <DatePickerModal
                 showDatePicker={showDatePicker}
                 setShowDatePicker={setShowDatePicker}
+                droppingCard={droppingCard}
+                completeDrop={completeDrop}
+                before={before}
             />
             <div 
                 onDragOver={handleDragOver} 

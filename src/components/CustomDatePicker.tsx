@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 
 interface CustomDatePickerProps {
@@ -23,6 +23,7 @@ const CustomDatePicker = ({dueDate, setDueDate}: CustomDatePickerProps) => {
             slotProps={{
                 textField: {size: "small"}
             }}
+            minDate={dayjs(new Date())}
         />
 
     )

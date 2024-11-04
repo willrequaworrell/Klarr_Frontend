@@ -2,19 +2,31 @@ import { Modal } from '@mui/material'
 import CustomDatePicker from './CustomDatePicker'
 import { FormEventHandler, useState } from 'react'
 import { Dayjs } from 'dayjs'
+import { CardType } from '../util/Types'
 
 interface DatePickerModalPropsType {
     showDatePicker: boolean
     setShowDatePicker: React.Dispatch<React.SetStateAction<boolean>>
+    droppingCard: CardType | null
+    completeDrop: (cardToTransfer: CardType, before: string) => void
+    before: string
 }
 
-const DatePickerModal = ({showDatePicker, setShowDatePicker}: DatePickerModalPropsType) => {
+const DatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard, completeDrop, before}: DatePickerModalPropsType) => {
 
     const [dueDate, setDueDate] = useState<Dayjs | null>(null)
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("submitting", dueDate?.toDate())
+        if (droppingCard) {
+            console.log(droppingCard)
+            const updatedCard = {...droppingCard, dueDate: dueDate?.toDate() as Date}
+            completeDrop(updatedCard, before)
+        }
+    }
+
+    const handleCancel = () => {
+        setShowDatePicker(false)
     }
 
     return (
@@ -26,15 +38,27 @@ const DatePickerModal = ({showDatePicker, setShowDatePicker}: DatePickerModalPro
         >
             <form onSubmit={handleSubmit}>
 
-                <div className="absolute flex flex-col p-8 -translate-x-1/2 -translate-y-1/2 border-t-4 border-b-8 border-l-8 border-r-4 bg-offwhite top-1/2 left-1/2 border-offblack rounded-xl font-Barlow text-offblack">
+                <div className="absolute flex flex-col p-8 -translate-x-1/2 -translate-y-1/2 border-t-4 border-b-8 border-l-8 border-r-4 gap-y-4 bg-offwhite top-1/2 left-1/2 border-offblack rounded-xl font-Barlow text-offblack">
                     <div>Pick a date for your upcoming task:</div>
                     <CustomDatePicker
                         dueDate={dueDate}
                         setDueDate={setDueDate}
                     />
-                    <div className='flex items-center justify-around'>
-                        <button type="submit">Submit</button>
-                        <button>Cancel</button>
+                    <div className='flex items-center justify-center'>
+                        <button 
+                            className='px-4 py-2 rounded-xl' 
+                            type="button"
+                            onClick={handleCancel}
+                        >
+                            Cancel
+                        </button>
+                        <button  
+                            className='px-4 py-2 text-white bg-offblack rounded-xl' 
+                            type="submit" 
+                        >
+                            Submit
+                        </button>
+                        
                     </div>
                 </div>
 
