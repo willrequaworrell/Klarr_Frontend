@@ -4,6 +4,9 @@ import DropIndicator from "./DropIndicator"
 import AddCard from "./AddCard"
 import axios from "axios"
 import { useState } from "react"
+import { Modal } from "@mui/material"
+import CustomDatePicker from "./CustomDatePicker"
+import DatePickerModal from "./DatePickerModal"
 
 interface ColumnProps {
     title: string
@@ -158,40 +161,53 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         
     }
 
+    const testComponent = () => {
+        return (
+            <div>
+                Modal
+            </div>
+        )
+    }
+
 
     const filteredCards = cards.filter(c => c.column === column)
     return (
+        <>
+            <DatePickerModal
+                showDatePicker={showDatePicker}
+                setShowDatePicker={setShowDatePicker}
+            />
+            <div 
+                onDragOver={handleDragOver} 
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                className={`flex flex-col font-Staat ${width} size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}
+            >
+                <div className="flex items-center justify-between mb-3">
+                    <h3 className={`font-bold text-2xl  ${headingColor}`}>
+                        <span className="text-4xl">{title.slice(0,1)}</span>{title.slice(1)}
+                    </h3>
+                    <span className="flex items-center justify-center p-2 text-2xl font-bold text-center rounded-full size-10 bg-offblack">{filteredCards.length}</span>
+                </div>
+                <div className="py-4 overflow-hidden hover:overflow-y-auto">
+                    {filteredCards.map(c => {
+                        return (
+                            <Card 
+                                key={c.id} 
+                                {...c}
+                                handleDragStart={handleDragStart}
+                                bgColor={bgColor}
+                                onEdit={handleEditCard}
+                            />
+                        )
+                    })}
 
-        <div 
-            onDragOver={handleDragOver} 
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-            className={`flex flex-col font-Staat ${width} size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}
-        >
-            <div className="flex items-center justify-between mb-3">
-                <h3 className={`font-bold text-2xl  ${headingColor}`}>
-                    <span className="text-4xl">{title.slice(0,1)}</span>{title.slice(1)}
-                </h3>
-                <span className="flex items-center justify-center p-2 text-2xl font-bold text-center rounded-full size-10 bg-offblack">{filteredCards.length}</span>
+                </div>
+                <DropIndicator beforeId={"-1"} column={column}/>
+                <AddCard column={column} setCards={setCards}/>
+                {showDatePicker && <p>Pick Date!</p>}
             </div>
-            <div className="py-4 overflow-hidden hover:overflow-y-auto">
-                {filteredCards.map(c => {
-                    return (
-                        <Card 
-                            key={c.id} 
-                            {...c}
-                            handleDragStart={handleDragStart}
-                            bgColor={bgColor}
-                            onEdit={handleEditCard}
-                        />
-                    )
-                })}
-
-            </div>
-            <DropIndicator beforeId={"-1"} column={column}/>
-            <AddCard column={column} setCards={setCards}/>
-            {showDatePicker && <p>Pick Date!</p>}
-        </div>
+        </>
     )
 }
 
