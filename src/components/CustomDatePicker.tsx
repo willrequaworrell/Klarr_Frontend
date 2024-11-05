@@ -23,7 +23,7 @@ const CustomDatePicker = ({dueDate, setDueDate}: CustomDatePickerProps) => {
             slotProps={{
                 textField: {size: "small"}
             }}
-            minDate={dayjs(new Date())}
+            minDate={dayjs().add(1, 'day')}
         />
 
     )
