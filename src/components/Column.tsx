@@ -21,7 +21,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     // const [active, setActive] = useState<boolean>(false)
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
-    const [before, setBefore] = useState<string>("-1")
+    const [beforeState, setBeforeState] = useState<string>("-1")
 
     const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date ) => {
         try {
@@ -99,6 +99,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     }
 
     const completeDrop = (cardToTransfer: CardType, before: string) => {
+        console.log(before)
         let copy = [...cards]
         copy = copy.filter(c => c.id !== cardToTransfer.id)
 
@@ -125,15 +126,19 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
         const indicators = getIndicators()
         const nearestIndicator = getNearestIndicator(e, indicators).element 
-        // const before = nearestIndicator.dataset.before || "-1"
-        setBefore(nearestIndicator.dataset.before || "-1")
+        const before = nearestIndicator.dataset.before || "-1"
+        setBeforeState(before)
+        console.log(nearestIndicator, nearestIndicator.dataset.before)
 
         if (before !== cardId) {
             let copy = [...cards];
             let cardToTransfer = copy.find(c => c.id === cardId);
             if (!cardToTransfer) return;
+            if (column === "today" && cardToTransfer.column !== "today") {
+                cardToTransfer.dueDate = new Date()
+            }
 
-            if (column === "upcoming") {
+            if (column === "upcoming" && cardToTransfer.column !== "upcoming") {
                 setDroppingCard({...cardToTransfer, column});
                 setShowDatePicker(true);
             } else {
@@ -143,7 +148,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         }
     }
 
-    const handleEditCard = async (id: string, newTitle: string) => {
+    const handleEditCard = async (id: string, newTitle: string):Promise<boolean> => {
         try {
             console.log(id, newTitle)
             const res = await updateCardTitle(id, newTitle)
@@ -151,10 +156,13 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
                 setCards(prev => {
                     return prev.map(card => (card.id === id ? {...card, title: newTitle} : card))
                 })
+                return true
             }
         } catch (error) {
             console.log(error)
+            return false
         }
+        return false
         
     }
 
@@ -166,7 +174,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
                 setShowDatePicker={setShowDatePicker}
                 droppingCard={droppingCard}
                 completeDrop={completeDrop}
-                before={before}
+                before={beforeState}
             />
             <div 
                 onDragOver={handleDragOver} 
@@ -178,7 +186,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
                     <h3 className={`font-bold text-2xl  ${headingColor}`}>
                         <span className="text-4xl">{title.slice(0,1)}</span>{title.slice(1)}
                     </h3>
-                    <span className="flex items-center justify-center p-2 text-2xl font-bold text-center rounded-full size-10 bg-offblack">{filteredCards.length}</span>
+                    <span className="flex items-center justify-center p-2 text-2xl font-bold text-center rounded-full font-Barlow size-10 bg-offblack">{filteredCards.length}</span>
                 </div>
                 <div className="py-4 overflow-hidden hover:overflow-y-auto">
                     {filteredCards.map(c => {
