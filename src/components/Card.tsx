@@ -67,7 +67,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit}: Dr
                 </form>
             :
             <>
-                <p className="flex-1 text-md font-Barlow text-offblack">{title}</p>
+                <p className="flex-1 tracking-wide text-md font-Barlow text-offblack">{title}</p>
                 {/* {column === "upcoming" && <p className="text-offblack">{formatDate(dueDate)}</p>} */}
                 {column === "upcoming" &&
                     <div className="flex items-center justify-center w-12 px-2 py-1 text-sm tracking-widest text-white rounded-full font-Barlow bg-offblack max-h-min">

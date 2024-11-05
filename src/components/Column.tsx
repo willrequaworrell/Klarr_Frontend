@@ -183,7 +183,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
                 className={`flex flex-col font-Staat ${width} size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}
             >
                 <div className="flex items-center justify-between mb-3">
-                    <h3 className={`font-bold text-2xl  ${headingColor}`}>
+                    <h3 className={`font-bold text-2xl tracking-wider  ${headingColor}`}>
                         <span className="text-4xl">{title.slice(0,1)}</span>{title.slice(1)}
                     </h3>
                     <span className="flex items-center justify-center p-2 text-2xl font-bold text-center rounded-full font-Barlow size-10 bg-offblack">{filteredCards.length}</span>

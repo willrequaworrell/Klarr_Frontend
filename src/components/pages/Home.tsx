@@ -36,7 +36,7 @@ const Home = () => {
                         
                     </div>
                     {/* <img className="h-12 w-min" src="Bauhaus.png" alt="logo" /> */}
-                    <p className="text-6xl text-offblack font-Staat">
+                    <p className="text-6xl tracking-wider text-offblack font-Staat">
                         KLAR
                     </p>
                 </div>
