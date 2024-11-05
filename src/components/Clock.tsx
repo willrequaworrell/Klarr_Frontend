@@ -8,7 +8,7 @@ interface TimeType {
 }
 
 const Clock = () => {
-    const [colonBg, setColonBg] = useState<"text-offwhite" | "text-offblack">("text-offblack")
+    const [colonBg, setColonBg] = useState<"text-white" | "text-offblack">("text-offblack")
     const [userLocalTime, setUserLocalTime] = useState<TimeType | null>(() => {
         const currentTime = new Date()
         const hour = currentTime.getHours()
@@ -31,7 +31,7 @@ const Clock = () => {
             const seconds = currentTime.getSeconds()
             setColonBg((prev) => {
                 if (prev == "text-offblack") {
-                    return "text-offwhite"
+                    return "text-white"
                 } else {
                     return "text-offblack"
                 }
