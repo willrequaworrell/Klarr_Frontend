@@ -1,6 +1,6 @@
 import { Modal } from '@mui/material'
 import CustomDatePicker from './CustomDatePicker'
-import { FormEventHandler, useState } from 'react'
+import { useState } from 'react'
 import { Dayjs } from 'dayjs'
 import { CardType } from '../util/Types'
 
@@ -22,6 +22,8 @@ const DatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard, compl
             console.log(droppingCard)
             const updatedCard = {...droppingCard, dueDate: dueDate?.toDate() as Date}
             completeDrop(updatedCard, before)
+            setShowDatePicker(false)
+            setDueDate(null)
         }
     }
 

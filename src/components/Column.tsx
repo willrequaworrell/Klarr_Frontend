@@ -4,8 +4,6 @@ import DropIndicator from "./DropIndicator"
 import AddCard from "./AddCard"
 import axios from "axios"
 import { useState } from "react"
-import { Modal } from "@mui/material"
-import CustomDatePicker from "./CustomDatePicker"
 import DatePickerModal from "./DatePickerModal"
 
 interface ColumnProps {
@@ -23,13 +21,12 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     // const [active, setActive] = useState<boolean>(false)
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [before, setBefore] = useState<string>("-1")
 
-    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional' ) => {
+    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date ) => {
         try {
-            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn })
-            console.log(res.data)
+            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate })
+            // console.log(res.data)
         } catch (error) {
             console.log(error)
         }
@@ -102,7 +99,6 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     }
 
     const completeDrop = (cardToTransfer: CardType, before: string) => {
-        console.log(cardToTransfer)
         let copy = [...cards]
         copy = copy.filter(c => c.id !== cardToTransfer.id)
 
@@ -117,9 +113,8 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
             copy.splice(insertAtIndex, 0, cardToTransfer)
         }
-        console.log(copy)
         
-        updateCardColumn(cardToTransfer.id, column);
+        updateCardColumn(cardToTransfer.id, column, cardToTransfer.dueDate);
         setCards(copy)
     }
 
