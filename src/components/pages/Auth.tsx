@@ -1,12 +1,13 @@
 import Background from "../Background"
 import { FcGoogle } from "react-icons/fc";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 import { fireAuth } from "../../util/firebase";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FirebaseError } from "firebase/app";
 import Toast from "../Toast";
+import { isValidEmail, isValidPassword } from "../../util/AuthValidation";
 
 interface userCredentialsInputType {
     email: string
@@ -51,22 +52,37 @@ const Auth = () => {
     }
 
     const emailSignup = async () => {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
-            const user = userCredential.user;
-            console.log(user)
+        console.log(isValidEmail(userCredentialsInput.email))
+        if (!isValidEmail(userCredentialsInput.email)) {
+            console.log("bad email")
+            setToastMessage("invalid email");
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 3000);
+            return;
+        } else if (!isValidPassword(userCredentialsInput.password)) {
+            setToastMessage("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 3000);
+            return;
+        } else {
 
-        } catch (error) {
-            if (error instanceof FirebaseError) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                setToastMessage(errorCode)
-                setShowToast(true)
-                setTimeout(() => setShowToast(false), 3000)
-                setUserCredentialsInput(pv => ({...pv, password: ""}))
-                console.log(errorCode, errorMessage);
-            } else {
-                console.log("Unknown Error:", error)
+            try {
+                const userCredential = await createUserWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
+                const user = userCredential.user;
+                console.log(user)
+    
+            } catch (error) {
+                if (error instanceof FirebaseError) {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    setToastMessage(errorCode)
+                    setShowToast(true)
+                    setTimeout(() => setShowToast(false), 3000)
+                    setUserCredentialsInput(pv => ({...pv, password: ""}))
+                    console.log(errorCode, errorMessage);
+                } else {
+                    console.log("Unknown Error:", error)
+                }
             }
         }
     }
@@ -103,10 +119,22 @@ const Auth = () => {
     return (
         <Background>
             
-            <div className="flex items-center justify-center w-full h-full min-h-screen">
-
+            <div className="flex flex-col items-center justify-center w-full h-full min-h-screen gap-y-8">
+                <div className="flex items-center justify-center scale-150 gap-x-8">
+                    <div className="relative flex items-center bg-white border-b-4 border-l-4 rounded-full border-offblack size-10">
+                        <div className="absolute flex items-center border-t-4 border-r-4 border-white rounded-full bg-offblack left-5 size-10">
+                            <div className="w-full h-2 bg-white "></div>
+                        </div>
+                        
+                        <div className="w-full h-4 bg-offblack"></div>
+                        
+                    </div>
+                    <p className="text-6xl tracking-wider text-offblack font-Staat ">
+                        KLAR
+                    </p>
+                </div>
                 <div className={`flex flex-col text-offblack w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
-                    <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center mb-3">
                         <h3 className={`font-bold text-2xl `}>
                             <span className="text-4xl">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
                         </h3>
@@ -114,14 +142,13 @@ const Auth = () => {
                     <div className="flex flex-col items-center justify-center flex-1 gap-4">
                         <div className="w-2/3 p-2">
                             <form className="flex flex-col gap-2" onSubmit={e => e.preventDefault()}>
-                                {/* <p>Email</p> */}
                                 <input 
                                     name="email"
                                     value={userCredentialsInput.email}
                                     onChange={handleUserCredentialsInputChange}
                                     placeholder="Email" 
                                     className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
-                                    type="email" 
+                                    type="text" 
                                 />
                                 <input 
                                     name="password"
