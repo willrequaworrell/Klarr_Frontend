@@ -60,9 +60,9 @@ const Auth = () => {
             setTimeout(() => setShowToast(false), 3000);
             return;
         } else if (!isValidPassword(userCredentialsInput.password)) {
-            setToastMessage("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+            setToastMessage("invalid password");
             setShowToast(true);
-            setTimeout(() => setShowToast(false), 3000);
+            setTimeout(() => setShowToast(false), 6000);
             return;
         } else {
 
