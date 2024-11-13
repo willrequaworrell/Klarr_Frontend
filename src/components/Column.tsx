@@ -120,13 +120,15 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             // copy.map(c => console.log( new Date(c.dueDate) < cardToTransfer.dueDate))
             newOrder = null
             const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate) > cardToTransfer.dueDate)
-            console.log(indexOfNextLatestDueDate)
-            if (!indexOfNextLatestDueDate) {
-                copy.push(cardToTransfer)
+            console.log("insert at:", indexOfNextLatestDueDate, indexOfNextLatestDueDate === -1)
+            if (indexOfNextLatestDueDate === -1) {
+                copy.push({ ...cardToTransfer, order: newOrder })
             } else {
-                console.log(copy)
+                // copy.map(c => console.log(c.title, copy.indexOf(c)))
+                // console.log("_________")
                 copy.splice(indexOfNextLatestDueDate, 0, { ...cardToTransfer, order: newOrder })
-                console.log(copy)
+                // copy.map(c => console.log(c.title, copy.indexOf(c)))
+                // console.log("_________")
             }
             
         } else {
@@ -152,14 +154,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         
         await updateCardColumn(cardToTransfer.id, column, cardToTransfer.dueDate, newOrder);
         await updateCardOrders(copy.filter(c => c.column === column));
-
-        setCards(prevCards => {
-            const updatedCards = prevCards.map(card =>
-            copy.find(c => c.id === card.id) || card
-            );
-            return updatedCards;
-        });
-        // setCards(copy)
+        setCards(copy)
     }
 
     const handleDrop = (e: React.DragEvent) => {
