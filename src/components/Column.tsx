@@ -23,9 +23,9 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
     const [beforeState, setBeforeState] = useState<string>("-1")
 
-    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date ) => {
+    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null ) => {
         try {
-            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate })
+            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate, order: newOrder })
             // console.log(res.data)
         } catch (error) {
             console.log(error)
@@ -40,6 +40,14 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
             console.log(error)
         }
     }
+
+    const updateCardOrders = async (updatedCards: CardType[]) => {
+        try {
+          await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
+        } catch (error) {
+          console.error('Failed to update card orders:', error);
+        }
+      }
 
     const getIndicators = () => {
         return Array.from(document.querySelectorAll(`[data-column="${column}"]`)) as HTMLElement[]
@@ -98,25 +106,60 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         clearIndicatorHighlights() 
     }
 
-    const completeDrop = (cardToTransfer: CardType, before: string) => {
-        console.log(before)
+    const completeDrop = async (cardToTransfer: CardType, before: string) => {
+        // console.log(before)
         let copy = [...cards]
         copy = copy.filter(c => c.id !== cardToTransfer.id)
-
+        
         // cardToTransfer = {...cardToTransfer, column}
 
         const moveToBack = before === "-1"
-        if (moveToBack) {
-            copy.push(cardToTransfer)
-        } else {
-            const insertAtIndex = copy.findIndex(card => card.id === before)
-            if (insertAtIndex === undefined) return
+        let newOrder: number | null;
 
-            copy.splice(insertAtIndex, 0, cardToTransfer)
+        if (column === "upcoming") {
+            // copy.map(c => console.log( new Date(c.dueDate) < cardToTransfer.dueDate))
+            newOrder = null
+            const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate) > cardToTransfer.dueDate)
+            console.log(indexOfNextLatestDueDate)
+            if (!indexOfNextLatestDueDate) {
+                copy.push(cardToTransfer)
+            } else {
+                console.log(copy)
+                copy.splice(indexOfNextLatestDueDate, 0, { ...cardToTransfer, order: newOrder })
+                console.log(copy)
+            }
+            
+        } else {
+            if (moveToBack) {
+                newOrder = copy.length > 0 ? Math.max(...copy.map(c => c.order || 0)) + 1 : 0 // place at max index + 1
+                copy.push({ ...cardToTransfer, order: newOrder })
+            } else {
+                const insertAtIndex = copy.findIndex(card => card.id === before)
+                if (insertAtIndex === undefined) return
+                
+                newOrder = copy[insertAtIndex].order || 0;
+                // console.log(insertAtIndex, copy[insertAtIndex].order)
+                copy.splice(insertAtIndex, 0, { ...cardToTransfer, order: newOrder })
+
+
+                // update backend of card list after new insertion 
+                for (let i = insertAtIndex + 1; i < copy.length; i++) {
+                    
+                    copy[i].order = (copy[i - 1].order || 0) + 1;
+                }   
+            }
         }
         
-        updateCardColumn(cardToTransfer.id, column, cardToTransfer.dueDate);
-        setCards(copy)
+        await updateCardColumn(cardToTransfer.id, column, cardToTransfer.dueDate, newOrder);
+        await updateCardOrders(copy.filter(c => c.column === column));
+
+        setCards(prevCards => {
+            const updatedCards = prevCards.map(card =>
+            copy.find(c => c.id === card.id) || card
+            );
+            return updatedCards;
+        });
+        // setCards(copy)
     }
 
     const handleDrop = (e: React.DragEvent) => {
@@ -128,7 +171,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         const nearestIndicator = getNearestIndicator(e, indicators).element 
         const before = nearestIndicator.dataset.before || "-1"
         setBeforeState(before)
-        console.log(nearestIndicator, nearestIndicator.dataset.before)
+        // console.log(nearestIndicator, nearestIndicator.dataset.before)
 
         if (before !== cardId) {
             let copy = [...cards];
@@ -167,6 +210,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     }
 
     const filteredCards = cards.filter(c => c.column === column)
+    const sortedCards = column === 'upcoming' ? filteredCards : filteredCards.sort((a, b) => a.order - b.order);
     return (
         <>
             <DatePickerModal
@@ -189,7 +233,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
                     <span className="flex items-center justify-center p-2 text-2xl font-bold text-center rounded-full font-Barlow size-10 bg-offblack">{filteredCards.length}</span>
                 </div>
                 <div className="py-4 overflow-hidden hover:overflow-y-auto">
-                    {filteredCards.map(c => {
+                    {sortedCards.map(c => {
                         return (
                             <Card 
                                 key={c.id} 

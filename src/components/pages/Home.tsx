@@ -11,7 +11,7 @@ import { FaSignOutAlt } from "react-icons/fa";
 const Home = () => {
     const navigate = useNavigate()
     const [user, loading] = useAuthState(fireAuth)
-    console.log(user)
+
 
     useEffect( () => {
         if (!loading && !user) {
