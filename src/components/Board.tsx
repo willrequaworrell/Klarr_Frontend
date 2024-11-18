@@ -22,11 +22,13 @@ import { PiCheckFatFill } from "react-icons/pi";
 const Board = () => {
     const [user, loading] = useAuthState(fireAuth)
     const [cards, setCards] = useState<CardType[]>([])
+    const [fetchLoading, setFetchLoading] = useState<boolean>(true)
 
     useEffect( () => {
 
         if (user) {
             const fetchAPI = async () => {
+                setFetchLoading(true)
                 try {
                     const res = await axios.get(`https://staatlidobackend.onrender.com/api/tasks/${user.uid}`)
                     const tasks = res.data.map(({_id, ...rest}: TaskFromBackend) => ({
@@ -37,6 +39,8 @@ const Board = () => {
                     setCards(tasks)
                 } catch (error) {
                     console.log(error)
+                } finally {
+                    setFetchLoading(false)
                 }
             }
             fetchAPI()
@@ -87,7 +91,11 @@ const Board = () => {
                 />
             
             </div>
-            
+            {fetchLoading && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center transition-all bg-opacity-50 bg-offblack">
+                <div className="animate-spin inline-block size-16 border-[8px] border-current border-t-transparent text-offwhite rounded-full dark:text-white" role="status" aria-label="loading"/>
+            </div>
+      )}
         </div>
     )
 }

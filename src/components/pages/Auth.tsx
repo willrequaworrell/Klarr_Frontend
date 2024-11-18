@@ -52,7 +52,7 @@ const Auth = () => {
     }
 
     const emailSignup = async () => {
-        console.log(isValidEmail(userCredentialsInput.email))
+        console.log(userCredentialsInput.password === userCredentialsInput.passwordRepeat)
         if (!isValidEmail(userCredentialsInput.email)) {
             console.log("bad email")
             setToastMessage("invalid email");
@@ -64,6 +64,10 @@ const Auth = () => {
             setShowToast(true);
             setTimeout(() => setShowToast(false), 6000);
             return;
+        } else if (userCredentialsInput.password !== userCredentialsInput.passwordRepeat) {
+            setToastMessage("password repeat invalid");
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 6000);
         } else {
 
             try {
@@ -158,6 +162,17 @@ const Auth = () => {
                                     className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
                                     type="password" 
                                 />
+                                {signinOrSignup === "signup" && 
+                                    <input 
+                                        name="passwordRepeat"
+                                        value={userCredentialsInput.passwordRepeat}
+                                        onChange={handleUserCredentialsInputChange}
+                                        placeholder="Repeat password" 
+                                        className="p-1 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
+                                        type="password" 
+                                    />
+                                }
+                               
                                 <button 
                                     onClick={signinOrSignup === "signin" ? emailSignin : emailSignup }
                                     className="flex items-center p-1 text-xl text-white rounded-lg bg-offblack hover:bg-black/50"
