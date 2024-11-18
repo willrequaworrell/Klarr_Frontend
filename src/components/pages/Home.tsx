@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import { fireAuth } from "../../util/firebase"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
-import { FaSignOutAlt } from "react-icons/fa";
+import { IoMdLogOut } from "react-icons/io"
 
 
 
@@ -41,7 +41,7 @@ const Home = () => {
                     </p>
                 </div>
                 <div onClick={() => fireAuth.signOut()} className="text-4xl text-offblack">
-                    <FaSignOutAlt />
+                    <IoMdLogOut className="cursor-pointer hover:text-white" />
                 </div>
 
 
