@@ -37,8 +37,8 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
 
     const insertCard = async (data: NewCardType) => {
         try {
-            const res = await axios.post(`http://localhost:3000/api/tasks/`, data)
-            // const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
+            // const res = await axios.post(`http://localhost:3000/api/tasks/`, data)
+            const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
             return res.data
         } catch (error) {
             console.log(error)
