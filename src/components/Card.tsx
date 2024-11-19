@@ -10,7 +10,7 @@ interface DraggableCardType extends CardType {
 }
 
 
-const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit}: DraggableCardType) => {
+const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, order}: DraggableCardType) => {
     const [editedTitle, setEditedTitle] = useState<string>(title)
     const [isEditing, setIsEditing] = useState<boolean>(false)
 
@@ -50,7 +50,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit}: Dr
             layoutId={id}
             draggable={!isEditing}
             className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} border-offblack border-l-8 border-b-8 active:cursor-grabbing`}
-            onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {title, id, column, dueDate})}
+            onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {order, title, id, column, dueDate})}
             onDoubleClick={handleDoubleClick}
         >
 

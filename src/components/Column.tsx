@@ -25,7 +25,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
     const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null ) => {
         try {
-            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate, order: newOrder })
+            await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate, order: newOrder })
             // console.log(res.data)
         } catch (error) {
             console.log(error)
@@ -205,7 +205,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     }
 
     const filteredCards = cards.filter(c => c.column === column)
-    const sortedCards = column === 'upcoming' ? filteredCards : filteredCards.sort((a, b) => a.order - b.order);
+    const sortedCards = column === 'upcoming' ? filteredCards : filteredCards.sort((a, b) => (a.order as number) - (b.order as number));
     return (
         <>
             <DatePickerModal
@@ -242,7 +242,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
 
                 </div>
                 <DropIndicator beforeId={"-1"} column={column}/>
-                <AddCard column={column} setCards={setCards}/>
+                <AddCard column={column} cards={cards} setCards={setCards}/>
                 {showDatePicker && <p>Pick Date!</p>}
             </div>
         </>

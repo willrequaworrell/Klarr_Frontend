@@ -37,16 +37,19 @@ const Board = () => {
                     }))
                     
                     setCards(tasks)
+                    setFetchLoading(false)
                 } catch (error) {
                     console.log(error)
-                } finally {
-                    setFetchLoading(false)
-                }
+                } 
             }
             fetchAPI()
 
         }
     },[user, loading])
+
+    // useEffect( () => {
+        
+    // }, [cards])
 
     return (
         <div className="flex flex-wrap justify-center gap-8 p-20 size-full">

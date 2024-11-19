@@ -1,5 +1,5 @@
 export interface CardType {
-    order: any;
+    order: number | null;
     title: string
     id: string
     column: 'today' | 'upcoming' | 'optional'

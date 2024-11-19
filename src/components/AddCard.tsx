@@ -14,10 +14,12 @@ interface NewCardType {
     title: string, 
     column: 'today' | 'upcoming' | 'optional',
     dueDate: Date | null, 
+    order: number | null
 }
 
 interface AddCardPropsType {
     column: 'today' | 'upcoming' | 'optional'
+    cards: CardType[]
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 }
 
@@ -27,7 +29,7 @@ const columnToColor = {
     'optional': 'bg-blue/75'
 }
 
-const AddCard = ({column, setCards}: AddCardPropsType) => {
+const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
     const [user] = useAuthState(fireAuth)
     const [text, setText] = useState<string>("")
     const [dueDate, setDueDate] = useState<Dayjs | null>(null)
@@ -35,7 +37,8 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
 
     const insertCard = async (data: NewCardType) => {
         try {
-            const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
+            const res = await axios.post(`http://localhost:3000/api/tasks/`, data)
+            // const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
             return res.data
         } catch (error) {
             console.log(error)
@@ -69,7 +72,8 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
             userId: user?.uid,
             title: text.trim(),
             column: column,
-            dueDate: determineDueDate(dueDate as Dayjs, column)
+            dueDate: determineDueDate(dueDate as Dayjs, column),
+            order: null
             // dueDate: dueDate ? dueDate.toDate() : null
         }
 
@@ -82,11 +86,23 @@ const AddCard = ({column, setCards}: AddCardPropsType) => {
                 column: column,
                 title: text.trim(),
                 id: insertedCard._id,
-                dueDate: insertedCard.dueDate
+                dueDate: insertedCard.dueDate,
+                order: insertedCard.order
             }
             setText("")
             setAdding(false)
-            setCards(prev => [...prev, newCard] )
+            if (column === "upcoming") {
+                let copy = [...cards]
+                const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate) > new Date(newCard.dueDate))
+                if (indexOfNextLatestDueDate === -1) {
+                    copy.push({ ...newCard })
+                } else {
+                    copy.splice(indexOfNextLatestDueDate, 0, { ...newCard})
+                }
+                setCards(copy)
+            } else {
+                setCards(prev => [...prev, newCard] )
+            }
 
         } else {
             console.log("error adding task")
