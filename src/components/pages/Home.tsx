@@ -37,7 +37,7 @@ const Home = () => {
                     </div>
                     {/* <img className="h-12 w-min" src="Bauhaus.png" alt="logo" /> */}
                     <p className="text-6xl tracking-wider text-offblack font-Staat">
-                        KLAR
+                        KLARR
                     </p>
                 </div>
                 <div onClick={() => fireAuth.signOut()} className="text-4xl text-offblack">

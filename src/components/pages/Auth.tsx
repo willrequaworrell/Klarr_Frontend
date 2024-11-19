@@ -134,7 +134,7 @@ const Auth = () => {
                         
                     </div>
                     <p className="text-6xl tracking-wider text-offblack font-Staat ">
-                        KLAR
+                        KLARR
                     </p>
                 </div>
                 <div className={`flex flex-col text-offblack w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
