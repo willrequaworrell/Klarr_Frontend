@@ -24,10 +24,17 @@ const Board = () => {
     const [cards, setCards] = useState<CardType[]>([])
     const [fetchLoading, setFetchLoading] = useState<boolean>(true)
 
+    useEffect(() => {
+        console.log('Board component mounted');
+        return () => console.log('Board component unmounted');
+    }, []);
+
     useEffect( () => {
 
         if (user) {
+            console.log('Effect running, user:', user);
             const fetchAPI = async () => {
+                console.log('Fetching API for user:', user.uid);
                 setFetchLoading(true)
                 try {
                     const res = await axios.get(`https://staatlidobackend.onrender.com/api/tasks/${user.uid}`)
