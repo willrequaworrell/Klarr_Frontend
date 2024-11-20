@@ -37,7 +37,7 @@ const Clock = () => {
                 }
             })
             setUserLocalTime({
-                hour: hour === 0 ? "12" : (hour % 12).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}),
+                hour: (hour === 0 || hour === 12) ? "12" : (hour % 12).toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}),
                 minute: minute.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}),
                 seconds: seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}),
                 ampm: hour > 11 ? "P" : "A"
