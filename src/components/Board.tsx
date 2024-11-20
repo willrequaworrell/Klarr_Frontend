@@ -20,7 +20,7 @@ import { PiCheckFatFill } from "react-icons/pi";
 
 
 const Board = () => {
-    const [user, loading] = useAuthState(fireAuth)
+    const [user] = useAuthState(fireAuth)
     const [cards, setCards] = useState<CardType[]>([])
     const [fetchLoading, setFetchLoading] = useState<boolean>(true)
 
@@ -45,7 +45,7 @@ const Board = () => {
             fetchAPI()
 
         }
-    },[user, loading])
+    },[user])
 
     // useEffect( () => {
         
