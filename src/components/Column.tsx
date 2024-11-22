@@ -1,24 +1,26 @@
-import { CardType } from "../util/Types"
+import { useState } from "react"
+import axios from "axios"
+
+import { useCards } from "../context/CardContext"
 import Card from "./Card"
 import DropIndicator from "./DropIndicator"
 import AddCard from "./AddCard"
-import axios from "axios"
-import { useState } from "react"
 import AddCardDatePickerModal from "./AddCardDatePickerModal"
+
+import { CardType } from "../util/Types"
 
 interface ColumnProps {
     title: string
     headingColor: string
     bgColor: string
     column: 'today' | 'upcoming' | 'optional'
-    cards: CardType[]
-    setCards: React.Dispatch<React.SetStateAction<CardType[]>>
     width: string
 }
 
 
-const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: ColumnProps) => {
+const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
     // const [active, setActive] = useState<boolean>(false)
+    const { cards, setCards } = useCards();
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
     const [beforeState, setBeforeState] = useState<string>("-1")

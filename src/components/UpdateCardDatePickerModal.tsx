@@ -11,16 +11,7 @@ interface UpdateCardDatePickerModalPropsType extends DatePickerModalPropsType {
 const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker}: UpdateCardDatePickerModalPropsType) => {
     const [dueDate, setDueDate] = useState<Dayjs | null>(null)
 
-    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault()
-    //     if (droppingCard) {
-    //         // console.log(droppingCard)
-    //         const updatedCard = {...droppingCard, dueDate: dueDate?.toDate() as Date}
-    //         completeDrop(updatedCard, before)
-    //         setShowDatePicker(false)
-    //         setDueDate(null)
-    //     }
-    // }
+   
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log(id)
