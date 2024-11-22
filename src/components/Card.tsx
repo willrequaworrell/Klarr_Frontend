@@ -3,6 +3,7 @@ import { CardType } from "../util/Types"
 import DropIndicator from "./DropIndicator"
 import { useState } from "react";
 import UpdateCardDatePickerModal from "./UpdateCardDatePickerModal";
+// import { useCards } from "../context/CardContext";
 // import { Dayjs } from "dayjs";
 
 interface DraggableCardType extends CardType {
@@ -13,7 +14,7 @@ interface DraggableCardType extends CardType {
 
 
 const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, order}: DraggableCardType) => {
-
+    // const {cards, setCards } = useCards();
     const [editedTitle, setEditedTitle] = useState<string>(title)
     const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
     // const [editedDate, setEditedDate] = useState<Dayjs | null>(null)
