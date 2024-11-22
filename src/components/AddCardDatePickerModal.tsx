@@ -2,17 +2,15 @@ import { Modal } from '@mui/material'
 import CustomDatePicker from './CustomDatePicker'
 import { useState } from 'react'
 import { Dayjs } from 'dayjs'
-import { CardType } from '../util/Types'
+import { CardType, DatePickerModalPropsType } from '../util/Types'
 
-interface DatePickerModalPropsType {
-    showDatePicker: boolean
-    setShowDatePicker: React.Dispatch<React.SetStateAction<boolean>>
+interface AddCardDatePickerModalPropsType extends DatePickerModalPropsType {
     droppingCard: CardType | null
-    completeDrop: (cardToTransfer: CardType, before: string) => void
+    completeDrop: (cardToTransfer: CardType) => void
     before: string
 }
 
-const DatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard, completeDrop, before}: DatePickerModalPropsType) => {
+const AddCardDatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard, completeDrop}: AddCardDatePickerModalPropsType) => {
 
     const [dueDate, setDueDate] = useState<Dayjs | null>(null)
 
@@ -21,7 +19,7 @@ const DatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard, compl
         if (droppingCard) {
             // console.log(droppingCard)
             const updatedCard = {...droppingCard, dueDate: dueDate?.toDate() as Date}
-            completeDrop(updatedCard, before)
+            completeDrop(updatedCard)
             setShowDatePicker(false)
             setDueDate(null)
         }
@@ -29,6 +27,7 @@ const DatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard, compl
 
     const handleCancel = () => {
         setShowDatePicker(false)
+        setDueDate(null)
     }
 
     return (
@@ -69,4 +68,4 @@ const DatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard, compl
     )
 }
 
-export default DatePickerModal
+export default AddCardDatePickerModal

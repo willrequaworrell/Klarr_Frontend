@@ -4,7 +4,7 @@ import DropIndicator from "./DropIndicator"
 import AddCard from "./AddCard"
 import axios from "axios"
 import { useState } from "react"
-import DatePickerModal from "./DatePickerModal"
+import AddCardDatePickerModal from "./AddCardDatePickerModal"
 
 interface ColumnProps {
     title: string
@@ -106,7 +106,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
         clearIndicatorHighlights() 
     }
 
-    const completeDrop = async (cardToTransfer: CardType, before: string) => {
+    const completeDrop = async (cardToTransfer: CardType, before?: string) => {
         // console.log(before)
         let copy = [...cards]
         copy = copy.filter(c => c.id !== cardToTransfer.id)
@@ -208,7 +208,7 @@ const Column = ({title, headingColor, bgColor, column, cards, setCards, width}: 
     const sortedCards = column === 'upcoming' ? filteredCards : filteredCards.sort((a, b) => (a.order as number) - (b.order as number));
     return (
         <>
-            <DatePickerModal
+            <AddCardDatePickerModal
                 showDatePicker={showDatePicker}
                 setShowDatePicker={setShowDatePicker}
                 droppingCard={droppingCard}

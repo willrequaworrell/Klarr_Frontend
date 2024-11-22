@@ -2,6 +2,8 @@ import { motion } from "framer-motion"
 import { CardType } from "../util/Types"
 import DropIndicator from "./DropIndicator"
 import { useState } from "react";
+import UpdateCardDatePickerModal from "./UpdateCardDatePickerModal";
+// import { Dayjs } from "dayjs";
 
 interface DraggableCardType extends CardType {
     handleDragStart: (e: React.DragEvent<HTMLDivElement>, card: CardType) => void;
@@ -11,20 +13,27 @@ interface DraggableCardType extends CardType {
 
 
 const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, order}: DraggableCardType) => {
+
     const [editedTitle, setEditedTitle] = useState<string>(title)
-    const [isEditing, setIsEditing] = useState<boolean>(false)
+    const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
+    // const [editedDate, setEditedDate] = useState<Dayjs | null>(null)
+    const [isEditingDate, setIsEditingDate] = useState<boolean>(false)
 
     const handleDoubleClick = () => {
-        setIsEditing(pv => !pv)
+        setIsEditingTitle(pv => !pv)
     }
 
     const handleTitleEdit = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEditedTitle(e.target.value)
     }
 
-    const handleSubmitEdit = async (e: React.FormEvent) => {
+    const handleSubmitTitleEdit = async (e: React.FormEvent) => {
         e.preventDefault()
         await onEdit(id, editedTitle)
+    }
+
+    const handleDateEdit = () => {
+        setIsEditingDate(true)
     }
 
     const formatDate = (date: Date | string): string => {
@@ -43,26 +52,27 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
     }
     
     return (
-    <>
+    <>  
+        <UpdateCardDatePickerModal id={id} showDatePicker={isEditingDate} setShowDatePicker={setIsEditingDate} />
         <DropIndicator beforeId={id} column={column}/>
         <motion.div 
             layout
             layoutId={id}
-            draggable={!isEditing}
+            draggable={!isEditingTitle}
             className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} border-offblack border-l-8 border-b-8 active:cursor-grabbing`}
             onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {order, title, id, column, dueDate})}
             onDoubleClick={handleDoubleClick}
         >
 
-            {isEditing 
+            {isEditingTitle 
             ?
-                <form onSubmit={handleSubmitEdit} className="w-full">
+                <form onSubmit={handleSubmitTitleEdit} className="w-full">
                     <input 
                         autoFocus
                         type="text" 
                         value={editedTitle}
                         onChange={handleTitleEdit}
-                        onBlur={() => setIsEditing(false)}
+                        onBlur={() => setIsEditingTitle(false)}
                         className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack" />
                 </form>
             :
@@ -70,7 +80,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
                 <p className="flex-1 tracking-wide text-md font-Barlow text-offblack">{title}</p>
                 {/* {column === "upcoming" && <p className="text-offblack">{formatDate(dueDate)}</p>} */}
                 {column === "upcoming" &&
-                    <div className="flex items-center justify-center w-12 px-2 py-1 text-sm tracking-widest text-white rounded-full font-Barlow bg-offblack max-h-min">
+                    <div onClick={handleDateEdit} className="flex items-center justify-center w-12 px-2 py-1 text-sm tracking-widest text-white rounded-full font-Barlow bg-offblack max-h-min">
                         <p >{formatDate(dueDate)}</p>
                     </div>
                 }

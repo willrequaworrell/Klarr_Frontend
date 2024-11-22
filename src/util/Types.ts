@@ -17,3 +17,8 @@ export interface TaskFromBackend {
     __v: number;
     [key: string]: any;
 }
+
+export interface DatePickerModalPropsType {
+    showDatePicker: boolean
+    setShowDatePicker: React.Dispatch<React.SetStateAction<boolean>>
+}
