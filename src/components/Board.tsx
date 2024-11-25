@@ -1,8 +1,4 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
 
-import { useAuthState } from "react-firebase-hooks/auth"
-import { fireAuth } from "../util/firebase"
 
 import Column from "./Column"
 import RemoveArea from "./RemoveArea"
@@ -11,13 +7,9 @@ import Clock from "./Clock"
 import { FaTrash } from "react-icons/fa"
 import { PiCheckFatFill } from "react-icons/pi";
 
-import { CardType } from "../util/Types"
-import { TaskFromBackend } from "../util/Types"
+
 import { useCards } from "../context/CardContext"
 
-
-
-// https://play.tailwindcss.com/2INd20Fvl0
 
 
 const Board = () => {
@@ -25,7 +17,7 @@ const Board = () => {
     // const [cards, setCards] = useState<CardType[]>([])
     // const [fetchLoading, setFetchLoading] = useState<boolean>(true)
 
-    const { cards, setCards, fetchLoading } = useCards();
+    const {setCards, fetchLoading } = useCards();
 
     return (
         
