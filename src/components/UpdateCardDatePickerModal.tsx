@@ -3,6 +3,8 @@ import CustomDatePicker from './CustomDatePicker'
 import { useState } from 'react'
 import { Dayjs } from 'dayjs'
 import {DatePickerModalPropsType } from '../util/Types'
+import { useCards } from '../context/CardContext'
+import { CardType } from '../util/Types'
 
 interface UpdateCardDatePickerModalPropsType extends DatePickerModalPropsType {
     id: string
@@ -10,18 +12,43 @@ interface UpdateCardDatePickerModalPropsType extends DatePickerModalPropsType {
 
 const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker}: UpdateCardDatePickerModalPropsType) => {
     const [dueDate, setDueDate] = useState<Dayjs | null>(null)
+    const {cards, setCards, updateCardDueDate} = useCards()
 
+    const completeUpdate = async (cardsCopy: CardType[], cardToUpdate: CardType): Promise<boolean> => {
+        if (!dueDate) return false
+        // copy.map(c => console.log( new Date(c.dueDate) < cardToUpdate.dueDate))
+        const indexOfNextLatestDueDate = cardsCopy.findIndex(card => new Date(card.dueDate) > cardToUpdate.dueDate)
+        if (indexOfNextLatestDueDate === -1) {
+            cardsCopy.push({ ...cardToUpdate})
+        } else {
+            cardsCopy.splice(indexOfNextLatestDueDate, 0, { ...cardToUpdate})
+        }
+        const updatedCard = await updateCardDueDate(id, dueDate?.toDate() as Date);
+        setCards(cardsCopy)
+        return updatedCard ? true : false
+    }
    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         console.log(id)
         // find card by id in cards, then send it to complete drop to update the db
-        // let copy = [...cards];
-        // let cardToTransfer = copy.find(c => c.id === cardId)
-        // const updatedCard = {...cardToTransfer, dueDate: dueDate?.toDate() as Date}
-        // completeDrop(updatedCard)
-        // setShowDatePicker(false)
-        // setDueDate(null)
+        let copy = [...cards];
+        let cardToUpdate = copy.find(c => c.id === id) 
+        if (!cardToUpdate) {
+            console.log("could not find a card with id", id)
+            return
+        }
+    
+        const updatedCard = {...cardToUpdate, dueDate: dueDate?.toDate() as Date, order: null}; 
+        copy = copy.filter(c => c.id !== id)
+        const updateSuccess = completeUpdate(copy, updatedCard)
+        console.log(copy)
+        if (!updateSuccess) {
+            console.log("there was an error updating the due date")
+            return 
+        }
+        setShowDatePicker(false)
+        setDueDate(null)
     }
 
     const handleCancel = () => {

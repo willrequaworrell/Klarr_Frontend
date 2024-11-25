@@ -1,5 +1,4 @@
 import { useState } from "react"
-import axios from "axios"
 
 import { useCards } from "../context/CardContext"
 import Card from "./Card"
@@ -20,36 +19,36 @@ interface ColumnProps {
 
 const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
     // const [active, setActive] = useState<boolean>(false)
-    const { cards, setCards } = useCards();
+    const { cards, setCards, updateCardColumn, updateCardTitle, updateCardOrders } = useCards();
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
     const [beforeState, setBeforeState] = useState<string>("-1")
 
-    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null ) => {
-        try {
-            await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate, order: newOrder })
-            // console.log(res.data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null ) => {
+    //     try {
+    //         await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate, order: newOrder })
+    //         // console.log(res.data)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
-    const updateCardTitle = async (id: string, newTitle: string) => {
-        try {
-            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {title: newTitle })
-            return res.data
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    // const updateCardTitle = async (id: string, newTitle: string) => {
+    //     try {
+    //         const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {title: newTitle })
+    //         return res.data
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
-    const updateCardOrders = async (updatedCards: CardType[]) => {
-        try {
-          await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
-        } catch (error) {
-          console.error('Failed to update card orders:', error);
-        }
-      }
+    // const updateCardOrders = async (updatedCards: CardType[]) => {
+    //     try {
+    //       await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
+    //     } catch (error) {
+    //       console.error('Failed to update card orders:', error);
+    //     }
+    //   }
 
     const getIndicators = () => {
         return Array.from(document.querySelectorAll(`[data-column="${column}"]`)) as HTMLElement[]
