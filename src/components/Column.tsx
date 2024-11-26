@@ -24,31 +24,6 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
     const [beforeState, setBeforeState] = useState<string>("-1")
 
-    // const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null ) => {
-    //     try {
-    //         await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {column: newColumn, dueDate: newDueDate, order: newOrder })
-    //         // console.log(res.data)
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // const updateCardTitle = async (id: string, newTitle: string) => {
-    //     try {
-    //         const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, {title: newTitle })
-    //         return res.data
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // const updateCardOrders = async (updatedCards: CardType[]) => {
-    //     try {
-    //       await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
-    //     } catch (error) {
-    //       console.error('Failed to update card orders:', error);
-    //     }
-    //   }
 
     const getIndicators = () => {
         return Array.from(document.querySelectorAll(`[data-column="${column}"]`)) as HTMLElement[]
@@ -189,7 +164,7 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
 
     const handleEditCard = async (id: string, newTitle: string):Promise<boolean> => {
         try {
-            console.log(id, newTitle)
+            
             const res = await updateCardTitle(id, newTitle)
             if (res) {
                 setCards(prev => {

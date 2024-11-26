@@ -8,6 +8,7 @@ interface CustomDatePickerProps {
     setDueDate: React.Dispatch<React.SetStateAction<Dayjs | null>>
 }
 
+
 const CustomDatePicker = ({dueDate, setDueDate}: CustomDatePickerProps) => {
 
     const handleDueDateChange = (newDueDate: Dayjs | null) => {
@@ -17,14 +18,19 @@ const CustomDatePicker = ({dueDate, setDueDate}: CustomDatePickerProps) => {
     }
 
     return (
+
+        
         <DatePicker
-            value={dueDate}
+            value={dueDate || dayjs().add(1, 'day') }
             onChange={handleDueDateChange}
             slotProps={{
-                textField: {size: "small"}
+                textField: {size: "small"},
+                actionBar: { actions: ["today"] },
             }}
+            
             minDate={dayjs().add(1, 'day')}
         />
+
 
     )
 }

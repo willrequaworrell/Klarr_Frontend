@@ -9,6 +9,7 @@ import { PiCheckFatFill } from "react-icons/pi";
 
 
 import { useCards } from "../context/CardContext"
+import Spinner from "./Spinner";
 
 
 
@@ -60,7 +61,8 @@ const Board = () => {
             </div>
             {fetchLoading && (
             <div className="fixed inset-0 z-50 flex items-center justify-center transition-all bg-opacity-50 bg-offblack">
-                <div className="animate-spin inline-block size-16 border-[8px] border-current border-t-transparent text-offwhite rounded-full dark:text-white" role="status" aria-label="loading"/>
+                <Spinner size="size-16" color="text-offwhite" borderWidth="border-8"/>
+                {/* <div className="animate-spin inline-block size-16 border-[8px] border-current border-t-transparent text-offwhite rounded-full dark:text-white" role="status" aria-label="loading"/> */}
             </div>
     )}
         </div>

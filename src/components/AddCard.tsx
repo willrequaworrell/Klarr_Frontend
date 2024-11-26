@@ -7,6 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { fireAuth } from '../util/firebase';
 import CustomDatePicker from './CustomDatePicker';
 import { Dayjs } from 'dayjs';
+import Spinner from './Spinner';
 
 
 interface NewCardType {
@@ -34,6 +35,7 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
     const [text, setText] = useState<string>("")
     const [dueDate, setDueDate] = useState<Dayjs | null>(null)
     const [adding, setAdding] = useState<boolean>(false)
+    const [addLoading, setAddLoading] = useState<boolean>(false)
 
     const insertCard = async (data: NewCardType) => {
         try {
@@ -48,6 +50,7 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
         e.preventDefault()
+        setAddLoading(true)
 
         if (!text.trim().length) return
 
@@ -80,6 +83,7 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
         console.log("Sending to server:", newCardForDatabase)
 
         const insertedCard = await insertCard(newCardForDatabase)
+        setAddLoading(false)
         if (insertedCard) {
             console.log("inserted" ,insertedCard)
             const newCard: CardType = {
@@ -149,9 +153,13 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                         </button>
                         <button
                             type="submit"
-                            className='flex rounded-full justify-center items-center w-min text-sm  gap-1.5 px-3 py-1.5  text-white bg-offblack transition-colors  hover:scale-105'
+                            className='flex rounded-full justify-center items-center w-min text-sm  gap-1.5 px-3 py-1.5 text-white bg-offblack transition-colors  hover:scale-105'
                         >
-                            <span>Add</span>
+                            {addLoading ? 
+                                <Spinner size='size-4' color='text-white' borderWidth='border-4'/>
+                            :
+                                <span>Add</span>
+                            }
                         </button>
                     </div>
                 </motion.form>

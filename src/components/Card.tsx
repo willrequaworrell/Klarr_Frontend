@@ -3,8 +3,7 @@ import { CardType } from "../util/Types"
 import DropIndicator from "./DropIndicator"
 import { useState } from "react";
 import UpdateCardDatePickerModal from "./UpdateCardDatePickerModal";
-// import { useCards } from "../context/CardContext";
-// import { Dayjs } from "dayjs";
+import Spinner from "./Spinner";
 
 interface DraggableCardType extends CardType {
     handleDragStart: (e: React.DragEvent<HTMLDivElement>, card: CardType) => void;
@@ -17,7 +16,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
     // const {cards, setCards } = useCards();
     const [editedTitle, setEditedTitle] = useState<string>(title)
     const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
-    // const [editedDate, setEditedDate] = useState<Dayjs | null>(null)
+    const [titleEditLoading, setTitleEditLoading] = useState<boolean>(false)
     const [isEditingDate, setIsEditingDate] = useState<boolean>(false)
 
     const handleDoubleClick = () => {
@@ -30,7 +29,12 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
 
     const handleSubmitTitleEdit = async (e: React.FormEvent) => {
         e.preventDefault()
-        await onEdit(id, editedTitle)
+        setTitleEditLoading(true)
+        const editSuccess = await onEdit(id, editedTitle)
+        if (editSuccess) {
+            setTitleEditLoading(false)
+            setIsEditingTitle(false)
+        }
     }
 
     const handleDateEdit = () => {
@@ -67,19 +71,20 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
 
             {isEditingTitle 
             ?
-                <form onSubmit={handleSubmitTitleEdit} className="w-full">
+                <form onSubmit={handleSubmitTitleEdit} className="flex items-center w-full">
                     <input 
                         autoFocus
                         type="text" 
                         value={editedTitle}
                         onChange={handleTitleEdit}
                         onBlur={() => setIsEditingTitle(false)}
-                        className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack" />
+                        className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack" 
+                    />
+                    {titleEditLoading && <Spinner size="size-4" color="text-offblack" borderWidth="border-4"/>}
                 </form>
             :
             <>
                 <p className="flex-1 tracking-wide text-md font-Barlow text-offblack">{title}</p>
-                {/* {column === "upcoming" && <p className="text-offblack">{formatDate(dueDate)}</p>} */}
                 {column === "upcoming" &&
                     <div onClick={handleDateEdit} className="flex items-center justify-center w-12 px-2 py-1 text-sm tracking-widest text-white rounded-full font-Barlow bg-offblack max-h-min">
                         <p >{formatDate(dueDate)}</p>
