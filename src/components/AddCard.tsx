@@ -50,13 +50,15 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
         e.preventDefault()
-        setAddLoading(true)
+        if (addLoading) return
 
         if (!text.trim().length) return
 
         if (!user) return 
 
         if ( !dueDate && (column === "upcoming"))  return 
+
+        setAddLoading(true)
 
         const determineDueDate = (dueDate: Dayjs, column: string) => {
             
@@ -140,9 +142,9 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
                         {column === "upcoming" && (
                             <CustomDatePicker
-                            dueDate={dueDate}
-                            setDueDate={setDueDate}
-                        />
+                                dueDate={dueDate}
+                                setDueDate={setDueDate}
+                            />
                         )}
                         <button
                             type='button'
@@ -153,6 +155,7 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                         </button>
                         <button
                             type="submit"
+                            disabled={addLoading}
                             className='flex rounded-full justify-center items-center w-min text-sm  gap-1.5 px-3 py-1.5 text-white bg-offblack transition-colors  hover:scale-105'
                         >
                             {addLoading ? 

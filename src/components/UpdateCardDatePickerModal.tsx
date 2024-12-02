@@ -1,18 +1,21 @@
 import { Modal } from '@mui/material'
 import CustomDatePicker from './CustomDatePicker'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Dayjs } from 'dayjs'
 import {DatePickerModalPropsType } from '../util/Types'
 import { useCards } from '../context/CardContext'
 import { CardType } from '../util/Types'
+import Spinner from './Spinner'
 
 interface UpdateCardDatePickerModalPropsType extends DatePickerModalPropsType {
-    id: string
+    id: string,
+    currDate: Dayjs,
 }
 
-const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker}: UpdateCardDatePickerModalPropsType) => {
-    const [dueDate, setDueDate] = useState<Dayjs | null>(null)
+const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currDate}: UpdateCardDatePickerModalPropsType) => {
+    const [updateLoading, setUpdateLoading] = useState<boolean>(false)
     const {cards, setCards, updateCardDueDate} = useCards()
+    const [dueDate, setDueDate] = useState<Dayjs | null>(currDate || null)
 
     const completeUpdate = async (cardsCopy: CardType[], cardToUpdate: CardType): Promise<boolean> => {
         if (!dueDate) return false
@@ -30,12 +33,16 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker}: Upda
    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        if (updateLoading) return
+        setUpdateLoading(true)
+        await new Promise(resolve => setTimeout(resolve, 200))
         console.log(id)
         // find card by id in cards, then send it to complete drop to update the db
         let copy = [...cards];
         let cardToUpdate = copy.find(c => c.id === id) 
         if (!cardToUpdate) {
             console.log("could not find a card with id", id)
+            setUpdateLoading(false)
             return
         }
     
@@ -45,17 +52,20 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker}: Upda
         console.log(copy)
         if (!updateSuccess) {
             console.log("there was an error updating the due date")
+            setUpdateLoading(false)
             return 
         }
+        setUpdateLoading(false)
         setShowDatePicker(false)
-        setDueDate(null)
+        
     }
 
     const handleCancel = () => {
         setShowDatePicker(false)
-        setDueDate(null)
+        setDueDate(currDate)
     }
 
+    useEffect
     
     return (
         <Modal 
@@ -82,9 +92,10 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker}: Upda
                         </button>
                         <button  
                             className='px-4 py-2 text-white bg-offblack rounded-xl' 
-                            type="submit" 
+                            type="submit"  
+                            disabled={updateLoading}
                         >
-                            Submit
+                            {updateLoading ? <Spinner size='size-4' color='text-white' borderWidth='border-4'/> : "Submit"}
                         </button>
                         
                     </div>

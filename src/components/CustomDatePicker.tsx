@@ -21,11 +21,10 @@ const CustomDatePicker = ({dueDate, setDueDate}: CustomDatePickerProps) => {
 
         
         <DatePicker
-            value={dueDate || dayjs().add(1, 'day') }
+            value={dueDate}
             onChange={handleDueDateChange}
             slotProps={{
                 textField: {size: "small"},
-                actionBar: { actions: ["today"] },
             }}
             
             minDate={dayjs().add(1, 'day')}

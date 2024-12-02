@@ -4,6 +4,7 @@ import DropIndicator from "./DropIndicator"
 import { useState } from "react";
 import UpdateCardDatePickerModal from "./UpdateCardDatePickerModal";
 import Spinner from "./Spinner";
+import dayjs from "dayjs";
 
 interface DraggableCardType extends CardType {
     handleDragStart: (e: React.DragEvent<HTMLDivElement>, card: CardType) => void;
@@ -13,7 +14,6 @@ interface DraggableCardType extends CardType {
 
 
 const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, order}: DraggableCardType) => {
-    // const {cards, setCards } = useCards();
     const [editedTitle, setEditedTitle] = useState<string>(title)
     const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
     const [titleEditLoading, setTitleEditLoading] = useState<boolean>(false)
@@ -29,6 +29,8 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
 
     const handleSubmitTitleEdit = async (e: React.FormEvent) => {
         e.preventDefault()
+        if (titleEditLoading) return
+        
         setTitleEditLoading(true)
         const editSuccess = await onEdit(id, editedTitle)
         if (editSuccess) {
@@ -58,7 +60,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
     
     return (
     <>  
-        <UpdateCardDatePickerModal id={id} showDatePicker={isEditingDate} setShowDatePicker={setIsEditingDate} />
+        <UpdateCardDatePickerModal id={id} showDatePicker={isEditingDate} setShowDatePicker={setIsEditingDate} currDate={dayjs(dueDate)} />
         <DropIndicator beforeId={id} column={column}/>
         <motion.div 
             layout
