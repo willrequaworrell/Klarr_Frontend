@@ -30,20 +30,20 @@ const Home = () => {
                 <div className="absolute top-0 flex items-center w-full px-8 py-2">
                     {/* <p  onClick={() => fireAuth.signOut()}>Logout</p> */}
                     <div className="flex items-center flex-1 gap-x-8">
-                        <div className="relative flex items-center bg-white border-b-4 border-l-4 rounded-full border-offblack size-10">
-                            <div className="absolute flex items-center border-t-4 border-r-4 border-white rounded-full bg-offblack left-5 size-10">
-                                <div className="w-full h-2 bg-white "></div>
+                        <div className="relative flex items-center bg-white border-b-[1vh] border-l-[1vh] rounded-full border-offblack size-[6vh]">
+                            <div className="absolute flex items-center border-t-[1vh] border-r-[1vh] border-white rounded-full bg-offblack left-5 size-[6vh]">
+                                <div className="w-full h-[1vh] bg-white "></div>
                             </div>
                             
-                            <div className="w-full h-4 bg-offblack"></div>
+                            <div className="w-full h-[2vh] bg-offblack"></div>
                             
                         </div>
                         {/* <img className="h-12 w-min" src="Bauhaus.png" alt="logo" /> */}
-                        <p className="tracking-wider tall:text-4xl grande:text-6xl text-offblack font-Staat">
+                        <p className="tracking-wider text-[6vh] text-offblack font-Staat">
                             KLARR
                         </p>
                     </div>
-                    <div onClick={() => fireAuth.signOut()} className="tall:text-2xl grande:text-4xl text-offblack">
+                    <div onClick={() => fireAuth.signOut()} className="text-[5vh] text-offblack">
                         <IoMdLogOut className="cursor-pointer hover:text-white" />
                     </div>
 
