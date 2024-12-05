@@ -59,45 +59,45 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
     }
     
     return (
-    <>  
-        <UpdateCardDatePickerModal id={id} showDatePicker={isEditingDate} setShowDatePicker={setIsEditingDate} currDate={dayjs(dueDate)} />
-        <DropIndicator beforeId={id} column={column}/>
-        <motion.div 
-            layout
-            layoutId={id}
-            draggable={!isEditingTitle}
-            className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} border-offblack border-l-8 border-b-8 active:cursor-grabbing`}
-            onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {order, title, id, column, dueDate})}
-            onDoubleClick={handleDoubleClick}
-        >
+        <>  
+            <UpdateCardDatePickerModal id={id} showDatePicker={isEditingDate} setShowDatePicker={setIsEditingDate} currDate={dayjs(dueDate)} />
+            <DropIndicator beforeId={id} column={column}/>
+            <motion.div 
+                layout
+                layoutId={id}
+                draggable={!isEditingTitle}
+                className={`flex relative p-2 rounded-xl cursor-grab  ${bgColor} border-offblack border-l-8 border-b-8 active:cursor-grabbing`}
+                onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {order, title, id, column, dueDate})}
+                onDoubleClick={handleDoubleClick}
+            >
 
-            {isEditingTitle 
-            ?
-                <form onSubmit={handleSubmitTitleEdit} className="flex items-center w-full">
-                    <input 
-                        autoFocus
-                        type="text" 
-                        value={editedTitle}
-                        onChange={handleTitleEdit}
-                        onBlur={() => setIsEditingTitle(false)}
-                        className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack" 
-                    />
-                    {titleEditLoading && <Spinner size="size-4" color="text-offblack" borderWidth="border-4"/>}
-                </form>
-            :
-            <>
-                <p className="flex-1 tracking-wide text-md font-Barlow text-offblack">{title}</p>
-                {column === "upcoming" &&
-                    <div onClick={handleDateEdit} className="flex items-center justify-center w-12 px-2 py-1 text-sm tracking-widest text-white rounded-full font-Barlow bg-offblack max-h-min">
-                        <p >{formatDate(dueDate)}</p>
-                    </div>
+                {isEditingTitle 
+                ?
+                    <form onSubmit={handleSubmitTitleEdit} className="flex items-center w-full">
+                        <input 
+                            autoFocus
+                            type="text" 
+                            value={editedTitle}
+                            onChange={handleTitleEdit}
+                            onBlur={() => setIsEditingTitle(false)}
+                            className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack " 
+                        />
+                        {titleEditLoading && <Spinner size="size-4" color="text-offblack" borderWidth="border-4"/>}
+                    </form>
+                :
+                <>
+                    <p className="flex-1 tracking-wide tall:text-sm grande:text-md font-Barlow text-offblack ">{title}</p>
+                    {column === "upcoming" &&
+                        <div onClick={handleDateEdit} className="flex items-center justify-center w-12 px-2 py-1 tracking-widest text-white rounded-full tall:text-xs grande:text-sm font-Barlow bg-offblack max-h-min">
+                            <p >{formatDate(dueDate)}</p>
+                        </div>
+                    }
+                </>
+
                 }
-            </>
 
-            }
-
-        </motion.div>
-    </>
+            </motion.div>
+        </>
     )
 }
 

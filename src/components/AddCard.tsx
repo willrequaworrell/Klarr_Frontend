@@ -130,7 +130,6 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                 <motion.form 
                     layout 
                     onSubmit={handleSubmit}
-                    // onBlur={() => setAdding(false)}
                 >
                     <textarea 
                         onChange={(e) => setText(e.target.value)}
@@ -170,7 +169,7 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                 <motion.button
                     layout
                     onClick={() => setAdding(true)}
-                    className={`flex text-lg rounded-full text-center justify-center items-center size-10 min-h-10 p-2  bg-offblack text-white transition-colors hover:scale-105`}
+                    className={`flex text-lg rounded-full text-center justify-center items-center size-[5vh] min-h-[5vh] p-2 bg-offblack text-white transition-colors hover:scale-105`}
                 >
                     
                     <FaPlus />

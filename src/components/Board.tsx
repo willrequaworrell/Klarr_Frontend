@@ -23,7 +23,7 @@ const Board = () => {
     return (
         
             
-        <div className="flex flex-wrap justify-center gap-8 p-20 size-full">
+        <div className="flex flex-wrap justify-center gap-8 p-[10vh] size-full">
 
             <div className="flex w-full gap-8 h-1/2">
                 <Column

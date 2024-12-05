@@ -21,6 +21,13 @@ export default {
         Baumans: ["Baumans", "system-ui"],
         Nanum: ["Nanum Gothic Coding", "monospace"],
         Barlow: ["Barlow Condensed", "sans-serif"]
+      },
+      screens: {
+        'short': { 'raw': '(max-height: 400px)' },
+        'tall': { 'raw': '(min-height: 401px) and (max-height: 600px)' },
+        'grande': { 'raw': '(min-height: 601px) and (max-height: 800px)' },
+        'venti': { 'raw': '(min-height: 801px)' },
+        'extra': {'raw': '(min-height: 1000px)'}
       }
     }
   },

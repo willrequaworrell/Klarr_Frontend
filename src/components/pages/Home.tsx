@@ -39,11 +39,11 @@ const Home = () => {
                             
                         </div>
                         {/* <img className="h-12 w-min" src="Bauhaus.png" alt="logo" /> */}
-                        <p className="text-6xl tracking-wider text-offblack font-Staat">
+                        <p className="tracking-wider tall:text-4xl grande:text-6xl text-offblack font-Staat">
                             KLARR
                         </p>
                     </div>
-                    <div onClick={() => fireAuth.signOut()} className="text-4xl text-offblack">
+                    <div onClick={() => fireAuth.signOut()} className="tall:text-2xl grande:text-4xl text-offblack">
                         <IoMdLogOut className="cursor-pointer hover:text-white" />
                     </div>
 
