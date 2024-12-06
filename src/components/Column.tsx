@@ -195,7 +195,7 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
                 onDragOver={handleDragOver} 
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                className={`flex flex-col font-Staat ${width} size-full p-2 rounded-xl transition-colors border-l-[1.25vh] border-b-[1.25vh] border-t-[.5vh] border-r-[.5vh] border-offblack`}
+                className={`flex flex-col font-Staat ${width} size-full p-2 rounded-2xl transition-colors border-l-[1.25vh] border-b-[1.25vh] border-t-[.5vh] border-r-[.5vh] border-offblack`}
             >
                 <div className="flex items-center justify-between mb-[1vh]">
                     <h3 className={`font-bold text-[3vh] tracking-wider  ${headingColor}`}>

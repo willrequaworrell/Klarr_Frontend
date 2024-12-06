@@ -66,7 +66,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
                 layout
                 layoutId={id}
                 draggable={!isEditingTitle}
-                className={`flex relative p-[1vh] rounded-xl cursor-grab  ${bgColor} border-offblack border-l-[1.25vh] border-b-[1.25vh] active:cursor-grabbing`}
+                className={`flex relative p-[1vh] rounded-2xl cursor-grab  ${bgColor} border-offblack border-l-[1vh] border-b-[1vh] active:cursor-grabbing`}
                 onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {order, title, id, column, dueDate})}
                 onDoubleClick={handleDoubleClick}
             >
@@ -86,9 +86,9 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
                     </form>
                 :
                 <>
-                    <p className="flex-1 tracking-wide text-[2vh] font-Barlow text-offblack ">{title}</p>
+                    <p className="flex-1 tracking-wide font-Barlow text-[min(2vh,16px)] text-offblack ">{title}</p>
                     {column === "upcoming" &&
-                        <div onClick={handleDateEdit} className="flex items-center justify-center w-12 px-2 py-1 tracking-widest text-white rounded-full text-[1.5vh] font-Barlow bg-offblack max-h-min">
+                        <div onClick={handleDateEdit} className="flex items-center justify-center w-12 px-2 py-1 tracking-widest text-white rounded-full text-[min(1.5vh,14px)] font-Barlow bg-offblack max-h-min">
                             <p >{formatDate(dueDate)}</p>
                         </div>
                     }

@@ -28,7 +28,6 @@ const Home = () => {
 
             <Background>
                 <div className="absolute top-0 flex items-center w-full px-8 py-2">
-                    {/* <p  onClick={() => fireAuth.signOut()}>Logout</p> */}
                     <div className="flex items-center flex-1 gap-x-8">
                         <div className="relative flex items-center bg-white border-b-[1vh] border-l-[1vh] rounded-full border-offblack size-[6vh]">
                             <div className="absolute flex items-center border-t-[1vh] border-r-[1vh] border-white rounded-full bg-offblack left-5 size-[6vh]">
