@@ -66,7 +66,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
                 layout
                 layoutId={id}
                 draggable={!isEditingTitle}
-                className={`flex relative p-[1vh] rounded-2xl cursor-grab  ${bgColor} border-offblack border-l-[1vh] border-b-[1vh] active:cursor-grabbing`}
+                className={`flex relative p-[1vh] rounded-xl cursor-grab  ${bgColor} border-offblack border-l-[1vh] border-b-[1vh] active:cursor-grabbing`}
                 onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {order, title, id, column, dueDate})}
                 onDoubleClick={handleDoubleClick}
             >
@@ -80,7 +80,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
                             value={editedTitle}
                             onChange={handleTitleEdit}
                             onBlur={() => setIsEditingTitle(false)}
-                            className="w-full font-bold bg-transparent border-none outline-none text-md font-Barlow text-offblack " 
+                            className="w-full font-bold bg-transparent border-none outline-none text-[min(2vh,16px)] font-Barlow text-offblack " 
                         />
                         {titleEditLoading && <Spinner size="size-4" color="text-offblack" borderWidth="border-4"/>}
                     </form>

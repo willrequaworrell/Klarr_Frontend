@@ -50,14 +50,14 @@ const Clock = () => {
     }, [])
 
     return (
-        <div className="flex items-center justify-center w-full text-white font-Barlow text-[115px] bg-offblack h-1/2 rounded-xl ">
+        <div className="flex items-center justify-center w-full text-white p-2 font-Barlow text-[15vh] bg-offblack h-1/2 rounded-xl ">
             <div className="flex items-baseline gap-4">
                 <p>
                     <span>{userLocalTime?.hour}</span>
                     <span className={`${colonBg} transition-all duration-300`}>:</span>
                     <span>{userLocalTime?.minute}</span>
                 </p>
-                <div className="flex-col my-auto text-4xl">
+                <div className="flex-col my-auto text-[4vh]">
                         <p >{userLocalTime?.ampm}</p>
                         <p >M</p>
                 </div>

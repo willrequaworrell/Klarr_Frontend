@@ -43,7 +43,7 @@ const RemoveArea = ({Icon, setCards}: RemoveAreaPropsType) => {
 
     return (
 		<div
-			className={` grid h-full w-full place-content-center  rounded-xl text-6xl 
+			className={` grid h-full w-full place-content-center  rounded-xl text-[8vh] 
 				${active 
 					? "bg-offblack/50 text-red-500" 
 					: " bg-offblack text-white"
@@ -53,7 +53,6 @@ const RemoveArea = ({Icon, setCards}: RemoveAreaPropsType) => {
 			onDragLeave={handleDragLeave}
 			onDrop={handleDrop}
 		>
-		{/* <FaTrash className={`${active ? "text-white/50 scale-125" : "text-white"}`}/> */}
 		<Icon className={`${active ? "text-white/50 scale-125" : "text-white"}`}/>
 
 			
