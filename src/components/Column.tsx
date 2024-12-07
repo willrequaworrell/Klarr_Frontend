@@ -18,7 +18,6 @@ interface ColumnProps {
 
 
 const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
-    // const [active, setActive] = useState<boolean>(false)
     const { cards, setCards, updateCardColumn, updateCardTitle, updateCardOrders } = useCards();
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
@@ -100,11 +99,7 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
             if (indexOfNextLatestDueDate === -1) {
                 copy.push({ ...cardToTransfer, order: newOrder })
             } else {
-                // copy.map(c => console.log(c.title, copy.indexOf(c)))
-                // console.log("_________")
                 copy.splice(indexOfNextLatestDueDate, 0, { ...cardToTransfer, order: newOrder })
-                // copy.map(c => console.log(c.title, copy.indexOf(c)))
-                // console.log("_________")
             }
             
         } else {
@@ -116,7 +111,6 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
                 if (insertAtIndex === undefined) return
                 
                 newOrder = copy[insertAtIndex].order || 0;
-                // console.log(insertAtIndex, copy[insertAtIndex].order)
                 copy.splice(insertAtIndex, 0, { ...cardToTransfer, order: newOrder })
 
 
@@ -135,14 +129,12 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
 
     const handleDrop = (e: React.DragEvent) => {
         const cardId = e.dataTransfer.getData("cardId")
-        // setActive(false)
         clearIndicatorHighlights()
 
         const indicators = getIndicators()
         const nearestIndicator = getNearestIndicator(e, indicators).element 
         const before = nearestIndicator.dataset.before || "-1"
         setBeforeState(before)
-        // console.log(nearestIndicator, nearestIndicator.dataset.before)
 
         if (before !== cardId) {
             let copy = [...cards];
