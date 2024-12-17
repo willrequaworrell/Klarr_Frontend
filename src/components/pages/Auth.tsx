@@ -124,7 +124,7 @@ const Auth = () => {
         <Background>
             
             <div className="flex flex-col items-center justify-center w-full h-full min-h-screen gap-y-8">
-                <div className="flex items-center justify-center scale-150 gap-x-8">
+                <div className="flex items-center justify-center scale-125 md:scale-150 gap-x-8">
                     <div className="relative flex items-center bg-white border-b-4 border-l-4 rounded-full border-offblack size-10">
                         <div className="absolute flex items-center border-t-4 border-r-4 border-white rounded-full bg-offblack left-5 size-10">
                             <div className="w-full h-2 bg-white "></div>
@@ -137,14 +137,14 @@ const Auth = () => {
                         KLARR
                     </p>
                 </div>
-                <div className={`flex flex-col text-offblack w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
+                <div className={` flex flex-col text-offblack w-4/5 lg:w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
                     <div className="flex items-center mb-3">
                         <h3 className={`font-bold text-2xl `}>
                             <span className="text-4xl">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
                         </h3>
                     </div>
                     <div className="flex flex-col items-center justify-center flex-1 gap-4">
-                        <div className="w-2/3 p-2">
+                        <div className="w-[90%] p-2 md:w-2/3">
                             <form className="flex flex-col gap-2" onSubmit={e => e.preventDefault()}>
                                 <input 
                                     name="email"
