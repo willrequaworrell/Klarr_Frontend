@@ -23,15 +23,15 @@ const Board = () => {
     return (
         
             
-        <div className="flex flex-wrap justify-center gap-8 p-[10vh] size-full">
+        <div className="flex flex-wrap justify-center gap-8 p-[4vh] pt-[10vh] md:p-[10vh] size-full">
 
-            <div className="flex w-full gap-8 h-1/2">
+            <div className="flex w-full md:gap-8 h-1/2">
                 <Column
                     title="TODAY"
                     column="today"
                     headingColor="text-offblack"
                     bgColor="bg-red"
-                    width="w-3/4"
+                    width="w-full md:w-3/4"
                 />
                 <div className="flex flex-col items-center justify-center flex-1 gap-8">
                     <Clock/>
@@ -42,20 +42,20 @@ const Board = () => {
                 </div>
 
             </div>
-            <div className="flex w-full gap-8 h-1/2">
+            <div className="flex flex-col w-full gap-8 md:flex-row h-1/2">
                 <Column
                     title="UPCOMING"
                     column="upcoming"
                     headingColor="text-offblack"
                     bgColor="bg-yellow"
-                    width="flex-1"
+                    width="w-full md:flex-1"
                 />
                 <Column
                     title="OPTIONAL"
                     column="optional"
                     headingColor="text-offblack"
                     bgColor="bg-blue"
-                    width="w-2/5"
+                    width="w-full md:w-2/5"
                 />
             
             </div>

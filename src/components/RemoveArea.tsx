@@ -43,7 +43,7 @@ const RemoveArea = ({Icon, setCards}: RemoveAreaPropsType) => {
 
     return (
 		<div
-			className={` grid h-full w-full place-content-center  rounded-xl text-[8vh] 
+			className={` hidden md:grid h-full w-full place-content-center rounded-xl text-[8vh]  
 				${active 
 					? "bg-offblack/50 text-red-500" 
 					: " bg-offblack text-white"

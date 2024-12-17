@@ -50,7 +50,7 @@ const Clock = () => {
     }, [])
 
     return (
-        <div className="flex items-center justify-center w-full text-white p-2 font-Barlow text-[15vh] bg-offblack h-1/2 rounded-xl ">
+        <div className="hidden md:flex items-center justify-center w-full text-white p-2 font-Barlow text-[15vh] bg-offblack h-1/2 rounded-xl ">
             <div className="flex items-baseline gap-4">
                 <p>
                     <span>{userLocalTime?.hour}</span>
