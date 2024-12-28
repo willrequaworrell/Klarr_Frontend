@@ -57,7 +57,6 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
             return `${month}/${day}`;
         }
     }
-    
     return (
         <>  
             <UpdateCardDatePickerModal id={id} showDatePicker={isEditingDate} setShowDatePicker={setIsEditingDate} currDate={dayjs(dueDate)} />
@@ -66,9 +65,10 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
                 layout
                 layoutId={id}
                 draggable={!isEditingTitle}
-                className={`flex relative p-[1vh] rounded-xl cursor-grab  ${bgColor} border-offblack border-l-[1vh] border-b-[1vh] active:cursor-grabbing`}
+                className={`flex relative p-[1vh] rounded-xl cursor-grab border-offblack border-l-[1vh] border-b-[1vh] active:cursor-grabbing`}
                 onDragStart={(e: any) => handleDragStart(e as React.DragEvent<HTMLDivElement>, {order, title, id, column, dueDate})}
                 onDoubleClick={handleDoubleClick}
+                style={{ backgroundColor: bgColor }}
             >
 
                 {isEditingTitle 

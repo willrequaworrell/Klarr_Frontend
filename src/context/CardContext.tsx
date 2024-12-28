@@ -6,6 +6,12 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { fireAuth } from '../util/firebase';
 import { CardType, TaskFromBackend } from '../util/Types';
 
+interface ColumnColorsType {
+    today: string;
+    upcoming: string;
+    optional: string;
+}
+
 interface CardContextType {
     cards: CardType[];
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>;
@@ -15,7 +21,11 @@ interface CardContextType {
     updateCardTitle: (id: string, newTitle: string) => Promise<any>;
     updateCardOrders: (updatedCards: CardType[]) => Promise<void>;
     updateCardDueDate: (id: string, newDate: Date) => Promise<any>;
+    columnColors: ColumnColorsType;
+    updateColumnColor: (column: string, color: string) => void
 }
+
+
 
 const CardContext = createContext<CardContextType | undefined>(undefined);
 
@@ -23,23 +33,33 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [user] = useAuthState(fireAuth);
     const [cards, setCards] = useState<CardType[]>([]);
     const [fetchLoading, setFetchLoading] = useState<boolean>(true);
+    const [columnColors, setColumnColors] = useState<ColumnColorsType>({
+        today: "#e66642",
+        upcoming: "#ffc849",
+        optional: "#4b87b4"
+    })
+    
+    // const updateColumnColor = (column: string, color: string) => {
+    //     setColumnColors(prevColors => ({ ...prevColors, [column]: color }));
+    // };
 
     const fetchCards = async () => {
-        if (user) {
-            setFetchLoading(true);
-            try {
-                const res = await axios.get(`https://staatlidobackend.onrender.com/api/tasks/${user.uid}`);
-                const tasks = res.data.map(({ _id, ...rest }: TaskFromBackend) => ({
-                    ...rest,
-                    id: _id,
-                }));
-                setCards(tasks);
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setFetchLoading(false);
-            }
+        if (!user) return 
+        
+        setFetchLoading(true);
+        try {
+            const res = await axios.get(`https://staatlidobackend.onrender.com/api/tasks/${user.uid}`);
+            const tasks = res.data.map(({ _id, ...rest }: TaskFromBackend) => ({
+                ...rest,
+                id: _id,
+            }));
+            setCards(tasks);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setFetchLoading(false);
         }
+    
     };
 
     const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null) => {
@@ -87,13 +107,43 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     };
 
+    const fetchUserPreferences = async () => {
+        if (!user) return 
+        try {
+            const response = await axios.get(`https://staatlidobackend.onrender.com/api/preferences/${user.uid}`)
+            setColumnColors(response.data.columnColors)
+        } catch (error) {
+            console.error('Error fetching user preferences:', error);
+        }
+    }
+
+    const updateColumnColor = async (column: string, color: string) => {
+        if (!user) return 
+        const newColors = { ...columnColors, [column]: color }
+
+        try {
+            await axios.post(`https://staatlidobackend.onrender.com/api/preferences/${user.uid}`, {
+                columnColors: newColors
+            })
+            setColumnColors(newColors)
+        } catch (error) {
+            console.error('Error updating user preferences:', error);
+        }
+
+    }
+
 
     useEffect(() => {
         fetchCards();
     }, [user]);
 
+    useEffect(() => {
+        if (!user) return 
+        fetchUserPreferences()
+    }, [user])
+
     return (
-        <CardContext.Provider value={{ cards, setCards, fetchLoading, fetchCards, updateCardColumn, updateCardTitle, updateCardOrders, updateCardDueDate }}>
+        <CardContext.Provider value={{ cards, setCards, fetchLoading, fetchCards, updateCardColumn, updateCardTitle, updateCardOrders, updateCardDueDate, columnColors, updateColumnColor }}>
             {children}
         </CardContext.Provider>
     );

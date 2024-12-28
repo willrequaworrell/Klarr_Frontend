@@ -18,19 +18,18 @@ const Board = () => {
     // const [cards, setCards] = useState<CardType[]>([])
     // const [fetchLoading, setFetchLoading] = useState<boolean>(true)
 
-    const {setCards, fetchLoading } = useCards();
+    const {setCards, fetchLoading, columnColors } = useCards();
 
     return (
         
             
         <div className="flex flex-wrap justify-center gap-8 p-[4vh] pt-[10vh] md:p-[10vh] size-full">
-
             <div className="flex w-full md:gap-8 h-1/2">
                 <Column
                     title="TODAY"
                     column="today"
                     headingColor="text-offblack"
-                    bgColor="bg-red"
+                    bgColor={columnColors.today}
                     width="w-full md:w-3/4"
                 />
                 <div className="flex flex-col items-center justify-center flex-1 gap-8">
@@ -47,14 +46,14 @@ const Board = () => {
                     title="UPCOMING"
                     column="upcoming"
                     headingColor="text-offblack"
-                    bgColor="bg-yellow"
+                    bgColor={columnColors.upcoming}
                     width="w-full md:flex-1"
                 />
                 <Column
                     title="OPTIONAL"
                     column="optional"
                     headingColor="text-offblack"
-                    bgColor="bg-blue"
+                    bgColor={columnColors.optional}
                     width="w-full md:w-2/5"
                 />
             

@@ -8,6 +8,7 @@ import { fireAuth } from '../util/firebase';
 import CustomDatePicker from './CustomDatePicker';
 import { Dayjs } from 'dayjs';
 import Spinner from './Spinner';
+import { useCards } from '../context/CardContext';
 
 
 interface NewCardType {
@@ -24,11 +25,11 @@ interface AddCardPropsType {
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 }
 
-const columnToColor = {
-    'today': 'bg-red/75',
-    'upcoming': 'bg-yellow/75',
-    'optional': 'bg-blue/75'
-}
+// const columnToColor = {
+//     'today': 'bg-red/75',
+//     'upcoming': 'bg-yellow/75',
+//     'optional': 'bg-blue/75'
+// }
 
 const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
     const [user] = useAuthState(fireAuth)
@@ -36,6 +37,8 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
     const [dueDate, setDueDate] = useState<Dayjs | null>(null)
     const [adding, setAdding] = useState<boolean>(false)
     const [addLoading, setAddLoading] = useState<boolean>(false)
+
+    const {columnColors } = useCards();
 
     const insertCard = async (data: NewCardType) => {
         try {
@@ -136,7 +139,8 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                         onKeyDown={handleKeyDown}
                         autoFocus
                         placeholder='Add new task...'
-                        className={`resize-none w-full p-2 text-md font-Barlow rounded-xl ${columnToColor[column]} text-offblack/75 placeholder-offblack/50 focus:outline-0 border-offblack/75 border-l-8 border-b-8`}
+                        className={`resize-none w-full p-2 text-md font-Barlow rounded-xl  text-offblack/75 placeholder-offblack/50 focus:outline-0 border-offblack/75 border-l-8 border-b-8`}
+                        style={{backgroundColor: columnColors[column]}}
                     />
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
                         {column === "upcoming" && (
