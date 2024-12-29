@@ -145,7 +145,7 @@ const Auth = () => {
                     </div>
                     <div className="flex flex-col items-center justify-center flex-1 gap-4">
                         <div className="w-[90%] p-2 md:w-2/3">
-                            <form className="flex flex-col gap-2" onSubmit={e => e.preventDefault()}>
+                            <form className="flex flex-col gap-2 font-Barlow" onSubmit={e => e.preventDefault()}>
                                 <input 
                                     name="email"
                                     value={userCredentialsInput.email}
@@ -175,13 +175,13 @@ const Auth = () => {
                                
                                 <button 
                                     onClick={signinOrSignup === "signin" ? emailSignin : emailSignup }
-                                    className="flex items-center p-1 text-xl text-white rounded-lg bg-offblack hover:bg-black/50"
+                                    className="flex items-center p-2 text-xl text-white rounded-lg bg-offblack hover:bg-offblack/50"
                                 >
                                     <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"}</p>
                                 </button>
                             </form>
-                            <button onClick={googleLogin} className="flex items-center justify-center w-full mt-2 text-xl bg-white hover:bg-offblack/50 text-offblack rounded-xl">
-                                <div className="flex items-center justify-center h-full mr-2 border-offblack">
+                            <button onClick={googleLogin} className="flex items-center justify-center w-full p-1 mt-2 text-xl bg-white font-Barlow hover:bg-offblack/50 text-offblack rounded-xl">
+                                <div className="flex items-center justify-center h-full mr-2">
                                     <FcGoogle className="p-1 text-4xl" />
                                 </div>
                                 <p className="">Continue with Google</p>

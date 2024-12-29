@@ -3,15 +3,18 @@ import Board from "../Board"
 import { useAuthState } from "react-firebase-hooks/auth"
 import { fireAuth } from "../../util/firebase"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
-import { IoMdLogOut } from "react-icons/io"
+import { useEffect, useState } from "react"
 import { CardProvider } from "../../context/CardContext"
+import SettingsModal from "../SettingsModal"
+import { IoSettingsSharp } from "react-icons/io5"
+// import { IoMdLogOut } from "react-icons/io"
 
 
 
 const Home = () => {
     const navigate = useNavigate()
     const [user, loading] = useAuthState(fireAuth)
+    const [showSettings, setShowSettings] = useState<boolean>(false)
 
 
     useEffect( () => {
@@ -42,14 +45,16 @@ const Home = () => {
                             KLARR
                         </p>
                     </div>
-                    <div onClick={() => fireAuth.signOut()} className="text-[5vh] text-offblack">
-                        <IoMdLogOut className="cursor-pointer hover:text-white" />
+                    {/* <div onClick={() => fireAuth.signOut()} className="text-[5vh] text-offblack"> */}
+                    <div onClick={() => setShowSettings(true)} className="text-[4vh] text-offblack">
+                        <IoSettingsSharp className="transition-all cursor-pointer hover:text-offblack/50" />
                     </div>
 
 
                 </div>
                 {/* <p onClick={() => fireAuth.signOut()}>Logout</p> */}
                 <Board/>
+                <SettingsModal showSettings={showSettings} setShowSettings={setShowSettings}/>
             </Background> 
         </CardProvider>
     )

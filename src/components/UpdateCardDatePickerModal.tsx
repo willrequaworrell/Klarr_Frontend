@@ -71,8 +71,8 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
         <Modal 
             open={showDatePicker} 
             onClose={() => setShowDatePicker(false)}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
+            aria-labelledby="choose-new-due-date"
+            aria-describedby="Choose a new date for the upcoming task"
         >
             <form onSubmit={handleSubmit}>
 
