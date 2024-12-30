@@ -15,9 +15,11 @@ const SettingsModal = ({showSettings, setShowSettings}: SettingsModalPropsType) 
     const  {updateColumnColor} = useCards()
 
     const handleResetColors = () => {
-        updateColumnColor("today", "#e66642")
-        updateColumnColor("upcoming", "#ffc849")
-        updateColumnColor("optional", "#4b87b4")
+        updateColumnColor({
+            today: "#e66642",
+            upcoming: "#ffc849",
+            optional: "#4b87b4"
+        });
     }
 
     return (

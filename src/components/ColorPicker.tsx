@@ -17,7 +17,7 @@ const ColorPicker = ({column}: ColorPickerPropsType) => {
 
     const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         console.log(e.target.value)
-        updateColumnColor(column, e.target.value)
+        updateColumnColor({[column]: e.target.value})
     }
     
     return (

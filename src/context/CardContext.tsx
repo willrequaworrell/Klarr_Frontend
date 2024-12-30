@@ -22,7 +22,7 @@ interface CardContextType {
     updateCardOrders: (updatedCards: CardType[]) => Promise<void>;
     updateCardDueDate: (id: string, newDate: Date) => Promise<any>;
     columnColors: ColumnColorsType;
-    updateColumnColor: (column: string, color: string) => void
+    updateColumnColor: (colors: Partial<ColumnColorsType>) => Promise<void>
 }
 
 
@@ -117,9 +117,9 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }
 
-    const updateColumnColor = async (column: string, color: string) => {
+    const updateColumnColor = async (colors: Partial<ColumnColorsType>) => {
         if (!user) return 
-        const newColors = { ...columnColors, [column]: color }
+        const newColors = { ...columnColors, ...colors }
 
         try {
             await axios.post(`https://staatlidobackend.onrender.com/api/preferences/${user.uid}`, {
@@ -131,7 +131,7 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
 
     }
-
+            
 
     useEffect(() => {
         fetchCards();
