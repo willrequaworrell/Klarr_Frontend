@@ -124,20 +124,26 @@ const Auth = () => {
         <Background>
             
             <div className="flex flex-col items-center justify-center w-full h-full min-h-screen gap-y-8">
-                <div className="flex items-center justify-center scale-125 md:scale-150 gap-x-8">
-                    <div className="relative flex items-center bg-white border-b-4 border-l-4 rounded-full border-offblack size-10">
-                        <div className="absolute flex items-center border-t-4 border-r-4 border-white rounded-full bg-offblack left-5 size-10">
-                            <div className="w-full h-2 bg-white "></div>
-                        </div>
+                <header aria-labelledby="title">
+                    <div className="flex items-center justify-center scale-125 md:scale-150 gap-x-8">
                         
-                        <div className="w-full h-4 bg-offblack"></div>
-                        
+                            <div className="relative flex items-center bg-white border-b-4 border-l-4 rounded-full border-offblack size-10">
+                                <div className="absolute flex items-center border-t-4 border-r-4 border-white rounded-full bg-offblack left-5 size-10">
+                                    <div className="w-full h-2 bg-white "></div>
+                                </div>
+                                
+                                <div className="w-full h-4 bg-offblack"></div>
+                                
+                            </div>
+
+                        <h1 className="text-6xl tracking-wider text-offblack font-Staat ">
+                            KLARR
+                        </h1>
                     </div>
-                    <p className="text-6xl tracking-wider text-offblack font-Staat ">
-                        KLARR
-                    </p>
-                </div>
-                <div className={` flex flex-col text-offblack w-4/5 lg:w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
+
+                </header>
+                
+                <main className={` flex flex-col text-offblack w-4/5 lg:w-1/3 h-1/2 font-Staat size-full p-2 rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
                     <div className="flex items-center mb-3">
                         <h3 className={`font-bold text-2xl `}>
                             <span className="text-4xl">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
@@ -191,7 +197,8 @@ const Auth = () => {
 
 
                     </div>
-                </div>
+                </main>
+
             </div>
 
             {showToast && <Toast message={toastMessage} type="error"/>}
@@ -201,16 +208,3 @@ const Auth = () => {
 
 export default Auth
 
-
-{/* <div className="flex justify-center w-full gap-2 p-2">
-    <div className="size-4 bg-red animate-spin"></div>
-    <div className="size-4 bg-blue animate-spin"></div>
-    <div className="size-4 bg-yellow animate-spin"></div>
-</div> */}
-
-{/* <button onClick={googleLogin} className="flex items-center w-full text-xl border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl">
-    <div className="flex items-center justify-center h-full text-white border-r-4 bg-offblack border-offblack">
-        <FcGoogle className="p-1 text-4xl" />
-    </div>
-    <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"} with Google</p>
-</button> */}

@@ -30,7 +30,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
     const handleSubmitTitleEdit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (titleEditLoading) return
-        
+        if (!editedTitle) return
         setTitleEditLoading(true)
         const editSuccess = await onEdit(id, editedTitle)
         if (editSuccess) {
