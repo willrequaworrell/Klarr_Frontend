@@ -24,6 +24,8 @@ export function generateFirebaseErrorMessage(errorCode: string): string {
             return 'Password must contain: 8 characters, an uppercase letter, lowercase letter, number, and special character';
         case 'Password repeat invalid':
             return 'Passwords don\'t match'
+        case 'reset email sent':
+            return "Password reset email sent"
         default:
             return 'An error occurred. Please try again.';
     }
