@@ -59,17 +59,17 @@ const Auth = () => {
         console.log(userCredentialsInput.password === userCredentialsInput.passwordRepeat)
         if (!isValidEmail(userCredentialsInput.email)) {
             console.log("bad email")
-            setToastMessage("invalid email");
+            setToastMessage("error/invalid-email");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 3000);
             return;
         } else if (!isValidPassword(userCredentialsInput.password)) {
-            setToastMessage("invalid password");
+            setToastMessage("error/invalid-password");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 6000);
             return;
         } else if (userCredentialsInput.password !== userCredentialsInput.passwordRepeat) {
-            setToastMessage("password repeat invalid");
+            setToastMessage("error/invalid-password-repeat");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 6000);
         } else {
@@ -235,7 +235,7 @@ const Auth = () => {
 
             </div>
 
-            {showToast && <Toast message={toastMessage} type="error"/>}
+            {showToast && <Toast message={toastMessage}/>}
         </Background>
     )
 }

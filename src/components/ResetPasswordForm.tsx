@@ -18,14 +18,14 @@ const ResetPasswordForm = ({setShowPasswordReset, setToastMessage, setShowToast}
     
     const handlePasswordReset = async () => {
         if (!isValidEmail(resetEmail)) {
-            setToastMessage("invalid email");
+            setToastMessage("error/invalid-email");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 3000);
             return;
         }
         try {
             await sendPasswordResetEmail(resetEmail);
-            setToastMessage("reset email sent");
+            setToastMessage("success/reset-email-sent");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 3000);
         } catch (error) {

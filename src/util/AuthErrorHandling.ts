@@ -1,5 +1,7 @@
-export function generateFirebaseErrorMessage(errorCode: string): string {
-    switch (errorCode) {
+export function generateFirebaseErrorMessage(code: string): string {
+    switch (code) {
+
+        // Firebase auth error cases
         case 'auth/email-already-in-use':
             return 'This email is already in use. Please try a different email.';
         case 'auth/invalid-email':
@@ -18,13 +20,17 @@ export function generateFirebaseErrorMessage(errorCode: string): string {
             return 'Too many unsuccessful login attempts. Please try again later.';
         case 'auth/invalid-credential':
             return 'Invalid email or password. Please check your credentials and try again.';
-        case 'invalid email':
+
+        // Extra error cases 
+        case 'error/invalid-email':
             return 'Please enter a valid email address.'
-        case 'invalid password':
+        case 'error/invalid-password':
             return 'Password must contain: 8 characters, an uppercase letter, lowercase letter, number, and special character';
-        case 'Password repeat invalid':
+        case 'error/invalid-password-repeat':
             return 'Passwords don\'t match'
-        case 'reset email sent':
+            
+        // Success Cases
+        case 'success/reset-email-sent':
             return "Password reset email sent"
         default:
             return 'An error occurred. Please try again.';
