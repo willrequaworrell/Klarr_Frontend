@@ -14,7 +14,7 @@ const Toast = ({message}: ToastPropsType) => {
 
     const type = message.split("/")[0]
 
-    if (type === "error") {
+    if (type === "error" || type === "auth") {
         bgColor = 'bg-red'
         textColor = 'text-offblack'
     } else {

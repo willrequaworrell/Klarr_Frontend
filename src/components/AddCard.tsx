@@ -139,7 +139,7 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                         onKeyDown={handleKeyDown}
                         autoFocus
                         placeholder='Add new task...'
-                        className={`resize-none w-full p-2 text-md font-Barlow rounded-xl  text-offblack/75 placeholder-offblack/50 focus:outline-0 border-offblack/75 border-l-8 border-b-8`}
+                        className={`resize-none w-full p-2 text-[min(2vh,16px)] font-Barlow rounded-xl text-offblack/75 placeholder-offblack/50 focus:outline-0 border-offblack/75 border-l-8 border-b-8`}
                         style={{backgroundColor: columnColors[column]}}
                     />
                     <div className='flex items-center mt-1.5 justify-end gap-1.5'>
