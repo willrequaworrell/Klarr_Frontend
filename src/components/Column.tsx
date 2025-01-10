@@ -63,6 +63,7 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
         clearIndicatorHighlights(indicators)
         const nearestIndicator = getNearestIndicator(e, indicators)
         nearestIndicator.element.style.opacity = "1"
+        
     }
 
 
@@ -82,17 +83,14 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
     }
 
     const completeDrop = async (cardToTransfer: CardType, before?: string) => {
-        // console.log(before)
         let copy = [...cards]
         copy = copy.filter(c => c.id !== cardToTransfer.id)
         
-        // cardToTransfer = {...cardToTransfer, column}
 
         const moveToBack = before === "-1"
         let newOrder: number | null;
 
         if (column === "upcoming") {
-            // copy.map(c => console.log( new Date(c.dueDate) < cardToTransfer.dueDate))
             newOrder = null
             const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate) > cardToTransfer.dueDate)
             console.log("insert at:", indexOfNextLatestDueDate, indexOfNextLatestDueDate === -1)

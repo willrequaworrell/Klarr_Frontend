@@ -42,7 +42,7 @@ const Home = () => {
                                 
                             </div> */}
                             <img 
-                                src="src/assets/klarr.png" 
+                                src="klarr.png" 
                                 alt="Klarr Logo - overlapping black and white circles & rectangles" 
                                 className="object-cover object-center h-[7vh]"
                             />
@@ -53,7 +53,7 @@ const Home = () => {
                         </div>
                         {/* <div onClick={() => fireAuth.signOut()} className="text-[5vh] text-offblack"> */}
                         <div onClick={() => setShowSettings(true)} className="text-[4vh] text-offblack">
-                            <IoSettingsSharp aria-labelledby="Settings menu button" className="transition-all cursor-pointer hover:text-offblack/50" />
+                            <IoSettingsSharp aria-labelledby="Settings menu button" className="transition-all cursor-pointer hover:text-offblack/50 hover:animate-spin" />
                         </div>
 
 

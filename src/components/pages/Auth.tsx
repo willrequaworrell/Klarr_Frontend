@@ -143,7 +143,7 @@ const Auth = () => {
                             
                         </div> */}
                         <img 
-                            src="src/assets/klarr.png" 
+                            src="klarr.png" 
                             alt="Klarr Logo - overlapping black and white circles & rectangles" 
                             className="object-cover object-center w-full h-[9vh]"
                         />
