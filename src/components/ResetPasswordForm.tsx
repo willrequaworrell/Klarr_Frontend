@@ -43,16 +43,16 @@ const ResetPasswordForm = ({setShowPasswordReset, setToastMessage, setShowToast}
                 value={resetEmail} 
                 onChange={(e) => setResetEmail(e.target.value)} 
                 placeholder="Email" 
-                className="p-1 mb-2 border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
+                className="p-[.5vh] text-[1.75vh] mb-[1vh] border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
                 type="text" 
             />
             <button 
                 onClick={handlePasswordReset} 
-                className="flex items-center justify-center p-2 text-xl text-white rounded-lg bg-offblack hover:bg-offblack/50"
+                className="flex items-center justify-center p-[1vh] text-[2.25vh] text-white rounded-lg bg-offblack hover:bg-offblack/50"
             >
                 <p>Send Reset Email</p>
             </button>
-            <p onClick={() => setShowPasswordReset(false)} className="text-sm text-center underline cursor-pointer hover:text-offblack/50">Back to Sign In</p>
+            <p onClick={() => setShowPasswordReset(false)} className="text-[1.5vh] text-center underline cursor-pointer font-Staat hover:text-offblack/50">Back to Sign In</p>
         </>
     )
 }
