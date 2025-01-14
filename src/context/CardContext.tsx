@@ -39,10 +39,6 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         optional: "#4b87b4"
     })
     
-    // const updateColumnColor = (column: string, color: string) => {
-    //     setColumnColors(prevColors => ({ ...prevColors, [column]: color }));
-    // };
-
     const fetchCards = async () => {
         if (!user) return 
         

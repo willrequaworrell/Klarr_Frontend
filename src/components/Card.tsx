@@ -5,6 +5,7 @@ import { useState } from "react";
 import UpdateCardDatePickerModal from "./UpdateCardDatePickerModal";
 import Spinner from "./Spinner";
 import dayjs from "dayjs";
+import { useToast } from "../context/ToastContext";
 
 interface DraggableCardType extends CardType {
     handleDragStart: (e: React.DragEvent<HTMLDivElement>, card: CardType) => void;
@@ -18,6 +19,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
     const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false)
     const [titleEditLoading, setTitleEditLoading] = useState<boolean>(false)
     const [isEditingDate, setIsEditingDate] = useState<boolean>(false)
+    const {setShowToast, setToastMessage } = useToast();
 
     const handleDoubleClick = () => {
         setIsEditingTitle(pv => !pv)
@@ -34,9 +36,15 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
         setTitleEditLoading(true)
         const editSuccess = await onEdit(id, editedTitle)
         if (editSuccess) {
-            setTitleEditLoading(false)
             setIsEditingTitle(false)
+            setToastMessage("success/update-task-title")
+			setShowToast(true)
+        } else {
+            setToastMessage("error/update-task-title")
+			setShowToast(true)
         }
+        setTitleEditLoading(false)
+        setTimeout(() => setShowToast(false), 3000)
     }
 
     const handleDateEdit = () => {

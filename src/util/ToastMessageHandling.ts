@@ -40,6 +40,8 @@ export function generateToastMessage(code: string): string {
             return "Task completed"
         case 'success/update-task-date':
             return "Date updated"
+        case 'success/update-task-title':
+            return "Task updated"
 
         // Task update error cases 
         case 'error/delete-task':
@@ -48,7 +50,8 @@ export function generateToastMessage(code: string): string {
             return "Error completing task"
         case 'error/update-task-date':
             return "Error updating date"
-
+        case 'error/update-task-title':
+            return "Error updating task"
         default:
             return 'An error occurred. Please try again.';
     }
