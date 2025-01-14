@@ -1,4 +1,6 @@
-import { generateFirebaseErrorMessage } from "../util/AuthErrorHandling"
+// import { generateToastMessage } from "../util/ToastMessageHandling"
+
+import { generateToastMessage } from "../util/ToastMessageHandling"
 
 
 interface ToastPropsType {
@@ -30,7 +32,7 @@ const Toast = ({message, position}: ToastPropsType) => {
         positionStyle = "bottom-[10%]"
     }
 
-    const errorMessage = generateFirebaseErrorMessage(message)
+    const errorMessage = generateToastMessage(message)
     return (
         <div className={`${bgColor} ${textColor} ${positionStyle} fixed w-1/5 text-[1.75vh] text-center shadow-xl rounded-xl p-4 font-Barlow left-1/2 -translate-x-1/2 transition-colors duration-500 ease-in-out`}>
             {errorMessage}

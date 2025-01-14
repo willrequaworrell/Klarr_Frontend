@@ -1,4 +1,4 @@
-export function generateFirebaseErrorMessage(code: string): string {
+export function generateToastMessage(code: string): string {
     switch (code) {
 
         // Firebase auth error cases
@@ -21,7 +21,7 @@ export function generateFirebaseErrorMessage(code: string): string {
         case 'auth/invalid-credential':
             return 'Invalid email or password. Please check your credentials and try again.';
 
-        // Extra error cases 
+        // Extra auth error cases 
         case 'error/invalid-email':
             return 'Please enter a valid email address.'
         case 'error/invalid-password':
@@ -29,9 +29,22 @@ export function generateFirebaseErrorMessage(code: string): string {
         case 'error/invalid-password-repeat':
             return 'Passwords don\'t match'
             
-        // Success Cases
+        // Password Reset cases
         case 'success/reset-email-sent':
             return "Password reset email sent"
+
+        // Delete & Complete task success cases 
+        case 'success/delete-task':
+            return "Task deleted"
+        case 'success/complete-task':
+            return "Task completed"
+
+        // Delete & Complete task success cases 
+        case 'error/delete-task':
+            return "Error deleting task"
+        case 'error/complete task':
+            return "Error completing task"
+
         default:
             return 'An error occurred. Please try again.';
     }

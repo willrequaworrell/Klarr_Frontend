@@ -35,8 +35,8 @@ const Board = () => {
                 <div className="flex flex-col items-center justify-center flex-1 gap-8">
                     <Clock/>
                     <div className="flex items-center justify-center size-full gap-x-8">
-                        <RemoveArea Icon={PiCheckFatFill} setCards={setCards}/>
-                        <RemoveArea Icon={FaTrash} setCards={setCards}/>
+                        <RemoveArea Icon={PiCheckFatFill} setCards={setCards} type="complete"/>
+                        <RemoveArea Icon={FaTrash} setCards={setCards} type="delete"/>
                     </div>
                 </div>
 

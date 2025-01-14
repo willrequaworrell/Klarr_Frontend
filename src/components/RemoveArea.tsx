@@ -3,24 +3,55 @@ import { CardType } from "../util/Types"
 import { IconBaseProps } from "react-icons"
 
 import axios from "axios"
+import { useToast } from "../context/ToastContext"
 
 interface RemoveAreaPropsType {
 	Icon: React.ComponentType<IconBaseProps>,
 	setCards: React.Dispatch<React.SetStateAction<CardType[]>>
+	type: 'delete' | 'complete'
 }
 
 
-const RemoveArea = ({Icon, setCards}: RemoveAreaPropsType) => {
+const RemoveArea = ({Icon, setCards, type}: RemoveAreaPropsType) => {
 	const [active, setActive] = useState<boolean>(false)
+	const {setShowToast, setToastMessage } = useToast();
 
-	const deleteCard = async (id: string) => {
+	const deleteCard = async (id: string): Promise<boolean> => {
+		let success = false
 		try {
             const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
             console.log(res.data)
+			setToastMessage("success/delete-task")
+			setShowToast(true)
+			success = true
         } catch (error) {
             console.log(error)
-        }
+			setToastMessage("error/delete-task")
+			setShowToast(true)
+        } finally {
+			setTimeout(() => setShowToast(false), 3000)
+			return success
+		}
 	}
+	
+	const completeCard = async (id: string): Promise<boolean> => {
+		let success = false
+		try {
+            const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
+            console.log(res.data)
+			setToastMessage("success/complete-task")
+			setShowToast(true)
+			success = true
+        } catch (error) {
+            console.log(error)
+			setToastMessage("error/complete task")
+			setShowToast(true)
+        } finally {
+			setTimeout(() => setShowToast(false), 3000)
+			return success
+		}
+	}
+
 
 	const handleDragOver = (e: React.DragEvent) => {
 		e.preventDefault()
@@ -31,13 +62,20 @@ const RemoveArea = ({Icon, setCards}: RemoveAreaPropsType) => {
 		setActive(false)
 	}
 
-	const handleDrop = (e: React.DragEvent) => {
+	const handleDrop = async (e: React.DragEvent) => {
 		const cardId = e.dataTransfer.getData("cardId")
+		let success = false
+		if (type === "complete") {
+			completeCard(cardId)
+		} else {
+			success = await deleteCard(cardId)
+		}
+		
+		if (success) {
+			setCards(prev => prev.filter((card) => card.id !== cardId))	
+		}
 
-		deleteCard(cardId)
-		setCards(prev => prev.filter((card) => card.id !== cardId))
 		setActive(false)
-
 	}
 
 
