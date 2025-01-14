@@ -5,6 +5,7 @@ import Auth from "./components/pages/Auth";
 import Error from "./components/pages/Error";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { ToastProvider } from "./context/ToastContext";
 
 
 function App() {
@@ -12,13 +13,15 @@ function App() {
   return (
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<BrowserRouter>
-				<Routes >
-					<Route path="/" element={<Layout/>}>
-						<Route index element={<Home/>}/>
-						<Route path="auth" element={<Auth/>}/>
-						<Route path="*" element={<Error/>}/>
-					</Route>
-				</Routes>
+				<ToastProvider>
+					<Routes >
+						<Route path="/" element={<Layout/>}>
+							<Route index element={<Home/>}/>
+							<Route path="auth" element={<Auth/>}/>
+							<Route path="*" element={<Error/>}/>
+						</Route>
+					</Routes>
+				</ToastProvider>
 			</BrowserRouter>
 		</LocalizationProvider>
 	

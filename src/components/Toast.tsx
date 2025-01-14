@@ -3,14 +3,16 @@ import { generateFirebaseErrorMessage } from "../util/AuthErrorHandling"
 
 interface ToastPropsType {
     message: string
+    position: "top" | "bottom"
     // type: 'error' | 'success'
 }
 
-const Toast = ({message}: ToastPropsType) => {
+const Toast = ({message, position}: ToastPropsType) => {
     // const bgColor = type === 'error' ? 'bg-red' : 'bg-offblack'
     // const textColor = type === 'error' ? 'text-offblack' : 'bg-white'
     let bgColor
     let textColor
+    let positionStyle
 
     const type = message.split("/")[0]
 
@@ -22,9 +24,15 @@ const Toast = ({message}: ToastPropsType) => {
         textColor = 'text-white'
     }
 
+    if (position === "top") {
+        positionStyle = "top-[5%]"
+    } else {
+        positionStyle = "bottom-[10%]"
+    }
+
     const errorMessage = generateFirebaseErrorMessage(message)
     return (
-        <div className={`${bgColor} ${textColor} fixed w-1/4 text-md shadow-xl rounded-xl p-4 font-Barlow left-1/2 bottom-[10%] -translate-x-1/2 transition-colors duration-500 ease-in-out`}>
+        <div className={`${bgColor} ${textColor} ${positionStyle} fixed w-1/5 text-[1.75vh] text-center shadow-xl rounded-xl p-4 font-Barlow left-1/2 -translate-x-1/2 transition-colors duration-500 ease-in-out`}>
             {errorMessage}
         </div>
     )

@@ -7,6 +7,8 @@ import { useEffect, useState } from "react"
 import { CardProvider } from "../../context/CardContext"
 import SettingsModal from "../SettingsModal"
 import { IoSettingsSharp } from "react-icons/io5"
+import Toast from "../Toast"
+import { useToast } from "../../context/ToastContext"
 // import { IoMdLogOut } from "react-icons/io"
 
 
@@ -14,7 +16,12 @@ import { IoSettingsSharp } from "react-icons/io5"
 const Home = () => {
     const navigate = useNavigate()
     const [user, loading] = useAuthState(fireAuth)
+
     const [showSettings, setShowSettings] = useState<boolean>(false)
+    // const [showToast, setShowToast] = useState<boolean>(true)
+    // const [toastMessage, setToastMessage] = useState<string>("")
+
+    const { showToast, toastMessage } = useToast();
 
 
     useEffect( () => {
@@ -64,6 +71,7 @@ const Home = () => {
                     <Board/>
                 </main>
                 <SettingsModal showSettings={showSettings} setShowSettings={setShowSettings}/>
+                {showToast && <Toast message={toastMessage} position="top"/>}
             </Background> 
         </CardProvider>
     )

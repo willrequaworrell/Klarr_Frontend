@@ -9,6 +9,7 @@ import { FirebaseError } from "firebase/app";
 import Toast from "../Toast";
 import { isValidEmail, isValidPassword } from "../../util/AuthValidation";
 import ResetPasswordForm from "../ResetPasswordForm";
+import { useToast } from "../../context/ToastContext";
 
 interface userCredentialsInputType {
     email: string
@@ -28,8 +29,9 @@ const Auth = () => {
     })
     const [showResetPassword, setShowResetPassword] = useState<boolean>(false)
 
-    const [showToast, setShowToast] = useState<boolean>(false)
-    const [toastMessage, setToastMessage] = useState<string>("")
+    // const [showToast, setShowToast] = useState<boolean>(false)
+    // const [toastMessage, setToastMessage] = useState<string>("")
+    const { showToast, toastMessage, setShowToast, setToastMessage } = useToast();
 
     const googleProvider = new GoogleAuthProvider()
 
@@ -148,7 +150,7 @@ const Auth = () => {
                             className="object-cover object-center h-[9vh]"
                         />
 
-                        <h1 className="text-[8vh] tracking-wider text-offblack font-Staat ">
+                        <h1 className="text-[8vh] tracking-wider text-offblack font-Staat">
                             KLARR
                         </h1>
                     </div>
@@ -175,7 +177,7 @@ const Auth = () => {
                             <form className="flex flex-col gap-[1vh] font-Barlow" onSubmit={e => e.preventDefault()}>
                                 <div className="flex flex-col w-full gap-2 mb-[1vh]">
                                     {showResetPassword ? 
-                                        <ResetPasswordForm setShowPasswordReset={setShowResetPassword} setToastMessage={setToastMessage} setShowToast={setShowToast}/>
+                                        <ResetPasswordForm setShowPasswordReset={setShowResetPassword}/>
                                     :
                                     <>
                                         <input 
@@ -241,7 +243,7 @@ const Auth = () => {
 
             </div>
 
-            {showToast && <Toast message={toastMessage}/>}
+            {showToast && <Toast message={toastMessage} position="top"/>}
         </Background>
     )
 }

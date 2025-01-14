@@ -3,18 +3,17 @@ import { isValidEmail } from "../util/AuthValidation";
 import { useState } from "react";
 import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { fireAuth } from "../util/firebase";
-import React from "react";
+import { useToast } from "../context/ToastContext";
 
 
 interface ResetPasswordFormPropTypes {
     setShowPasswordReset: (showResetPassword: boolean) => void
-    setToastMessage: React.Dispatch<React.SetStateAction<string>>
-    setShowToast: (showToast: boolean) => void
 }
 
-const ResetPasswordForm = ({setShowPasswordReset, setToastMessage, setShowToast}: ResetPasswordFormPropTypes) => {
+const ResetPasswordForm = ({setShowPasswordReset}: ResetPasswordFormPropTypes) => {
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(fireAuth);
     const [resetEmail, setResetEmail] = useState<string>("");
+    const {setShowToast, setToastMessage } = useToast();
     
     const handlePasswordReset = async () => {
         if (!isValidEmail(resetEmail)) {
