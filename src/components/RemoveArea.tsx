@@ -44,7 +44,7 @@ const RemoveArea = ({Icon, setCards, type}: RemoveAreaPropsType) => {
 			success = true
         } catch (error) {
             console.log(error)
-			setToastMessage("error/complete task")
+			setToastMessage("error/complete-task")
 			setShowToast(true)
         } finally {
 			setTimeout(() => setShowToast(false), 3000)

@@ -1,11 +1,12 @@
 import { Modal } from '@mui/material'
 import CustomDatePicker from './CustomDatePicker'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Dayjs } from 'dayjs'
-import {DatePickerModalPropsType } from '../util/Types'
+import { DatePickerModalPropsType } from '../util/Types'
 import { useCards } from '../context/CardContext'
 import { CardType } from '../util/Types'
 import Spinner from './Spinner'
+import { useToast } from '../context/ToastContext'
 
 interface UpdateCardDatePickerModalPropsType extends DatePickerModalPropsType {
     id: string,
@@ -17,6 +18,8 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
     const {cards, setCards, updateCardDueDate} = useCards()
     const [dueDate, setDueDate] = useState<Dayjs | null>(currDate || null)
 
+    const { setShowToast, setToastMessage } = useToast();
+
     const completeUpdate = async (cardsCopy: CardType[], cardToUpdate: CardType): Promise<boolean> => {
         if (!dueDate) return false
         // copy.map(c => console.log( new Date(c.dueDate) < cardToUpdate.dueDate))
@@ -27,7 +30,17 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
             cardsCopy.splice(indexOfNextLatestDueDate, 0, { ...cardToUpdate})
         }
         const updatedCard = await updateCardDueDate(id, dueDate?.toDate() as Date);
-        setCards(cardsCopy)
+        if (updatedCard) {
+            setCards(cardsCopy)
+            setToastMessage("success/update-task-date")
+            setShowToast(true)
+            setTimeout(() => setShowToast(false), 3000)
+        } else {
+            setToastMessage("error/update-task-date")
+            setShowToast(true)
+            setTimeout(() => setShowToast(false), 3000)
+        }
+        
         return updatedCard ? true : false
     }
    
@@ -48,13 +61,8 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
     
         const updatedCard = {...cardToUpdate, dueDate: dueDate?.toDate() as Date, order: null}; 
         copy = copy.filter(c => c.id !== id)
-        const updateSuccess = completeUpdate(copy, updatedCard)
-        console.log(copy)
-        if (!updateSuccess) {
-            console.log("there was an error updating the due date")
-            setUpdateLoading(false)
-            return 
-        }
+        await completeUpdate(copy, updatedCard)
+       
         setUpdateLoading(false)
         setShowDatePicker(false)
         
@@ -65,8 +73,6 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
         setDueDate(currDate)
     }
 
-    useEffect
-    
     return (
         <Modal 
             open={showDatePicker} 

@@ -33,17 +33,21 @@ export function generateToastMessage(code: string): string {
         case 'success/reset-email-sent':
             return "Password reset email sent"
 
-        // Delete & Complete task success cases 
+        // Task update success cases 
         case 'success/delete-task':
             return "Task deleted"
         case 'success/complete-task':
             return "Task completed"
+        case 'success/update-task-date':
+            return "Date updated"
 
-        // Delete & Complete task success cases 
+        // Task update error cases 
         case 'error/delete-task':
             return "Error deleting task"
-        case 'error/complete task':
+        case 'error/complete-task':
             return "Error completing task"
+        case 'error/update-task-date':
+            return "Error updating date"
 
         default:
             return 'An error occurred. Please try again.';
