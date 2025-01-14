@@ -18,8 +18,6 @@ const Home = () => {
     const [user, loading] = useAuthState(fireAuth)
 
     const [showSettings, setShowSettings] = useState<boolean>(false)
-    // const [showToast, setShowToast] = useState<boolean>(true)
-    // const [toastMessage, setToastMessage] = useState<string>("")
 
     const { showToast, toastMessage } = useToast();
 
