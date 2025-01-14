@@ -66,7 +66,7 @@ const RemoveArea = ({Icon, setCards, type}: RemoveAreaPropsType) => {
 		const cardId = e.dataTransfer.getData("cardId")
 		let success = false
 		if (type === "complete") {
-			completeCard(cardId)
+			success = await completeCard(cardId)
 		} else {
 			success = await deleteCard(cardId)
 		}
