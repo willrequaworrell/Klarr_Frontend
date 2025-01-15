@@ -1,11 +1,16 @@
 # Klarr - www.klarr.app
 
+## Inspiration
+
 Small tasks add up through the work day, and for me, if it doesn't get written down, it doesn't get done. I tried countless todo list applications in search of a solution. Most were too feature-heavy and just made things more complicated, while simpler ones lacked essential functionality and were uninspiring to use. I found myself returning again and again to a basic list I kept in my OneNote, which was divided into three sections: tasks I needed to do that day, tasks that had an upcoming due date, and optional tasks with no due date. I would highlight tasks in different colors based on their due date, and manually change the colors and dates as needed. This actually worked very well, but it required tedious text editing each day to maintain and aesthetically it left a lot to be desired. 
 
 The method was good, but I wanted an app that would remove friction from the process of using it--so I built one. 
 
 Klarr makes tracking daily tasks beautifully simple by providing an intuitive and visually pleasing interface to utilize the three category method. Taking aesthetic inspiration from German Bauhaus design,  remove the pain points from productivity.
 
+
+<img width="389" alt="image" src="https://github.com/user-attachments/assets/ced852b8-0067-432d-ab17-59a34b314115" />
+My old list method
 
 ## Usage
 
