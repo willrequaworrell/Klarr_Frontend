@@ -2,9 +2,11 @@
 
 Klarr makes tracking daily tasks beautifully simple. Intuitive drag and drop UX + customizable Bauhaus-inspired styling enables users to create their own experience and remove the pain points from productivity.
 
+See a demo <a href="google.com">here</a>
+
 ## Inspiration
 
-Small tasks add up through the work day, and for me, if it doesn't get written down, it doesn't get done. In search of a solution, I tried countless productivity apps. Some were too feature-heavy and just made things more complicated, while others were simple, but lacked essential functions and were uninspiring to use. 
+Small tasks add up through the work day, and for me, _if it doesn't get written down, it doesn't get done_. In search of a solution, I tried countless productivity apps. Some were too feature-heavy and just made things more complicated, while others were simple, but lacked essential functions and were uninspiring to use. 
 
 Despite my efforts, I found myself returning again and again to the basic list I kept in a OneNote page, where I would highlight my tasks based on their urgency: Red for tasks due today, Yellow for tasks with an upcoming due date, and Green for optional tasks with no due date (see below). Throughout the day, I would add, change, or delete tasks from the list and update the highlight colors accordingly.
 
