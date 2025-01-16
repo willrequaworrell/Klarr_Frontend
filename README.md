@@ -100,3 +100,5 @@ From a productivity standpoint, this system worked very well, but using it was q
 ## Technologies
 
 <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/> <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+
+The frontend was written in TypeScript and built with React and Tailwind CSS. Authentication and User identity is handled by Firebase and integrated through custom React hooks. The backend is written in JavaScript and built with Express.js (Node.js) and connects to a MongoDB Atlas cluster which utilizes Atlas triggers for CRON updates to records.
