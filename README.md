@@ -7,9 +7,9 @@ Klarr makes tracking daily tasks beautifully simple. Intuitive drag and drop UX 
 
 **See a demo <a href="https://youtu.be/XO2wxNqiY30" target="_blank">here</a>**
 ## Contents
-* [Custom foo description](#usage)
-* Usage
-* Technologies
+* [Inspiration](#inspiration)
+* [Usage](#usage)
+* [Technologies](#technologies)
 ## Inspiration
 
 Small tasks add up through the work day, and for me, _if it doesn't get written down, it doesn't get done_. In search of a solution, I tried countless productivity apps. Some were too feature-heavy and just made things more complicated, while others were simple, but lacked essential functions and were uninspiring to use. 
@@ -90,7 +90,9 @@ From a productivity standpoint, this system worked very well, but using it was q
 > * These settings will be saved to your profile.
 > * You can reset theme back at any time by clicking the "Reset" button in settings.
 
+## Technologies
 
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/> <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
 
 ### Complete & Delete Tasks
 
