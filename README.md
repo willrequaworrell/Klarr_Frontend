@@ -1,8 +1,11 @@
 # Klarr (www.klarr.app)
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/> <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/> <img src="https://img.shields.io/badge/Express%20js-000000?style=for-the-badge&logo=express&logoColor=white"/> <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white"/> <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/> <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
 
 Klarr makes tracking daily tasks beautifully simple. Intuitive drag and drop UX + customizable Bauhaus-inspired styling enables users to create their own experience and remove the pain points from productivity.
 
-See a demo <a href="google.com">here</a>
+
+
+See a demo <a href="https://youtu.be/XO2wxNqiY30" target="_blank">here</a>
 
 ## Inspiration
 
