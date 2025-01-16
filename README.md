@@ -1,19 +1,17 @@
-# Klarr - www.klarr.app
+# Klarr (www.klarr.app)
+
+Klarr makes tracking daily tasks beautifully simple. Intuitive drag and drop UX + customizable Bauhaus-inspired styling enables users to create their own experience and remove the pain points from productivity.
 
 ## Inspiration
 
-Small tasks add up through the work day, and for me, if it doesn't get written down, it doesn't get done. I tried countless todo applications in search of a solution. Most were too feature-heavy and just made things more complicated, while others were simple, but lacked essential functions and were uninspiring to use. 
+Small tasks add up through the work day, and for me, if it doesn't get written down, it doesn't get done. In search of a solution, I tried countless productivity apps. Some were too feature-heavy and just made things more complicated, while others were simple, but lacked essential functions and were uninspiring to use. 
 
-Despite my efforts, I found myself returning again and again to the basic list I kept in a OneNote page, where I would highlight my tasks based on their urgency: Red for tasks I needed to do that day, Yellow for tasks with an upcoming due date, and Green for optional tasks with no due date (see below). Throughout the day, I would add, change, or delete tasks from the list and update the highlight colors accordingly.
+Despite my efforts, I found myself returning again and again to the basic list I kept in a OneNote page, where I would highlight my tasks based on their urgency: Red for tasks due today, Yellow for tasks with an upcoming due date, and Green for optional tasks with no due date (see below). Throughout the day, I would add, change, or delete tasks from the list and update the highlight colors accordingly.
 
 <img width="389" alt="Old todo list screen capture" src="https://github.com/user-attachments/assets/ced852b8-0067-432d-ab17-59a34b314115" />
 
 
-On a basic level, this system worked very well, but using it was quite tedious and visually abrasive. I knew that the method was good, but I wanted an app that would remove friction from the process and be something I didn't mind looking at all day--so I built one.
-
-Klarr makes tracking daily tasks beautifully simple by providing an intuitive and visually pleasing interface to utilize the three category method. Taking aesthetic inspiration from German Bauhaus design,  remove the pain points from productivity.
-
-
+From a productivity standpoint, this system worked very well, but using it was quite tedious and visually abrasive. I knew that the method was good, but I wanted an app that would remove friction from the process and provide a more visually compelling backdrop to my work day--so I built one.
 
 
 ## Usage
