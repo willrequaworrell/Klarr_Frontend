@@ -5,8 +5,11 @@ Klarr makes tracking daily tasks beautifully simple. Intuitive drag and drop UX 
 
 
 
-See a demo <a href="https://youtu.be/XO2wxNqiY30" target="_blank">here</a>
-
+**See a demo <a href="https://youtu.be/XO2wxNqiY30" target="_blank">here</a>**
+## Contents
+* [Custom foo description](#usage)
+* Usage
+* Technologies
 ## Inspiration
 
 Small tasks add up through the work day, and for me, _if it doesn't get written down, it doesn't get done_. In search of a solution, I tried countless productivity apps. Some were too feature-heavy and just made things more complicated, while others were simple, but lacked essential functions and were uninspiring to use. 
