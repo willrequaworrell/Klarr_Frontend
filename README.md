@@ -16,7 +16,8 @@ Small tasks add up through the work day, and for me, _if it doesn't get written 
 
 Despite my efforts, I found myself returning again and again to the basic list I kept in a OneNote page, where I would highlight my tasks based on their urgency: Red for tasks due today, Yellow for tasks with an upcoming due date, and Green for optional tasks with no due date (see below). Throughout the day, I would add, change, or delete tasks from the list and update the highlight colors accordingly.
 
-<img width="389" alt="Old todo list screen capture" src="https://github.com/user-attachments/assets/ced852b8-0067-432d-ab17-59a34b314115" />
+![transformation](https://github.com/user-attachments/assets/53e730e0-1b68-4bc0-b16c-9f528716b058)
+
 
 
 From a productivity standpoint, this system worked very well, but using it was quite tedious and visually abrasive. I knew that the method was good, but I wanted an app that would remove friction from the process and provide a more visually compelling backdrop to my work day--so I built one.
