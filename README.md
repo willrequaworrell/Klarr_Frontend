@@ -2,15 +2,19 @@
 
 ## Inspiration
 
-Small tasks add up through the work day, and for me, if it doesn't get written down, it doesn't get done. I tried countless todo list applications in search of a solution. Most were too feature-heavy and just made things more complicated, while simpler ones lacked essential functionality and were uninspiring to use. I found myself returning again and again to a basic list I kept in my OneNote, which was divided into three sections: tasks I needed to do that day, tasks that had an upcoming due date, and optional tasks with no due date. I would highlight tasks in different colors based on their due date, and manually change the colors and dates as needed. This actually worked very well, but it required tedious text editing each day to maintain and aesthetically it left a lot to be desired. 
+Small tasks add up through the work day, and for me, if it doesn't get written down, it doesn't get done. I tried countless todo applications in search of a solution. Most were too feature-heavy and just made things more complicated, while others were simple, but lacked essential functions and were uninspiring to use. 
 
-The method was good, but I wanted an app that would remove friction from the process of using it--so I built one. 
+Despite my efforts, I found myself returning again and again to the basic list I kept in a OneNote page, where I would highlight my tasks based on their urgency: Red for tasks I needed to do that day, Yellow for tasks with an upcoming due date, and Green for optional tasks with no due date (see below). Throughout the day, I would add, change, or delete tasks from the list and update the highlight colors accordingly.
+
+<img width="389" alt="Old todo list screen capture" src="https://github.com/user-attachments/assets/ced852b8-0067-432d-ab17-59a34b314115" />
+
+
+On a basic level, this system worked very well, but using it was quite tedious and visually abrasive. I knew that the method was good, but I wanted an app that would remove friction from the process and be something I didn't mind looking at all day--so I built one.
 
 Klarr makes tracking daily tasks beautifully simple by providing an intuitive and visually pleasing interface to utilize the three category method. Taking aesthetic inspiration from German Bauhaus design,  remove the pain points from productivity.
 
 
-<img width="389" alt="image" src="https://github.com/user-attachments/assets/ced852b8-0067-432d-ab17-59a34b314115" />
-My old list method
+
 
 ## Usage
 
