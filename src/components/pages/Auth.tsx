@@ -10,6 +10,7 @@ import Toast from "../Toast";
 import { isValidEmail, isValidPassword } from "../../util/AuthValidation";
 import ResetPasswordForm from "../ResetPasswordForm";
 import { useToast } from "../../context/ToastContext";
+import { useDemoContext } from "../../context/DemoContext";
 
 interface userCredentialsInputType {
     email: string
@@ -32,6 +33,7 @@ const Auth = () => {
     // const [showToast, setShowToast] = useState<boolean>(false)
     // const [toastMessage, setToastMessage] = useState<string>("")
     const { showToast, toastMessage, setShowToast, setToastMessage } = useToast();
+    const {setIsDemoMode} = useDemoContext()
 
     const googleProvider = new GoogleAuthProvider()
 
@@ -117,7 +119,10 @@ const Auth = () => {
         }
     }
 
-    
+    const enableDemoMode = () => {
+        setIsDemoMode(true)
+        navigate("/demo")    
+    }
 
     useEffect(() => {
 
@@ -215,12 +220,20 @@ const Auth = () => {
                                 </div>
                                
                                {!showResetPassword && 
-                                    <button 
-                                        onClick={signinOrSignup === "signin" ? emailSignin : emailSignup }
-                                        className="flex items-center justify-center p-[1vh] text-[2.25vh] text-white rounded-lg bg-offblack hover:bg-offblack/50"
-                                    >
-                                        <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"}</p>
-                                    </button>
+                                    <div className="flex justify-between gap-x-2">
+                                        <button 
+                                            onClick={signinOrSignup === "signin" ? emailSignin : emailSignup }
+                                            className="flex w-1/2 items-center justify-center p-[1vh] text-[2.25vh] text-white rounded-lg bg-offblack hover:bg-offblack/50"
+                                        >
+                                            <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"}</p>
+                                        </button>
+                                        <button 
+                                            onClick={enableDemoMode}
+                                            className="flex w-1/2 items-center justify-center p-[1vh] text-[2.25vh] text-white rounded-lg bg-offblack hover:bg-offblack/50"
+                                        >
+                                            <p className="flex-1">Try a Demo</p>
+                                        </button>
+                                    </div>
                                }
                                                            
                             </form>

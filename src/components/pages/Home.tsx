@@ -9,6 +9,7 @@ import SettingsModal from "../SettingsModal"
 import { IoSettingsSharp } from "react-icons/io5"
 import Toast from "../Toast"
 import { useToast } from "../../context/ToastContext"
+import { useDemoContext } from "../../context/DemoContext"
 // import { IoMdLogOut } from "react-icons/io"
 
 
@@ -20,14 +21,14 @@ const Home = () => {
     const [showSettings, setShowSettings] = useState<boolean>(false)
 
     const { showToast, toastMessage } = useToast();
-
+    const {isDemoMode} = useDemoContext()
 
     useEffect( () => {
-        if (!loading && !user) {
+        if (!loading && !user && !isDemoMode) {
             navigate('/auth')
         }
         
-    } , [loading, user])
+    } , [loading, user, isDemoMode])
 
     
     
@@ -53,7 +54,7 @@ const Home = () => {
                             />
                             {/* <img className="h-12 w-min" src="Bauhaus.png" alt="logo" /> */}
                             <h1 aria-label="Klarr Logo Text" className="tracking-wider text-[6vh] text-offblack font-Staat">
-                                KLARR
+                                KLARR {isDemoMode && <span className="text-2xl text-red animate-pulse">DEMO MODE</span>}
                             </h1>
                         </div>
                         {/* <div onClick={() => fireAuth.signOut()} className="text-[5vh] text-offblack"> */}

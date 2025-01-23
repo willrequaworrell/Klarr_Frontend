@@ -1,20 +1,20 @@
 import React, { useState } from "react"
-import { CardType } from "../util/Types"
 import { IconBaseProps } from "react-icons"
 
 import axios from "axios"
 import { useToast } from "../context/ToastContext"
+import { useCards } from "../context/CardContext"
 
 interface RemoveAreaPropsType {
 	Icon: React.ComponentType<IconBaseProps>,
-	setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 	type: 'delete' | 'complete'
 }
 
 
-const RemoveArea = ({Icon, setCards, type}: RemoveAreaPropsType) => {
+const RemoveArea = ({Icon, type}: RemoveAreaPropsType) => {
 	const [active, setActive] = useState<boolean>(false)
 	const {setShowToast, setToastMessage } = useToast();
+	const {setCards} = useCards();
 
 	const deleteCard = async (id: string): Promise<boolean> => {
 		let success = false

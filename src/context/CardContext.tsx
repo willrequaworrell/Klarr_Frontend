@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { fireAuth } from '../util/firebase';
 import { CardType, TaskFromBackend } from '../util/Types';
+import { useDemoContext } from './DemoContext';
+import { demoTasks } from '../util/generateDemoTask';
 
 interface ColumnColorsType {
     today: string;
@@ -17,7 +19,7 @@ interface CardContextType {
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>;
     fetchLoading: boolean;
     fetchCards: () => Promise<void>;
-    updateCardColumn: (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null) => Promise<void>;
+    updateCardColumn: (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date | null, newOrder: number | null) => Promise<void>;
     updateCardTitle: (id: string, newTitle: string) => Promise<any>;
     updateCardOrders: (updatedCards: CardType[]) => Promise<void>;
     updateCardDueDate: (id: string, newDate: Date) => Promise<any>;
@@ -38,17 +40,29 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         upcoming: "#ffc849",
         optional: "#4b87b4"
     })
+
+    const {isDemoMode} = useDemoContext()
+
     
     const fetchCards = async () => {
-        if (!user) return 
-        
         setFetchLoading(true);
+        if (isDemoMode) {
+            setTimeout(() => {
+                setFetchLoading(false)
+                setCards(demoTasks)
+            }, 500)
+            
+            return
+        }
+
+        if (!user) return  
         try {
             const res = await axios.get(`https://staatlidobackend.onrender.com/api/tasks/${user.uid}`);
             const tasks = res.data.map(({ _id, ...rest }: TaskFromBackend) => ({
                 ...rest,
                 id: _id,
             }));
+            console.log(tasks)
             setCards(tasks);
         } catch (error) {
             console.log(error);
@@ -58,12 +72,15 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     };
 
-    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date, newOrder: number | null) => {
+    const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date | null, newOrder: number | null) => {
+        console.log("updateCardColumn")
         try {
-            await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, { column: newColumn, dueDate: newDueDate, order: newOrder });
-            setCards(prevCards => prevCards.map(card =>
-                card.id === id ? { ...card, column: newColumn, dueDate: newDueDate, order: newOrder } : card
-            ));
+            if (!isDemoMode) {
+                await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, { column: newColumn, dueDate: newDueDate, order: newOrder });
+            } 
+            // setCards(prevCards => prevCards.map(card =>
+            //     card.id === id ? { ...card, column: newColumn, dueDate: newDueDate, order: newOrder } : card
+            // ));
         } catch (error) {
             console.log(error);
         }
@@ -83,9 +100,22 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const updateCardOrders = async (updatedCards: CardType[]) => {
         try {
-            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
-            console.log("res from backend:", res.data)
-            setCards(updatedCards);
+            if (!isDemoMode) {
+                const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
+                console.log("res from backend:", res.data)
+            }
+            // setCards(updatedCards);
+            // setCards(prevCards => 
+            //     {
+            //         const res = prevCards.map(card => {
+            //             const updatedCard = updatedCards.find(c => c.id === card.id);
+            //             return updatedCard ? { ...card, ...updatedCard } : card;
+            //         })
+            //         console.log("resCards", res)
+            //         return res
+
+            //     }
+            // );
         } catch (error) {
             console.error('Failed to update card orders:', error);
         }
@@ -137,6 +167,10 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (!user) return 
         fetchUserPreferences()
     }, [user])
+
+    useEffect( () => {
+        console.log(cards)
+    }, [cards])
 
     return (
         <CardContext.Provider value={{ cards, setCards, fetchLoading, fetchCards, updateCardColumn, updateCardTitle, updateCardOrders, updateCardDueDate, columnColors, updateColumnColor }}>

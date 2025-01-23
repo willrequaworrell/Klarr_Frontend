@@ -14,11 +14,11 @@ import Spinner from "./Spinner";
 
 
 const Board = () => {
-    // const [user] = useAuthState(fireAuth)
+    // const [user] = useAuthState(fireAuth) 
     // const [cards, setCards] = useState<CardType[]>([])
     // const [fetchLoading, setFetchLoading] = useState<boolean>(true)
 
-    const {setCards, fetchLoading, columnColors } = useCards();
+    const {fetchLoading, columnColors } = useCards();
 
     return (
         
@@ -35,8 +35,8 @@ const Board = () => {
                 <div className="flex flex-col items-center justify-center flex-1 gap-8">
                     <Clock/>
                     <div className="flex items-center justify-center size-full gap-x-8">
-                        <RemoveArea Icon={PiCheckFatFill} setCards={setCards} type="complete"/>
-                        <RemoveArea Icon={FaTrash} setCards={setCards} type="delete"/>
+                        <RemoveArea Icon={PiCheckFatFill} type="complete"/>
+                        <RemoveArea Icon={FaTrash} type="delete"/>
                     </div>
                 </div>
 

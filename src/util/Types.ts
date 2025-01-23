@@ -1,9 +1,12 @@
 export interface CardType {
-    order: number | null;
+    userId?: string
+    order: number | null
     title: string
     id: string
     column: 'today' | 'upcoming' | 'optional'
-    dueDate: Date
+    dueDate: Date | null
+    createdAt?: Date
+    updatedAt?: Date
 }
 
 export interface TaskFromBackend {

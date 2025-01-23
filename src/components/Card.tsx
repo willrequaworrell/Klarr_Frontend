@@ -97,7 +97,7 @@ const Card = ({title, id, column, dueDate, handleDragStart, bgColor, onEdit, ord
                     <p className="flex-1 tracking-wide font-Barlow text-[min(2vh,16px)] text-offblack ">{title}</p>
                     {column === "upcoming" &&
                         <div onClick={handleDateEdit} className="flex items-center justify-center w-12 px-2 py-1 tracking-widest text-white rounded-full text-[min(1.5vh,14px)] font-Barlow bg-offblack max-h-min">
-                            <p >{formatDate(dueDate)}</p>
+                            <p >{formatDate(dueDate as Date)}</p>
                         </div>
                     }
                 </>

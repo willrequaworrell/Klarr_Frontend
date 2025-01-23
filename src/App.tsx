@@ -6,6 +6,7 @@ import Error from "./components/pages/Error";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { ToastProvider } from "./context/ToastContext";
+import { DemoProvider } from "./context/DemoContext";
 
 
 function App() {
@@ -14,13 +15,16 @@ function App() {
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<BrowserRouter>
 				<ToastProvider>
-					<Routes >
-						<Route path="/" element={<Layout/>}>
-							<Route index element={<Home/>}/>
-							<Route path="auth" element={<Auth/>}/>
-							<Route path="*" element={<Error/>}/>
-						</Route>
-					</Routes>
+					<DemoProvider>
+						<Routes >
+							<Route path="/" element={<Layout/>}>
+								<Route index element={<Home/>}/>
+								<Route path="demo" element={<Home/>}/>
+								<Route path="auth" element={<Auth/>}/>
+								<Route path="*" element={<Error/>}/>
+							</Route>
+						</Routes>
+					</DemoProvider>
 				</ToastProvider>
 			</BrowserRouter>
 		</LocalizationProvider>

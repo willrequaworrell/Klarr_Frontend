@@ -23,7 +23,7 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
     const completeUpdate = async (cardsCopy: CardType[], cardToUpdate: CardType): Promise<boolean> => {
         if (!dueDate) return false
         // copy.map(c => console.log( new Date(c.dueDate) < cardToUpdate.dueDate))
-        const indexOfNextLatestDueDate = cardsCopy.findIndex(card => new Date(card.dueDate) > cardToUpdate.dueDate)
+        const indexOfNextLatestDueDate = cardsCopy.findIndex(card => new Date(card.dueDate as Date) >( cardToUpdate.dueDate as Date))
         if (indexOfNextLatestDueDate === -1) {
             cardsCopy.push({ ...cardToUpdate})
         } else {
@@ -31,7 +31,9 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
         }
         const updatedCard = await updateCardDueDate(id, dueDate?.toDate() as Date);
         if (updatedCard) {
-            setCards(cardsCopy)
+            setCards(() => {
+                return cardsCopy
+            })
             setToastMessage("success/update-task-date")
             setShowToast(true)
             setTimeout(() => setShowToast(false), 3000)

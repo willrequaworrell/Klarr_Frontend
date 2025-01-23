@@ -85,15 +85,13 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
     const completeDrop = async (cardToTransfer: CardType, before?: string) => {
         let copy = [...cards]
         copy = copy.filter(c => c.id !== cardToTransfer.id)
-        
 
         const moveToBack = before === "-1"
         let newOrder: number | null;
 
         if (column === "upcoming") {
             newOrder = null
-            const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate) > cardToTransfer.dueDate)
-            console.log("insert at:", indexOfNextLatestDueDate, indexOfNextLatestDueDate === -1)
+            const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate as Date) > (cardToTransfer.dueDate as Date))
             if (indexOfNextLatestDueDate === -1) {
                 copy.push({ ...cardToTransfer, order: newOrder })
             } else {
@@ -101,7 +99,9 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
             }
             
         } else {
+            
             if (moveToBack) {
+                
                 newOrder = copy.length > 0 ? Math.max(...copy.map(c => c.order || 0)) + 1 : 0 // place at max index + 1
                 copy.push({ ...cardToTransfer, order: newOrder })
             } else {
@@ -111,18 +111,21 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
                 newOrder = copy[insertAtIndex].order || 0;
                 copy.splice(insertAtIndex, 0, { ...cardToTransfer, order: newOrder })
 
-
                 // update backend of card list after new insertion 
                 for (let i = insertAtIndex + 1; i < copy.length; i++) {
                     
                     copy[i].order = (copy[i - 1].order || 0) + 1;
                 }   
+                
             }
         }
         
         await updateCardColumn(cardToTransfer.id, column, cardToTransfer.dueDate, newOrder);
         await updateCardOrders(copy.filter(c => c.column === column));
-        setCards(copy)
+        setCards(() => {
+            return copy
+        })
+        
     }
 
     const handleDrop = (e: React.DragEvent) => {
@@ -169,7 +172,8 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
         return false
         
     }
-
+    
+    
     const filteredCards = cards.filter(c => c.column === column)
     const sortedCards = column === 'upcoming' ? filteredCards : filteredCards.sort((a, b) => (a.order as number) - (b.order as number));
     return (

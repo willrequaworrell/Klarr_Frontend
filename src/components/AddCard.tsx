@@ -9,6 +9,7 @@ import CustomDatePicker from './CustomDatePicker';
 import { Dayjs } from 'dayjs';
 import Spinner from './Spinner';
 import { useCards } from '../context/CardContext';
+import { useDemoContext } from '../context/DemoContext';
 
 
 interface NewCardType {
@@ -25,12 +26,6 @@ interface AddCardPropsType {
     setCards: React.Dispatch<React.SetStateAction<CardType[]>>
 }
 
-// const columnToColor = {
-//     'today': 'bg-red/75',
-//     'upcoming': 'bg-yellow/75',
-//     'optional': 'bg-blue/75'
-// }
-
 const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
     const [user] = useAuthState(fireAuth)
     const [text, setText] = useState<string>("")
@@ -38,11 +33,18 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
     const [adding, setAdding] = useState<boolean>(false)
     const [addLoading, setAddLoading] = useState<boolean>(false)
 
+    const {isDemoMode} = useDemoContext()
+
     const {columnColors } = useCards();
 
+    function generateUniqueId(): string {
+        return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+    }
+      
+
     const insertCard = async (data: NewCardType) => {
+        
         try {
-            // const res = await axios.post(`http://localhost:3000/api/tasks/`, data)
             const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
             return res.data
         } catch (error) {
@@ -53,11 +55,12 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLTextAreaElement>) => {
         e.preventDefault()
+
         if (addLoading) return
 
         if (!text.trim().length) return
 
-        if (!user) return 
+        if (!user && !isDemoMode) return 
 
         if ( !dueDate && (column === "upcoming"))  return 
 
@@ -76,49 +79,92 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
             }
         }
 
-        const newCardForDatabase: NewCardType = {
-            userId: user?.uid,
-            title: text.trim(),
-            column: column,
-            dueDate: determineDueDate(dueDate as Dayjs, column),
-            order: null
-            // dueDate: dueDate ? dueDate.toDate() : null
-        }
+        // if DEMO
+            // create card from state data:
+                // {
+                // column: column, 
+                // title: text.trim(), 
+                // id: GENERATE --> uniqueId function , 
+                // dueDate: determineDueDate(dueDate as Dayjs, column),  
+                // order: GENERATE --> highest order in column + 1
+                // }
+            // if not upcoming column, add new task to end of card array 
+            // if upcoming column, find correct spot to splice into cards array based on dueDates
 
-        console.log("Sending to server:", newCardForDatabase)
+        // if NOT DEMO do below
 
-        const insertedCard = await insertCard(newCardForDatabase)
-        setAddLoading(false)
-        if (insertedCard) {
-            console.log("inserted" ,insertedCard)
-            const newCard: CardType = {
+        if (isDemoMode) {
+            const newDemoCard = {
                 column: column,
                 title: text.trim(),
-                id: insertedCard._id,
-                dueDate: insertedCard.dueDate,
-                order: insertedCard.order
+                id: generateUniqueId(),
+                dueDate: determineDueDate(dueDate as Dayjs, column),
+                order: Math.max(...cards.map(card => card.order as number)) + 1 // highest current order + 1
             }
             setText("")
             setAdding(false)
             if (column === "upcoming") {
                 let copy = [...cards]
-                const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate) > new Date(newCard.dueDate))
+                const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate as Date) > new Date(newDemoCard.dueDate as Date))
                 if (indexOfNextLatestDueDate === -1) {
-                    copy.push({ ...newCard })
+                    copy.push({ ...newDemoCard })
                 } else {
-                    copy.splice(indexOfNextLatestDueDate, 0, { ...newCard})
+                    copy.splice(indexOfNextLatestDueDate, 0, { ...newDemoCard})
                 }
                 setCards(copy)
             } else {
-                setCards(prev => [...prev, newCard] )
+                setCards(prev => [...prev, newDemoCard])
+            }
+            setAddLoading(false)
+        } else {
+            if (!user) return // to make typescript happy even though this is already checked up top
+
+            const newCardForDatabase: NewCardType = {
+                userId: user?.uid,
+                title: text.trim(),
+                column: column,
+                dueDate: determineDueDate(dueDate as Dayjs, column),
+                order: null
+                // dueDate: dueDate ? dueDate.toDate() : null
             }
 
-        } else {
-            console.log("error adding task")
+            console.log("Sending to server:", newCardForDatabase)
+            const insertedCard = await insertCard(newCardForDatabase)
+            setAddLoading(false)
+
+            if (insertedCard) {
+                console.log("inserted" ,insertedCard)
+                const newCard: CardType = {
+                    column: column,
+                    title: text.trim(),
+                    id: insertedCard._id,
+                    dueDate: insertedCard.dueDate,
+                    order: insertedCard.order
+                }
+                setText("")
+                setAdding(false)
+                if (column === "upcoming") {
+                    let copy = [...cards]
+                    const indexOfNextLatestDueDate = copy.findIndex(card => new Date(card.dueDate as Date) > new Date(newCard.dueDate as Date))
+                    if (indexOfNextLatestDueDate === -1) {
+                        copy.push({ ...newCard })
+                    } else {
+                        copy.splice(indexOfNextLatestDueDate, 0, { ...newCard})
+                    }
+                    setCards(copy)
+                } else {
+                    setCards(prev => [...prev, newCard])
+                }
+    
+            } else {
+                console.log("error adding task")
+            }
         }
+
     }
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        
 
         if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
             e.preventDefault();
