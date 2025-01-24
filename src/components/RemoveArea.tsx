@@ -4,6 +4,7 @@ import { IconBaseProps } from "react-icons"
 import axios from "axios"
 import { useToast } from "../context/ToastContext"
 import { useCards } from "../context/CardContext"
+import { useDemoContext } from "../context/DemoContext"
 
 interface RemoveAreaPropsType {
 	Icon: React.ComponentType<IconBaseProps>,
@@ -15,12 +16,15 @@ const RemoveArea = ({Icon, type}: RemoveAreaPropsType) => {
 	const [active, setActive] = useState<boolean>(false)
 	const {setShowToast, setToastMessage } = useToast();
 	const {setCards} = useCards();
+	const {isDemoMode} = useDemoContext()
 
 	const deleteCard = async (id: string): Promise<boolean> => {
 		let success = false
 		try {
-            const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
-            console.log(res.data)
+			if (!isDemoMode) {
+				const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
+				console.log(res.data)
+			}
 			setToastMessage("success/delete-task")
 			setShowToast(true)
 			success = true
@@ -36,9 +40,12 @@ const RemoveArea = ({Icon, type}: RemoveAreaPropsType) => {
 	
 	const completeCard = async (id: string): Promise<boolean> => {
 		let success = false
+		
 		try {
-            const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
-            console.log(res.data)
+			if (!isDemoMode) {
+				const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
+				console.log(res.data)
+			}
 			setToastMessage("success/complete-task")
 			setShowToast(true)
 			success = true

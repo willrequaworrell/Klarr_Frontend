@@ -7,6 +7,7 @@ import AddCard from "./AddCard"
 import AddCardDatePickerModal from "./AddCardDatePickerModal"
 
 import { CardType } from "../util/Types"
+import { useDemoContext } from "../context/DemoContext"
 
 interface ColumnProps {
     title: string
@@ -22,6 +23,7 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
     const [beforeState, setBeforeState] = useState<string>("-1")
+    const {isDemoMode} = useDemoContext()
 
 
     const getIndicators = () => {
@@ -157,8 +159,12 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
 
     const handleEditCard = async (id: string, newTitle: string):Promise<boolean> => {
         try {
-            
-            const res = await updateCardTitle(id, newTitle)
+            let res
+            if (!isDemoMode) {
+                res = await updateCardTitle(id, newTitle)
+            } else {
+                res = true
+            }
             if (res) {
                 setCards(prev => {
                     return prev.map(card => (card.id === id ? {...card, title: newTitle} : card))

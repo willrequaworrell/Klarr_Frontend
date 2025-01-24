@@ -7,6 +7,7 @@ import { useCards } from '../context/CardContext'
 import { CardType } from '../util/Types'
 import Spinner from './Spinner'
 import { useToast } from '../context/ToastContext'
+import { useDemoContext } from '../context/DemoContext'
 
 interface UpdateCardDatePickerModalPropsType extends DatePickerModalPropsType {
     id: string,
@@ -17,6 +18,7 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
     const [updateLoading, setUpdateLoading] = useState<boolean>(false)
     const {cards, setCards, updateCardDueDate} = useCards()
     const [dueDate, setDueDate] = useState<Dayjs | null>(currDate || null)
+    const {isDemoMode} = useDemoContext()
 
     const { setShowToast, setToastMessage } = useToast();
 
@@ -29,7 +31,13 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
         } else {
             cardsCopy.splice(indexOfNextLatestDueDate, 0, { ...cardToUpdate})
         }
-        const updatedCard = await updateCardDueDate(id, dueDate?.toDate() as Date);
+        let updatedCard
+        if (!isDemoMode) {
+            updatedCard = await updateCardDueDate(id, dueDate?.toDate() as Date);
+        } else {
+            updatedCard = true
+        }
+
         if (updatedCard) {
             setCards(() => {
                 return cardsCopy
@@ -51,7 +59,6 @@ const UpdateCardDatePickerModal = ({id, showDatePicker, setShowDatePicker, currD
         if (updateLoading) return
         setUpdateLoading(true)
         await new Promise(resolve => setTimeout(resolve, 200))
-        console.log(id)
         // find card by id in cards, then send it to complete drop to update the db
         let copy = [...cards];
         let cardToUpdate = copy.find(c => c.id === id) 

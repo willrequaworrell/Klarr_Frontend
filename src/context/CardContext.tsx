@@ -73,25 +73,18 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     const updateCardColumn = async (id: string, newColumn: 'today' | 'upcoming' | 'optional', newDueDate: Date | null, newOrder: number | null) => {
-        console.log("updateCardColumn")
+        if (isDemoMode) return
         try {
-            if (!isDemoMode) {
-                await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, { column: newColumn, dueDate: newDueDate, order: newOrder });
-            } 
-            // setCards(prevCards => prevCards.map(card =>
-            //     card.id === id ? { ...card, column: newColumn, dueDate: newDueDate, order: newOrder } : card
-            // ));
+            await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, { column: newColumn, dueDate: newDueDate, order: newOrder });
         } catch (error) {
             console.log(error);
         }
     };
 
     const updateCardTitle = async (id: string, newTitle: string) => {
+        if (isDemoMode) return
         try {
             const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/${id}`, { title: newTitle });
-            setCards(prevCards => prevCards.map(card =>
-                card.id === id ? { ...card, title: newTitle } : card
-            ));
             return res.data;
         } catch (error) {
             console.log(error);
@@ -99,23 +92,11 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     const updateCardOrders = async (updatedCards: CardType[]) => {
+        if (isDemoMode) return
         try {
-            if (!isDemoMode) {
-                const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
-                console.log("res from backend:", res.data)
-            }
-            // setCards(updatedCards);
-            // setCards(prevCards => 
-            //     {
-            //         const res = prevCards.map(card => {
-            //             const updatedCard = updatedCards.find(c => c.id === card.id);
-            //             return updatedCard ? { ...card, ...updatedCard } : card;
-            //         })
-            //         console.log("resCards", res)
-            //         return res
-
-            //     }
-            // );
+            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
+            console.log("res from backend:", res.data)
+            
         } catch (error) {
             console.error('Failed to update card orders:', error);
         }
@@ -144,13 +125,16 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const updateColumnColor = async (colors: Partial<ColumnColorsType>) => {
-        if (!user) return 
+        if (!user && !isDemoMode) return 
         const newColors = { ...columnColors, ...colors }
 
         try {
-            await axios.post(`https://staatlidobackend.onrender.com/api/preferences/${user.uid}`, {
-                columnColors: newColors
-            })
+            if (!isDemoMode) {
+                if (!user) return
+                await axios.post(`https://staatlidobackend.onrender.com/api/preferences/${user.uid}`, {
+                    columnColors: newColors
+                })
+            }
             setColumnColors(newColors)
         } catch (error) {
             console.error('Error updating user preferences:', error);
