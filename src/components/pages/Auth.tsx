@@ -127,6 +127,7 @@ const Auth = () => {
     useEffect(() => {
 
         if (user) {
+            setIsDemoMode(false)
             navigate('/')
             return
         }
