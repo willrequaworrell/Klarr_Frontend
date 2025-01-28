@@ -27,7 +27,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Creating a **Today** Task
 
->![Create-Today-Task](https://github.com/user-attachments/assets/9e6ecbb8-9aaf-4782-b843-a273fd1c54e3)
+><img src="https://github.com/user-attachments/assets/9e6ecbb8-9aaf-4782-b843-a273fd1c54e3" width="600" />
 >
 > * Create a task by clicking the + button in a given section. Submit by pressing "Add" or Command/Ctrl + Enter on the keyboard
 > * Today tasks automatically have a due date of the current day.
@@ -35,7 +35,8 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Editing a task
 
->![Edit Today Task](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExemZqdDR6NjNtOG9kcmU2MHgyazVmcDkxMGI4YWN1ejU0emhmMDE1cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/cT5XCsg2EpFxuSngeo/giphy.gif)
+
+><img src="https://github.com/user-attachments/assets/0c040ce6-c874-4011-967b-5a5df2a35d65" width="600" />
 >
 > * Edit a task by double clicking on its description, making your change, and pressing Enter to submit.
 
@@ -43,7 +44,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Creating an Upcoming Task
 
->![Create Upcoming Task](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExenoxb2ZoMnQ2Z293Z2wybWVzZWFlMnY2ZG85NmgydTU1N21oeDJycyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/w2KKE5bgrrCsl6z1i0/giphy.gif)
+><img src="https://github.com/user-attachments/assets/27f653bd-8570-44d7-85ef-c7ec913b4855" width="600" />
 >
 > * Creating Upcoming tasks is just like creating Today tasks, but a due date in the future is required.
 > * Tasks in the Upcoming section will be automatically sorted by due date.
@@ -52,7 +53,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Editing an Upcoming Task Due Date
 
->![Update Upcoming Task](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3JmZmNvcHdzMmg1Mzk4a2k2YmlmMXR1MGg1bnRuYzhibXJlbjF0dSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/PqRdUKj0RBbZaZxwDE/giphy.gif)
+><img src="https://github.com/user-attachments/assets/a1fa60b0-7a1c-40fe-bb0b-270e8198e4cf" width="600" />
 >
 > * To update the due date of an Upcoming task, click on the due date to bring up the date picker.
 > * If you want to make the due date today, you'll need to drag it into the Today section (more on that later).
@@ -60,7 +61,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 
 ### Create Optional Task
-> ![Create Optional Task](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMHVlcTdqcGEzOXBhajRmdmRjMmpxczNsbmpobDh2bGNndXgyZW56NCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Pxa7nadyGnXrdg8QPJ/giphy.gif)
+><img src="https://github.com/user-attachments/assets/5b327477-79cb-4e87-8231-cda728fb2a41" width="600" />
 >
 > * Creating an Optional task is identical to creating a Today task, except optional tasks have no due date.
 
@@ -68,7 +69,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Reorder Tasks
 
->![Reorder Optional Task](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWc0ZWVtNThuMHprZWI5cXZ1cTdvYjB6dGkxN2h4bXZyNHlpbXQwaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BKStTQYVTL9KB5K5LC/giphy.gif)
+><img src="https://github.com/user-attachments/assets/3feaa9d9-ac43-46c2-bfeb-eda3ad1fbdaf" width="600" />
 >
 > * When you have more than one task in a section, you can drag to reorder them.
 
@@ -76,7 +77,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Move Task Between Sections
 
->![Move Task Between Columns](https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWFnZXcwcmVna3lxZGFleGJoYmpyYXl5Z2tuc2xoNGY0bm03M2R0aSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OoEaOPy7uzPoLxEGao/giphy.gif)
+><img src="https://github.com/user-attachments/assets/6571ee39-7421-41e8-869c-387bf56c7272" width="600" />
 >
 > * Tasks can also be dragged between sections.
 > * If you drag a task into the Upcoming section, a due date will be required.
@@ -85,7 +86,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Update Theme
 
->![Update Theme](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmw5ZzE3MG43bjY1ZWoxcWRoYml2a3BkZHpzc3JyanA3ZmpmeHl1bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pluxx2n0jioLXgyPsp/giphy.gif)
+><img src="https://github.com/user-attachments/assets/63bd8a50-466e-4b09-bbaa-274d0e2a7660" width="600" />
 >
 > * If you're not a fan of the primary colors, open the settings to choose whatever palette you want.
 > * These settings will be saved to your profile.
@@ -94,7 +95,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Complete & Delete Tasks
 
->![Complete & Delete Tasks](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXM0MmhrbmNhbXlyajlseDY4bmxmeTl6emlqdXJvaDFsaHR0cWZnaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/8LzUSGW7hvgFBGkCFz/giphy.gif)
+><img src="https://github.com/user-attachments/assets/308bf23c-48da-4ca0-afc0-9eaa742b7d2d" width="600" />
 >
 > * To complete or delete tasks, drag them to the checkmark area or trash can area respectively.
 
