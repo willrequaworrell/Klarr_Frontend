@@ -27,7 +27,7 @@ From a productivity standpoint, this system worked very well, but using it was q
 
 ### Creating a **Today** Task
 
->![Create Today Task](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExbGtncWluMXR0Z3ZjYWE5ZHExaGZwbDM4OGVwbWE5NGxzZHBsNm1iNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/6POg5FK0jZqxtUijPU/giphy.gif)
+>![Create-Today-Task](https://github.com/user-attachments/assets/9e6ecbb8-9aaf-4782-b843-a273fd1c54e3)
 >
 > * Create a task by clicking the + button in a given section. Submit by pressing "Add" or Command/Ctrl + Enter on the keyboard
 > * Today tasks automatically have a due date of the current day.
