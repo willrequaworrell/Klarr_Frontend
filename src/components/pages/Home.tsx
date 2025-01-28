@@ -10,6 +10,7 @@ import { IoSettingsSharp } from "react-icons/io5"
 import Toast from "../Toast"
 import { useToast } from "../../context/ToastContext"
 import { useDemoContext } from "../../context/DemoContext"
+import MobileModal from "../MobileModal"
 // import { IoMdLogOut } from "react-icons/io"
 
 
@@ -54,7 +55,7 @@ const Home = () => {
                             />
                             {/* <img className="h-12 w-min" src="Bauhaus.png" alt="logo" /> */}
                             <h1 aria-label="Klarr Logo Text" className="tracking-wider text-[6vh] text-offblack font-Staat">
-                                KLARR {isDemoMode && <span className="text-2xl text-red animate-pulse">DEMO MODE</span>}
+                                KLARR {isDemoMode && <span className="text-2xl text-red animate-pulse">DEMO</span>}
                             </h1>
                         </div>
                         {/* <div onClick={() => fireAuth.signOut()} className="text-[5vh] text-offblack"> */}
@@ -70,6 +71,7 @@ const Home = () => {
                     <Board/>
                 </main>
                 <SettingsModal showSettings={showSettings} setShowSettings={setShowSettings}/>
+                <MobileModal></MobileModal>
                 {showToast && <Toast message={toastMessage} position="top"/>}
             </Background> 
         </CardProvider>

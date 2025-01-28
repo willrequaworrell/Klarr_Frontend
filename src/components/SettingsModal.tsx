@@ -4,6 +4,7 @@ import { fireAuth } from "../util/firebase"
 import { useCards } from "../context/CardContext"
 import { RiPaintFill } from "react-icons/ri";
 import { FaUser } from "react-icons/fa";
+import { useDemoContext } from "../context/DemoContext";
 
 interface SettingsModalPropsType {
     showSettings: boolean
@@ -13,6 +14,7 @@ interface SettingsModalPropsType {
 const SettingsModal = ({showSettings, setShowSettings}: SettingsModalPropsType) => {
 
     const  {updateColumnColor} = useCards()
+    const {isDemoMode} = useDemoContext()
 
     const handleResetColors = () => {
         updateColumnColor({
@@ -56,22 +58,23 @@ const SettingsModal = ({showSettings, setShowSettings}: SettingsModalPropsType) 
                             <button onClick={handleResetColors} className="hover:text-offblack/50">Reset</button>
                         </div>
                     </div>
-
-                    <div>
-                        <div className="flex items-baseline gap-x-2">
-                            <FaUser className="text-[2.5vh]"/>
-                            <p className="text-[2.5vh] ">User</p>
+                    {!isDemoMode && 
+                        <div>
+                            <div className="flex items-baseline gap-x-2">
+                                <FaUser className="text-[2.5vh]"/>
+                                <p className="text-[2.5vh] ">User</p>
+                            </div>
+                            {/* <button 
+                                onClick={() => fireAuth.signOut()}
+                                className="flex items-center p-1 text-white rounded-lg w-min bg-offblack hover:bg-offblack/50"
+                            >
+                                <p className="flex-1">Logout</p>
+                            </button> */}
+                            <div className="text-offblack/70">
+                                <button className="hover:text-offblack/50" onClick={() => fireAuth.signOut()}>Logout</button>
+                            </div>
                         </div>
-                        {/* <button 
-                            onClick={() => fireAuth.signOut()}
-                            className="flex items-center p-1 text-white rounded-lg w-min bg-offblack hover:bg-offblack/50"
-                        >
-                            <p className="flex-1">Logout</p>
-                        </button> */}
-                        <div className="text-offblack/70">
-                            <button className="hover:text-offblack/50" onClick={() => fireAuth.signOut()}>Logout</button>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </Modal>
