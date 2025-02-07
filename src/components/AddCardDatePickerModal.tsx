@@ -17,7 +17,6 @@ const AddCardDatePickerModal = ({showDatePicker, setShowDatePicker, droppingCard
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if (droppingCard) {
-            // console.log(droppingCard)
             const updatedCard = {...droppingCard, dueDate: dueDate?.toDate() as Date}
             completeDrop(updatedCard)
             setShowDatePicker(false)

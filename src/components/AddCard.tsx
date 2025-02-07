@@ -69,12 +69,10 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
         const determineDueDate = (dueDate: Dayjs, column: string) => {
             
             if (column === "upcoming"){
-                console.log('upcoming hit')
                 return dueDate.toDate()
             }else if (column === "today") {
                 return new Date()
             }else {
-                console.log("optional hit")
                 return null
             }
         }
@@ -128,12 +126,10 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
                 // dueDate: dueDate ? dueDate.toDate() : null
             }
 
-            console.log("Sending to server:", newCardForDatabase)
             const insertedCard = await insertCard(newCardForDatabase)
             setAddLoading(false)
 
             if (insertedCard) {
-                console.log("inserted" ,insertedCard)
                 const newCard: CardType = {
                     column: column,
                     title: text.trim(),
