@@ -52,17 +52,14 @@ const Auth = () => {
 
     const googleLogin = async () => {
         try {
-            const res = await signInWithPopup(fireAuth, googleProvider)
-            console.log(res.user)
+            await signInWithPopup(fireAuth, googleProvider)
         } catch (error) {
             console.log(error)
         }
     }
 
     const emailSignup = async () => {
-        console.log(userCredentialsInput.password === userCredentialsInput.passwordRepeat)
         if (!isValidEmail(userCredentialsInput.email)) {
-            console.log("bad email")
             setToastMessage("error/invalid-email");
             setShowToast(true);
             setTimeout(() => setShowToast(false), 3000);
@@ -79,9 +76,7 @@ const Auth = () => {
         } else {
 
             try {
-                const userCredential = await createUserWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
-                const user = userCredential.user;
-                console.log(user)
+                await createUserWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
     
             } catch (error) {
                 if (error instanceof FirebaseError) {
@@ -101,9 +96,7 @@ const Auth = () => {
 
     const emailSignin = async () => {
         try {
-            const userCredential = await signInWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
-            const user = userCredential.user
-            console.log(user)
+            await signInWithEmailAndPassword(fireAuth, userCredentialsInput.email, userCredentialsInput.password)
         } catch (error) {
             if (error instanceof FirebaseError) {
                 const errorCode = error.code;

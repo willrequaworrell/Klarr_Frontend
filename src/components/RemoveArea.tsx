@@ -22,8 +22,7 @@ const RemoveArea = ({Icon, type}: RemoveAreaPropsType) => {
 		let success = false
 		try {
 			if (!isDemoMode) {
-				const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
-				console.log(res.data)
+				await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
 			}
 			setToastMessage("success/delete-task")
 			setShowToast(true)
@@ -43,8 +42,7 @@ const RemoveArea = ({Icon, type}: RemoveAreaPropsType) => {
 		
 		try {
 			if (!isDemoMode) {
-				const res = await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
-				console.log(res.data)
+				await axios.delete(`https://staatlidobackend.onrender.com/api/tasks/${id}`)
 			}
 			setToastMessage("success/complete-task")
 			setShowToast(true)

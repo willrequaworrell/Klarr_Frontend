@@ -94,7 +94,7 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const updateCardOrders = async (updatedCards: CardType[]) => {
         if (isDemoMode) return
         try {
-            const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
+            await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
             
         } catch (error) {
             console.error('Failed to update card orders:', error);
