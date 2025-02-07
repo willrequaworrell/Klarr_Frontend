@@ -95,7 +95,6 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (isDemoMode) return
         try {
             const res = await axios.patch(`https://staatlidobackend.onrender.com/api/tasks/reorder`, { tasks: updatedCards });
-            console.log("res from backend:", res.data)
             
         } catch (error) {
             console.error('Failed to update card orders:', error);
@@ -151,10 +150,6 @@ export const CardProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (!user) return 
         fetchUserPreferences()
     }, [user])
-
-    useEffect( () => {
-        console.log(cards)
-    }, [cards])
 
     return (
         <CardContext.Provider value={{ cards, setCards, fetchLoading, fetchCards, updateCardColumn, updateCardTitle, updateCardOrders, updateCardDueDate, columnColors, updateColumnColor }}>
