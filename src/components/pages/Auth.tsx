@@ -11,6 +11,7 @@ import { isValidEmail, isValidPassword } from "../../util/AuthValidation";
 import ResetPasswordForm from "../ResetPasswordForm";
 import { useToast } from "../../context/ToastContext";
 import { useDemoContext } from "../../context/DemoContext";
+import AuthHeader from "../AuthHeader";
 
 interface userCredentialsInputType {
     email: string
@@ -30,8 +31,6 @@ const Auth = () => {
     })
     const [showResetPassword, setShowResetPassword] = useState<boolean>(false)
 
-    // const [showToast, setShowToast] = useState<boolean>(false)
-    // const [toastMessage, setToastMessage] = useState<string>("")
     const { showToast, toastMessage, setShowToast, setToastMessage } = useToast();
     const {setIsDemoMode} = useDemoContext()
 
@@ -131,45 +130,21 @@ const Auth = () => {
         <Background>
             
             <div className="flex flex-col items-center justify-center w-full h-full min-h-screen gap-y-[2vh]">
-                <header aria-labelledby="title">
-                    <div className="flex items-center justify-center scale-125 md:scale-150 gap-x-1">
-                        
-                        {/* HTML to make logo */}
-                        {/* <div className="relative flex items-center bg-white border-b-4 border-l-4 rounded-full border-offblack size-10">
-                            <div className="absolute flex items-center border-t-4 border-r-4 border-white rounded-full bg-offblack left-5 size-10">
-                                <div className="w-full h-2 bg-white "></div>
-                            </div>
-                            
-                            <div className="w-full h-4 bg-offblack"></div>
-                            
-                        </div> */}
-                        <img 
-                            src="klarr.png" 
-                            alt="Klarr Logo - overlapping black and white circles & rectangles" 
-                            className="object-cover object-center h-[9vh]"
-                        />
-
-                        <h1 className="text-[8vh] tracking-wider text-offblack font-Staat">
-                            KLARR
-                        </h1>
-                    </div>
-
-                </header>
-                
+                <AuthHeader/>
                 <main className={` flex flex-col text-offblack w-4/5 lg:w-2/5 h-1/2 font-Staat size-full p-[1.5vh] rounded-xl transition-colors border-l-8 border-b-8 border-t-4 border-r-4 border-offblack`}>
                     <div className="flex items-center mb-[1.5vh]">
-                        <h3 className={`font-bold text-[3vh] `}>
+                        <div className={`font-bold text-[3vh]`}>
                             {showResetPassword ? 
-                                <p>
+                                <h2>
                                     <span className="text-[5vh]">R</span>eset Password
-                                </p>
+                                </h2>
                             :
-                            <p>
-                                <span className="text-[5vh]">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
-                            </p>
+                                <h2>
+                                    <span className="text-[5vh]">S</span>ign {signinOrSignup === "signin" ? "in" : "up"}
+                                </h2>
                             }
                             
-                        </h3>
+                        </div>
                     </div>
                     <div className="flex flex-col items-center justify-center flex-1">
                         <div className="w-[90%] p-2 md:w-2/3">
@@ -186,6 +161,7 @@ const Auth = () => {
                                             placeholder="Email" 
                                             className="p-[.5vh] text-[1.75vh] border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
                                             type="text" 
+                                            aria-label="Email"
                                         />
                                         <input 
                                             name="password"
@@ -193,10 +169,13 @@ const Auth = () => {
                                             onChange={handleUserCredentialsInputChange}
                                             placeholder="Password" 
                                             className="p-[.5vh] text-[1.75vh] border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
-                                            type="password" 
+                                            type="password"
+                                            aria-label="Password"
                                         />
                                         {signinOrSignup === "signin" && 
-                                            <p onClick={() => setShowResetPassword(true)} className="px-4 text-[1.5vh] font-Staat underline cursor-pointer hover:text-offblack/50">Forgot password?</p>
+                                            <div className="flex justify-start">
+                                                <button onClick={() => setShowResetPassword(true)} className="px-4 text-[1.5vh] font-Staat underline cursor-pointer hover:text-offblack/50">Forgot password?</button>
+                                            </div>
                                         }
                                         {signinOrSignup === "signup" && 
                                             <input 
@@ -206,6 +185,7 @@ const Auth = () => {
                                                 placeholder="Repeat password" 
                                                 className="p-[.5vh] text-[1.75vh] border-t-4 border-b-8 border-l-8 border-r-4 border-offblack rounded-xl" 
                                                 type="password" 
+                                                aria-label="Repeat Password"
                                             />
                                         }
                                     </>
@@ -233,12 +213,12 @@ const Auth = () => {
                             </form>
                             {!showResetPassword && 
                                 <>
-                                    <button onClick={googleLogin} className="flex items-center justify-center w-full p-[.5vh] mt-[1vh] text-[2.25vh] bg-white font-Barlow hover:bg-offblack/50 text-offblack rounded-xl">
+                                    <a onClick={googleLogin} className="flex items-center justify-center w-full p-[.5vh] mt-[1vh] text-[2.25vh] bg-white font-Barlow hover:bg-offblack/50 text-offblack rounded-xl cursor-pointer">
                                         <div className="flex items-center justify-center h-full mr-2">
                                             <FcGoogle className="p-[.5vh] text-[4vh]" />
                                         </div>
                                         <p className="">Continue with Google</p>
-                                    </button>
+                                    </a>
                                     <p className="mt-2 text-[1.5vh] text-center">{signinOrSignup === "signup" ? "Already" : "Don't"} have an account? <span onClick={toggleSigninSignup} className="underline cursor-pointer hover:text-offblack/50">Sign {signinOrSignup === "signin" ? "Up" : "In"}</span></p>
                                 </>
                             }
