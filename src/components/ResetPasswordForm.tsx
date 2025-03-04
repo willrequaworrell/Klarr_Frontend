@@ -7,10 +7,10 @@ import { useToast } from "../context/ToastContext";
 
 
 interface ResetPasswordFormPropTypes {
-    setShowPasswordReset: (showResetPassword: boolean) => void
+    setShowResetPassword: (showResetPassword: boolean) => void
 }
 
-const ResetPasswordForm = ({setShowPasswordReset}: ResetPasswordFormPropTypes) => {
+const ResetPasswordForm = ({setShowResetPassword}: ResetPasswordFormPropTypes) => {
     const [sendPasswordResetEmail] = useSendPasswordResetEmail(fireAuth);
     const [resetEmail, setResetEmail] = useState<string>("");
     const {setShowToast, setToastMessage } = useToast();
@@ -51,7 +51,7 @@ const ResetPasswordForm = ({setShowPasswordReset}: ResetPasswordFormPropTypes) =
             >
                 <p>Send Reset Email</p>
             </button>
-            <p onClick={() => setShowPasswordReset(false)} className="text-[1.5vh] text-center underline cursor-pointer font-Staat hover:text-offblack/50">Back to Sign In</p>
+            <p onClick={() => setShowResetPassword(false)} className="text-[1.5vh] text-center underline cursor-pointer font-Staat hover:text-offblack/50">Back to Sign In</p>
         </>
     )
 }

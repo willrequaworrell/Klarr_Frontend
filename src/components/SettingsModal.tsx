@@ -31,7 +31,7 @@ const SettingsModal = ({showSettings, setShowSettings}: SettingsModalPropsType) 
             aria-labelledby="settings-menu"
             aria-describedby="Menu to adjust user settings or logout"
         >
-            <div className="absolute flex flex-col justify-center w-2/3 px-4 py-4 -translate-x-1/2 -translate-y-1/2 border-t-4 border-b-8 border-l-8 border-r-4 md:w-1/4 sm:w-1/2 gap-y-2 bg-offwhite top-1/2 left-1/2 border-offblack rounded-xl font-Barlow text-offblack">
+            <div className="absolute flex flex-col justify-center w-2/3 px-4 py-4 -translate-x-1/2 -translate-y-1/2 border-t-4 border-b-8 border-l-8 border-r-4 lg:w-1/5 md:w-1/4 sm:w-1/2 gap-y-2 bg-offwhite top-1/2 left-1/2 border-offblack rounded-xl font-Barlow text-offblack">
                 <h3 className={`font-bold text-[3vh] tracking-wider font-Staat`}>
                     <span className="text-[4vh]">S</span>ettings
                 </h3>
