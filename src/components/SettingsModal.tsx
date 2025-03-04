@@ -31,7 +31,7 @@ const SettingsModal = ({showSettings, setShowSettings}: SettingsModalPropsType) 
             aria-labelledby="settings-menu"
             aria-describedby="Menu to adjust user settings or logout"
         >
-            <div className="absolute flex flex-col justify-center w-1/5 px-4 py-4 -translate-x-1/2 -translate-y-1/2 border-t-4 border-b-8 border-l-8 border-r-4 gap-y-2 bg-offwhite top-1/2 left-1/2 border-offblack rounded-xl font-Barlow text-offblack">
+            <div className="absolute flex flex-col justify-center w-2/3 px-4 py-4 -translate-x-1/2 -translate-y-1/2 border-t-4 border-b-8 border-l-8 border-r-4 md:w-1/4 sm:w-1/2 gap-y-2 bg-offwhite top-1/2 left-1/2 border-offblack rounded-xl font-Barlow text-offblack">
                 <h3 className={`font-bold text-[3vh] tracking-wider font-Staat`}>
                     <span className="text-[4vh]">S</span>ettings
                 </h3>
@@ -64,12 +64,6 @@ const SettingsModal = ({showSettings, setShowSettings}: SettingsModalPropsType) 
                                 <FaUser className="text-[2.5vh]"/>
                                 <p className="text-[2.5vh] ">User</p>
                             </div>
-                            {/* <button 
-                                onClick={() => fireAuth.signOut()}
-                                className="flex items-center p-1 text-white rounded-lg w-min bg-offblack hover:bg-offblack/50"
-                            >
-                                <p className="flex-1">Logout</p>
-                            </button> */}
                             <div className="text-offblack/70">
                                 <button className="hover:text-offblack/50" onClick={() => fireAuth.signOut()}>Logout</button>
                             </div>
