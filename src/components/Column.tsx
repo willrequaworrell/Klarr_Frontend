@@ -9,6 +9,7 @@ import AddCardDatePickerModal from "./AddCardDatePickerModal"
 import { CardType } from "../util/Types"
 import { useDemoContext } from "../context/DemoContext"
 import { clearIndicatorHighlights, getIndicators, getNearestIndicator, highlightIndicators } from "../util/indicatorFunctions"
+import ColumnTitle from "./ColumnTitle"
 
 interface ColumnProps {
     title: string
@@ -25,49 +26,6 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
     const [droppingCard, setDroppingCard] = useState<CardType | null>(null);
     const [beforeState, setBeforeState] = useState<string>("-1")
     const {isDemoMode} = useDemoContext()
-
-
-    // const getIndicators = () => {
-    //     return Array.from(document.querySelectorAll(`[data-column="${column}"]`)) as HTMLElement[]
-    // }
-
-    // const getNearestIndicator = (e: React.DragEvent, indicators: HTMLElement[]) => {
-    //     const DISTANCE_OFFSET = 50
-
-    //     const nearest = indicators.reduce(
-    //         (closest, child) => {
-    //             const box = child.getBoundingClientRect()
-    //             const offset = e.clientY - (box.top + DISTANCE_OFFSET)
-
-    //             if (offset < 0 && offset > closest.offset) {
-    //                 return {offset: offset, element: child}
-    //             } else {
-    //                 return closest
-    //             }
-    //         },
-    //         {
-    //             offset: Number.NEGATIVE_INFINITY,
-    //             element: indicators[indicators.length - 1]
-    //         }
-    //     )
-
-    //     return nearest
-    // }
-    // const clearIndicatorHighlights = (indicatorList?: HTMLElement[]) => {
-    //     const indicators = indicatorList || getIndicators()
-
-    //     indicators.forEach( i => {
-    //         i.style.opacity = "0"
-    //     })
-    // }
-
-    // const highlightIndicators = (e: React.DragEvent) => {
-    //     const indicators = getIndicators()
-    //     clearIndicatorHighlights(indicators)
-    //     const nearestIndicator = getNearestIndicator(e, indicators)
-    //     nearestIndicator.element.style.opacity = "1"
-        
-    // }
 
 
     const handleDragStart = (e: React.DragEvent, card: CardType) => {
@@ -102,9 +60,9 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
         } else {
             
             if (moveToBack) {
-                
                 newOrder = copy.length > 0 ? Math.max(...copy.map(c => c.order || 0)) + 1 : 0 // place at max index + 1
                 copy.push({ ...cardToTransfer, order: newOrder })
+                
             } else {
                 const insertAtIndex = copy.findIndex(card => card.id === before)
                 if (insertAtIndex === undefined) return
@@ -164,6 +122,7 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
             } else {
                 res = true
             }
+            
             if (res) {
                 setCards(prev => {
                     return prev.map(card => (card.id === id ? {...card, title: newTitle} : card))
@@ -190,18 +149,19 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
                 completeDrop={completeDrop}
                 before={beforeState}
             />
+
             <div 
                 onDragOver={handleDragOver} 
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
                 className={`flex flex-col font-Staat ${width} size-full p-2 rounded-2xl transition-colors border-l-[1.25vh] border-b-[1.25vh] border-t-[.5vh] border-r-[.5vh] border-offblack`}
             >
-                <div className="flex items-center justify-between mb-[1vh]">
-                    <h2 className={`font-bold text-[3vh] tracking-wider  ${headingColor}`}>
-                        <span className="text-[4vh]">{title.slice(0,1)}</span>{title.slice(1)}
-                    </h2>
-                    <span className="flex items-center justify-center p-2 text-[3vh] font-bold text-center rounded-full font-Barlow size-[5vh] bg-offblack">{filteredCards.length}</span>
-                </div>
+                <ColumnTitle
+                    title={title}
+                    headingColor={headingColor}
+                    filteredCards={filteredCards}
+                />
+
                 <div className="py-4 overflow-hidden hover:overflow-y-auto">
                     {sortedCards.map(c => {
                         return (
@@ -216,6 +176,7 @@ const Column = ({title, headingColor, bgColor, column, width}: ColumnProps) => {
                     })}
 
                 </div>
+
                 <DropIndicator beforeId={"-1"} column={column}/>
                 <AddCard column={column} cards={cards} setCards={setCards}/>
             </div>
