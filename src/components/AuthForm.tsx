@@ -6,9 +6,9 @@ import { fireAuth } from "../util/firebase"
 import { FirebaseError } from "firebase/app"
 import { useDemoContext } from "../context/DemoContext"
 import { useNavigate } from "react-router-dom"
-import { FcGoogle } from "react-icons/fc"
 import { isValidEmail, isValidPassword } from "../util/AuthValidation"
 import AuthInput from "./AuthInput"
+import AuthButton from "./AuthButton"
 
 interface userCredentialsInputType {
     email: string
@@ -17,8 +17,6 @@ interface userCredentialsInputType {
 }
 
 interface AuthFormPropsType {
-    // userCredentialsInput: userCredentialsInputType
-    // setUserCredentialsInput: React.Dispatch<React.SetStateAction<userCredentialsInputType>>
     showResetPassword: boolean
     setShowResetPassword: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -166,18 +164,14 @@ const AuthForm = ({showResetPassword, setShowResetPassword}: AuthFormPropsType) 
                 
                 {!showResetPassword && 
                     <div className="flex justify-between gap-x-2">
-                        <button 
-                            onClick={signinOrSignup === "signin" ? emailSignin : emailSignup }
-                            className="flex w-1/2 items-center justify-center p-[1vh] text-[2.25vh] text-white rounded-lg bg-offblack hover:bg-offblack/50"
-                        >
-                            <p className="flex-1">Sign {signinOrSignup === "signin" ? "in" : "up"}</p>
-                        </button>
-                        <button 
+                        <AuthButton
+                            text={`Sign ${signinOrSignup === "signin" ? "in" : "up"}`}
+                            onClick={signinOrSignup === "signin" ? emailSignin : emailSignup}
+                        />
+                        <AuthButton
+                            text="Try a Demo"
                             onClick={enableDemoMode}
-                            className="flex w-1/2 items-center justify-center p-[1vh] text-[2.25vh] text-white rounded-lg bg-offblack hover:bg-offblack/50"
-                        >
-                            <p className="flex-1">Try a Demo</p>
-                        </button>
+                        />
                     </div>
                 }
                                             
@@ -185,13 +179,20 @@ const AuthForm = ({showResetPassword, setShowResetPassword}: AuthFormPropsType) 
             
             {!showResetPassword && 
                 <>
-                    <a onClick={googleLogin} className="flex items-center justify-center w-full p-[.5vh] mt-[1vh] text-[2.25vh] bg-white font-Barlow hover:bg-offblack/50 text-offblack rounded-xl cursor-pointer">
-                        <div className="flex items-center justify-center h-full mr-2">
-                            <FcGoogle className="p-[.5vh] text-[4vh]" />
-                        </div>
-                        <p className="">Continue with Google</p>
-                    </a>
-                    <p className="mt-2 text-[1.5vh] text-center">{signinOrSignup === "signup" ? "Already" : "Don't"} have an account? <span onClick={toggleSigninSignup} className="underline cursor-pointer hover:text-offblack/50">Sign {signinOrSignup === "signin" ? "Up" : "In"}</span></p>
+                    <AuthButton
+                        text="Continue with Google"
+                        onClick={googleLogin}
+                        google
+                    />
+                    <AuthButton
+                        text={
+                            <>
+                                {signinOrSignup === "signup" ? "Already" : "Don't"} have an account? <span onClick={toggleSigninSignup} className="underline cursor-pointer hover:text-offblack/50">Sign {signinOrSignup === "signin" ? "Up" : "In"}</span>
+                            </>
+                        }
+                        account={true}
+                    />
+
                 </>
             }
         </>
