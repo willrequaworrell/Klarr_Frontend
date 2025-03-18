@@ -74,12 +74,14 @@ const AuthForm = ({showResetPassword, setShowResetPassword}: AuthFormPropsType) 
                     const errorMessage = error.message;
                     setToastMessage(errorCode)
                     setShowToast(true)
-                    setTimeout(() => setShowToast(false), 3000)
                     setUserCredentialsInput(pv => ({...pv,email: "", password: "", passwordRepeat: ""}))
                     console.log(errorCode, errorMessage);
                 } else {
+                    setToastMessage("Unknown Error")
+                    setShowToast(true)
                     console.log("Unknown Error:", error)
                 }
+                setTimeout(() => setShowToast(false), 3000)
             }
         }
     }

@@ -45,7 +45,9 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
     const insertCard = async (data: NewCardType) => {
         
         try {
-            const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
+            const res = await axios.post(`http://localhost:3000/api/tasks/`, data)
+            // const res = await axios.post(`https://staatlidobackend.onrender.com/api/tasks/`, data)
+            console.log(res)
             return res.data
         } catch (error) {
             console.log(error)
@@ -77,19 +79,6 @@ const AddCard = ({column, cards, setCards}: AddCardPropsType) => {
             }
         }
 
-        // if DEMO
-            // create card from state data:
-                // {
-                // column: column, 
-                // title: text.trim(), 
-                // id: GENERATE --> uniqueId function , 
-                // dueDate: determineDueDate(dueDate as Dayjs, column),  
-                // order: GENERATE --> highest order in column + 1
-                // }
-            // if not upcoming column, add new task to end of card array 
-            // if upcoming column, find correct spot to splice into cards array based on dueDates
-
-        // if NOT DEMO do below
 
         if (isDemoMode) {
             const newDemoCard = {

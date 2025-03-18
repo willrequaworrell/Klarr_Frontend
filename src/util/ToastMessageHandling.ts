@@ -52,7 +52,17 @@ export function generateToastMessage(code: string): string {
             return "Error updating date"
         case 'error/update-task-title':
             return "Error updating task"
+
+
+        // Rate limit exceeded error case
+        case 'error/rate-limit':
+            return "Rate limit exceeded. Try again later."
+
+
+        // Catch all error case
         default:
             return 'An error occurred. Please try again.';
+
+        
     }
 }
